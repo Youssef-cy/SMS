@@ -1,0 +1,95 @@
+<div class="page">
+
+  <!-- Teachers Panel -->
+  <div class="panel teachers-panel">
+    <div class="panel-header">
+      <span class="panel-icon"><i class="hgi hgi-stroke hgi-rounded hgi-teaching"></i></span>
+      <div>
+        <div class="panel-title">Teachers</div>
+        <div class="panel-subtitle">Drag to assign sessions</div>
+      </div>
+    </div>
+
+    <div
+      class="teacher-list"
+      id="teacher-list"
+      cdkDropList
+      [cdkDropListData]="teachers"
+      [cdkDropListConnectedTo]="allSlotIds()"
+      (cdkDropListDropped)="drop($event)">
+      @for (teacher of teachers; track teacher.name) {
+        <div class="teacher-card {{ teacher.colorClass }}" cdkDrag>
+          <div class="teacher-avatar">{{ getAvatarInitial(teacher.name) }}</div>
+          <div class="teacher-info">
+            <div class="teacher-name">{{ teacher.name }}</div>
+            <div class="teacher-subject">{{ teacher.subject }}</div>
+          </div>
+          <span class="drag-handle">⠿</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Timetable Grid -->
+  <div class="panel grid-panel">
+    <div class="panel-header">
+      <span class="panel-icon"><i class="hgi hgi-stroke hgi-rounded hgi-calendar-02"></i></span>
+      <div>
+        <div class="panel-title">Weekly Schedule</div>
+        <div class="panel-subtitle">Sessions timetable</div>
+      </div>
+    </div>
+
+    <div class="grid-wrapper">
+      <!-- Header Row -->
+      <div class="grid-row header-row">
+        <div class="grid-cell day-header">Day</div>
+        @for (col of columns; track $index) {
+          @if (col.type === 'break') {
+            <div class="grid-cell break-header">{{ col.label }}</div>
+          } @else if (col.type === 'period') {
+            <div class="grid-cell period-header">{{ col.label }}</div>
+          }
+        }
+      </div>
+
+      <!-- Day Rows -->
+      @for (day of days; track day; let dayIdx = $index) {
+        <div class="grid-row data-row">
+          <div class="grid-cell day-cell">{{ day }}</div>
+
+          @for (col of columns; track $index) {
+            @if (col.type === 'break') {
+              <div class="grid-cell break-cell">break</div>
+            } @else if (col.type === 'period') {
+              <div
+                class="grid-cell slot-cell"
+                [id]="getListId(dayIdx, col.periodIdx)"
+                cdkDropList
+                [cdkDropListData]="timetableData[dayIdx][col.periodIdx]"
+                [cdkDropListConnectedTo]="allSlotIds()"
+                (cdkDropListDropped)="drop($event)">
+
+                @for (session of timetableData[dayIdx][col.periodIdx]; track $index) {
+                  <div class="session-card {{ session.colorClass }}" cdkDrag>
+                    <div class="session-subject">{{ session.subject }}</div>
+                    <div class="session-teacher">{{ session.teacher }}</div>
+                  </div>
+                } @empty {
+                  <span class="empty-indicator">+</span>
+                }
+
+              </div>
+            }
+          }
+        </div>
+      }
+
+      <div class="save" (click)="openDialog()">
+        save
+      </div>
+
+    </div>
+  </div>
+
+</div>
