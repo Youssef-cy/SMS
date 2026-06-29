@@ -1,0 +1,30 @@
+package com.Company.SMS.DTO.User;
+
+
+import com.Company.SMS.entities.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserReq {
+
+    private String firstName;
+    private String firstNameAnArabic;
+    private String lastName;
+    private String lastNameAnArabic;
+    private Long nationalId;
+    private String email;
+    private String password;
+    private String address;
+    private char gender;
+    private String nationality;
+    private LocalDate birthDate;
+    private Role role;
+    private boolean isDeleted;
+    private String religion;
+}
