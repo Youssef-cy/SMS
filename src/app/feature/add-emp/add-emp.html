@@ -1,0 +1,163 @@
+<div class="modal-overlay">
+
+  <div class="add-employee-modal">
+
+    <div class="modal-header">
+      <h2>Add new Employee</h2>
+      <p>
+        Creates a record in Employee and links it to the Teacher table.
+        Fields marked * are required.
+      </p>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="upload-card">
+
+        <div class="upload-icon">
+          <i class="hgi hgi-user"></i>
+        </div>
+
+        <div class="upload-content">
+          <h4>Profile photo (optional)</h4>
+
+          <button class="upload-btn">
+            <i class="hgi hgi-upload-01"></i>
+            Upload photo
+          </button>
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Personal Information</h3>
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Full name *</label>
+          <input type="text" placeholder="e.g. Salma Tamer Rizq Mahmoud">
+        </div>
+
+        <div class="form-group">
+          <label>National ID *</label>
+          <input type="text" placeholder="e.g. 29901012345678">
+        </div>
+
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" placeholder="name@sms.edu">
+        </div>
+
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="text" placeholder="+20 1XX XXX XXXX">
+        </div>
+
+        <div class="form-group">
+          <label>Hire date *</label>
+          <input type="date">
+        </div>
+
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" placeholder="Temporary password">
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" placeholder="Street, City">
+        </div>
+
+        <div class="form-group">
+          <label>Role ID *</label>
+
+          <select>
+            <option>Select role</option>
+            <option>Teacher</option>
+            <option>Worker</option>
+            <option>Administrator</option>
+          </select>
+
+        </div>
+
+        <div class="form-group full-width">
+
+          <label>Subjects taught</label>
+
+          <select>
+            <option>+ Select subject</option>
+            <option>Mathematics</option>
+            <option>Physics</option>
+            <option>Arabic</option>
+          </select>
+
+          <div class="selected-subjects">
+
+            <span class="tag blue">
+              Mathematics
+              <i class="hgi hgi-cancel-01"></i>
+            </span>
+
+            <span class="tag pink">
+              Physics
+              <i class="hgi hgi-cancel-01"></i>
+            </span>
+
+            <span class="tag green">
+              Arabic
+              <i class="hgi hgi-cancel-01"></i>
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Account settings</h3>
+
+      <div class="settings-grid">
+
+        <div class="setting-card">
+
+          <span>Account active</span>
+
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+
+        </div>
+
+        <div class="setting-card">
+
+          <span>Mark as deleted (is-deleted)</span>
+
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <app-cancel-btn></app-cancel-btn>
+
+      <div class="footer-actions">
+
+        <app-save-btn></app-save-btn>
+
+        <app-add-btn></app-add-btn>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

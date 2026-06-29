@@ -1,0 +1,31 @@
+
+
+@import "tailwindcss";
+
+:root {
+    /* Main Colors */
+    --color-primary-dark: #620000;
+    --color-secondary-dark: #05172F;
+    --color-bg-main: #EEEEEE;
+    --color-top-banner:#E9E3E6;
+    --color-table-header:#E9E3E6;
+
+    /* Text */
+    --color-text-main: #333333;
+    --color-text-muted: #777777;
+
+    /* Status */
+    --color-status-active-bg: #A2E4BA;
+    --color-status-active-text: #1D8844;
+
+    --color-status-inactive-bg: #FCDAD7;
+    --color-status-inactive-text: #620000;
+
+    --color-status-leave-bg: #FFF59D;
+    --color-status-leave-text: #DA5F12;
+
+    /* Misc */
+    --color-info-banner-bg: #87A7C8;
+    --color-info-banner-text: #355C84;
+
+}
