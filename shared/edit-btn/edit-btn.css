@@ -1,0 +1,16 @@
+.edit-btn {
+    background: white;
+    color: var(--color-secondary-dark);
+    border: 1px solid var(--color-secondary-dark);
+    border-radius: 6px;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.edit-btn:hover {
+    background: var(--color-secondary-dark);
+    color: white;
+}

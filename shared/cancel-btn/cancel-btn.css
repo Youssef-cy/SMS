@@ -1,0 +1,18 @@
+.btn-cancel {
+    border: 1px solid #8A0000;
+    color: #8A0000;
+    background: white;
+}
+
+.btn-cancel{
+    height: 42px;
+    padding: 0 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn-cancel:hover{
+    opacity: .9;
+}

@@ -1,0 +1,152 @@
+
+.materials-page {
+    padding: 24px;
+    background:var(--color-bg-main);
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.top-banner {
+    background: var(--color-top-banner);
+    padding: 18px 30px;
+    border-bottom: 1px solid var( --color-status-inactive-bg);
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-main);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+
+.grade-card {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+
+.grade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-table-header);
+    padding: 10px 18px;
+    border-left: 5px solid var(--color-primary-dark);
+}
+
+.grade-header h3 {
+    margin: 0;
+    font-size: 14px;
+    color: var( --color-text-main);
+    font-weight: 700;
+}
+
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #E4E4E4;
+    border-radius: 20px;
+    padding: 0 12px;
+    height: 34px;
+    width: 230px;
+}
+
+.search-box i {
+    color: var(--color-text-muted);
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 13px;
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: var(--color-text-main);
+}
+
+.materials-table tbody tr:nth-child(even) {
+    background: #FCF8F8;
+}
+
+.materials-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.materials-table thead {
+    background: #FBFBFB;
+}
+
+.materials-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+.materials-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--color-text-main);
+    border-top: 1px solid #F0F0F0;
+}
+
+.materials-table tbody tr:hover {
+    background: #FCFCFC;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.question {
+    background: var(--color-info-banner-bg);
+    color: var(--color-info-banner-text);
+}
+
+.study {
+    background: var(--color-status-active-bg);
+    color: var(--color-status-active-text);
+}
+
+.reference {
+    background: var(--color-status-leave-bg);
+    color: var(--color-status-leave-text);
+}
+
