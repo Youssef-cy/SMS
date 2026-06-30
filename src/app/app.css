@@ -1,0 +1,135 @@
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #ededed;
+}
+.sidebar {
+  width: 200px; 
+  min-width: 200px;
+  background-color: #5b0606; 
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 20px 0;
+  box-sizing: border-box;
+}
+.logo-container {
+  padding: 15px 10px 25px 0;
+}
+.logo-white-card {
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 0 25px 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.logo-img {
+  height: 45px;
+  max-width: 100%;
+  object-fit: contain;
+}
+.menu-section {
+  padding: 0 12px;
+  margin-bottom: 18px;
+}
+.menu-title {
+  font-size: 11px;
+  color: #a37575;
+  margin: 0 0 8px 6px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #e2d4d4;
+  transition: all 0.2s ease;
+}
+.menu-item .dot {
+  width: 6px;
+  height: 6px;
+  background-color: #b39292;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+}
+.menu-item.active {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 500;
+}
+.menu-item.active .dot {
+  background-color: #ffffff;
+}
+.sidebar-user {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 15px 0 15px;
+}
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #4a5c73;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+.user-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+.user-role {
+  font-size: 10px;
+  color: #bfa6a6;
+}
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px 25px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.page-heading {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+  color: #0f172a;
+}
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f59e0b;
+  cursor: pointer;
+}

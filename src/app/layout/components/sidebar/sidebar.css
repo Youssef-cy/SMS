@@ -1,0 +1,106 @@
+.sidebar {
+  width: 240px;
+  background-color: #550000; 
+  height: 100vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  z-index: 100;
+}
+.logo-container {
+  background-color: #f3f0f0;
+  padding: 0;
+  margin: 0;
+}
+.logo-bg-wrapper {
+  background-color: #ffffff;
+  padding: 12px 25px;
+  border-bottom-right-radius: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.menu-section {
+  padding: 3px 20px;
+}
+.menu-title {
+  color: #835555; 
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12); 
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+.menu-item .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: inline-block;
+}
+.menu-item.active-page {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.sidebar-footer {
+  margin-top: auto;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #5c84c1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: #ffffff;
+}
+.user-info .username {
+  font-size: 12px;
+  margin: 0;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: lowercase; 
+}
+.user-info .role {
+  font-size: 10px;
+  color: #b09090;
+  margin: 0;
+}

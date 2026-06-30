@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
+import { Component } from '@angular/core';
+import { Sidebar } from './layout/components/sidebar/sidebar';
+import { Navbar } from './layout/components/navbar/navbar';
+import { TopStudentsComponent } from './feature/top-students/top-students';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [Sidebar, Navbar, TopStudentsComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('sms-dashboard');
 }
