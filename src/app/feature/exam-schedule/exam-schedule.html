@@ -9,245 +9,72 @@
                 <button class="btn-icon">
                     <i class="hgi hgi-stroke hgi-rounded hgi-bell-ring"></i>
                 </button>
-                <button class="create-btn">
+                <button class="create-btn" (click)="opendilog()">
                     Create Exam
                 </button>
             </div>
         </header>
     </div>
 
-    <div class="exam-content">
+  <div class="exam-content">
 
+  @for (group of groupedExams; track group[0]) {
 
+    <div class="exam-card">
 
-        <div class="exam-card">
+      <div class="card-title">
+        {{ group[0] }}
+      </div>
 
-            <div class="card-title">
+      <table class="exam-table">
 
-                Final Exams
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-            </div>
+        <tbody>
 
-            <table class="exam-table">
+          @for (exam of group[1]; track exam.id) {
 
-                <thead>
+            <tr>
 
-                    <tr>
+              <td>{{ exam.courseName }}</td>
 
-                        <th>Subject</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Location</th>
-                        <th>Grade</th>
-                        <th>Status</th>
+              <td>{{ exam.examDate }}</td>
 
-                    </tr>
+              <td>{{ exam.examTime.substring(0,5) }}</td>
 
-                </thead>
+              <td>{{ exam.committeeName }}</td>
 
-                <tbody>
+              <td>
+                <span
+                  class="badge"
+                  [class.published]="exam.status === 'Scheduled'"
+                  [class.pending]="exam.status === 'Pending'"
+                  [class.draft]="exam.status === 'Draft'">
 
-                    <tr>
+                  {{ exam.status }}
 
-                        <td>Mathematics</td>
-                        <td>June 2</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall A</td>
-                        <td>Grade 11</td>
+                </span>
+              </td>
 
-                        <td>
+            </tr>
 
-                            <span class="badge published">
+          }
 
-                                Published
+        </tbody>
 
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Social Studies</td>
-                        <td>June 3</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall B</td>
-                        <td>Grade 10</td>
-
-                        <td>
-
-                            <span class="badge published">
-
-                                Published
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>IT</td>
-                        <td>June 4</td>
-                        <td>1:00 – 3:00 PM</td>
-                        <td>Lab 2</td>
-                        <td>Grade 11</td>
-
-                        <td>
-
-                            <span class="badge draft">
-
-                                Draft
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Physics</td>
-                        <td>June 5</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall A</td>
-                        <td>Grade 10</td>
-
-                        <td>
-
-                            <span class="badge pending">
-
-                                Pending
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-
-        <div class="exam-card">
-
-            <div class="card-title">
-
-                Monthly Exams
-
-            </div>
-
-            <table class="exam-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Subject</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Location</th>
-                        <th>Grade</th>
-                        <th>Status</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>Mathematics</td>
-                        <td>June 2</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall A</td>
-                        <td>Grade 11</td>
-
-                        <td>
-
-                            <span class="badge published">
-
-                                Published
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Social Studies</td>
-                        <td>June 3</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall B</td>
-                        <td>Grade 10</td>
-
-                        <td>
-
-                            <span class="badge published">
-
-                                Published
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>IT</td>
-                        <td>June 4</td>
-                        <td>1:00 – 3:00 PM</td>
-                        <td>Lab 2</td>
-                        <td>Grade 11</td>
-
-                        <td>
-
-                            <span class="badge draft">
-
-                                Draft
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Physics</td>
-                        <td>June 5</td>
-                        <td>9:00 – 11:00 AM</td>
-                        <td>Hall A</td>
-                        <td>Grade 10</td>
-
-                        <td>
-
-                            <span class="badge pending">
-
-                                Pending
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
+      </table>
 
     </div>
 
+  }
+
+</div>
 </div>
