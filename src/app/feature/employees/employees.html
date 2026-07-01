@@ -1,0 +1,78 @@
+<div class="employees-page">
+
+    <div class="top-banner">
+        <header>
+            <h1 class="page-title">Employees</h1>
+
+            <div class="header-actions">
+                <button class="btn-icon">
+                    <i class="hgi hgi-stroke hgi-rounded hgi-bell-ring"></i>
+                </button>
+                <div class="button" (click)="openDialog()"><app-add-btn></app-add-btn></div>
+            </div>
+        </header>
+    </div>
+
+
+    <div class="page-content">
+
+        <div class="info-banner">
+            <i class="hgi hgi-information-circle"></i>
+            <p class="info-text">
+                Manage all staff records — add, update, or remove employees.
+            </p>
+        </div>
+
+        <div class="filter-bar">
+            <select class="dropdown">
+                <option>ALL DEPARTMENTS</option>
+                <option>IT</option>
+                <option>Math</option>
+                <option>Arabic</option>
+                <option>English</option>
+                <option>Social Studies</option>
+                <option>Physics</option>
+            </select>
+        </div>
+
+        <div class="table-card">
+
+            <table class="data-table">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+  @for (teacher of data(); track teacher.id) {
+    <tr>
+      <td>{{ teacher.firstName }}</td>
+      <td>{{teacher.role}}</td>
+      <td>{{ teacher.subject ?? 'No Subject' }}</td>
+      <td>{{ teacher.deleted ? 'Deleted' : 'Active' }}</td>
+      <td>
+        <div class="buttons">
+            <app-view-btn></app-view-btn>
+            <div class="space"></div>
+            <app-remove-btn></app-remove-btn>
+        </div>
+      </td>
+    </tr>
+  }
+</tbody>
+
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,102 @@
+<div class="notifications-page">
+
+    <div class="top-banner">
+
+        <div class="banner-left">
+
+            <button class="back-btn" >
+                <i class="hgi hgi-arrow-left-02"></i>
+            </button>
+
+            <div class="title-group">
+
+                <div class="title-row">
+
+                    <i class="hgi hgi-notification-02 notification-icon"></i>
+
+                    <h1>Notifications</h1>
+
+                </div>
+
+                <p>Stay updates with important alerts and activities.</p>
+
+            </div>
+
+        </div>
+
+        <app-add-btn  (click)="openDialog()"></app-add-btn>
+
+    </div>
+
+
+    <div class="search-bar">
+
+        <i class="hgi hgi-search-01"></i>
+
+        <input type="text" placeholder="Search notifications..."
+        (input)="onSearch($event)"
+        >
+
+    </div>
+
+
+
+    <div class="filters">
+
+        <button class="filter active">All</button>
+        <button class="filter">Academic</button>
+        <button class="filter">Students</button>
+        <button class="filter">Activity</button>
+
+    </div>
+
+
+    <h2 class="section-title">Today</h2>
+
+
+
+<div class="notification-card">
+
+    @for (item of filteredNotifications(); track item.id) {
+
+    <div class="notification-item">
+
+        <div class="notification-left">
+
+            <div class="icon">
+                <i class="hgi hgi-user-circle"></i>
+            </div>
+
+            <div class="notification-content">
+
+                <h3>{{ item.title }}</h3>
+
+                <h4>{{ item.priority }} Priority</h4>
+
+                <p>{{ item.message }}</p>
+
+            </div>
+
+        </div>
+
+        <div class="notification-right">
+
+            <span class="badge">
+                {{ item.type }}
+            </span>
+
+            <small>{{ item.sentDate   }}</small>
+
+            <small>{{ item.sentDate  }}</small>
+
+        </div>
+
+        <i class="hgi hgi-arrow-right-01 arrow"></i>
+
+    </div>
+
+    }
+
+</div>
+   
+</div>

@@ -1,0 +1,17 @@
+.btn-draft {
+    border: 1px solid #CFCFCF;
+    background: white;
+}
+
+.btn-draft:hover{
+    opacity: .9;
+}
+
+.btn-draft{
+    height: 42px;
+    padding: 0 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}

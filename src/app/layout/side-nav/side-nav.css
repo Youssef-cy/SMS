@@ -1,0 +1,149 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 233px;
+  background: var(--primry);
+}
+
+.sidebar {
+  width: 100%;
+  flex: 1;
+  background: var(--primry);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px 0 18px;
+  color: var(--white);
+  align-items: center;
+  min-height: 0;
+}
+
+/* Logo */
+
+.logo {
+    left: 13px;
+    right: 0%;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background: var(--white);
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  display: flex;
+  width: 207.61px;
+  height: 68.64px;
+  margin-bottom: 20px;
+}
+
+.logo img {
+    margin-right: 80px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Menu */
+
+.menu {
+  width: 100%;
+  flex: 1;
+  padding-right: 4px;
+  min-height: 0;
+}
+
+.menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.menu-group {
+  margin-bottom: 18px;
+}
+
+.menu-group h4{
+    color:#b78f8f;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:10px;
+    font-weight:500;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 14px;
+  margin-bottom: 6px;
+    font-size:15px;
+    font-weight:600;
+    transition:.25s;
+    width: 180px;
+}
+
+.menu-item:hover{
+    background:var(--border);
+}
+
+.menu-item.selected{
+    background:var(--border);
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--bg);
+}
+
+.dot.white{
+    background:var(--white);
+}
+
+/* Profile */
+
+.profile {
+  width: 100%;
+  background-color: var(--primry);
+  padding: 5px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.avatar {
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#74a6de;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:600;
+}
+
+.name{
+    color: var(--white);
+    font-size:14px;
+    font-weight:600;
+}
+
+.role{
+    color:#d8bcbc;
+    font-size:12px;
+}

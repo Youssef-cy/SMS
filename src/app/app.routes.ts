@@ -1,0 +1,49 @@
+import { Routes } from '@angular/router';
+import { Dashboard } from './feature/dashboard/dashboard';
+import { Employees } from './feature/employees/employees';
+import { ExamSchedule } from './feature/exam-schedule/exam-schedule';
+import { Reports } from './feature/reports/reports';
+import { Materials } from './feature/materials/materials';
+import { Timetable } from './feature/time-table/time-table';
+import { Notifications } from './feature/notifications/notifications';
+import { TopStudentsComponent } from './feature/top-student/top-student';
+import { StudentsComponent } from './feature/student/student';
+
+export const routes: Routes = [
+   {
+        path: "",
+        component: Dashboard
+    },
+    {
+        path: "Employees",
+        component: Employees
+    },
+    {
+        path:"Students",
+        component:StudentsComponent
+    },
+    {
+        path:"TOP",
+        component:TopStudentsComponent
+    },
+    {
+        path: "Exam_schedule",
+        component: ExamSchedule
+    },
+    {
+        path: "Timetable",
+        component: Timetable
+    },
+    {
+        path:"Reports",
+        component:Reports
+    },
+    {
+        path:"Materials",
+        component:Materials
+    },
+    {
+        path:"notification",
+        component:Notifications
+    }
+];

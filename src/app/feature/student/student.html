@@ -1,0 +1,79 @@
+<div class="main-layout">
+  <div class="top-navbar">
+    <h2>Students</h2>
+    <div class="notification-icon">
+      <i class="bi bi-bell"></i>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="filter-container">
+      <div class="checkbox-wrapper">
+        <span class="custom-checkbox"></span>
+      </div>
+      <div class="select-wrapper">
+   <select class="grade-select"
+        (change)="selectedGrade.set($any($event.target).value)">
+  <option value="ALL">ALL GRADES</option>
+
+  @for (grade of grades(); track grade) {
+    <option [value]="grade">
+      {{ grade }}
+    </option>
+  }
+</select>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search files..." class="search-input"  (input)="searchText.set($any($event.target).value)"
+>
+      </div>
+    </div>
+    <div class="table-container">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>Attendance</th>
+            <th>Class</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+@for (student of filteredStudents; track student.studentId) {    <tr>
+      <td><strong>{{ student.studentId }}</strong></td>
+
+      <td>{{ student.firstName }}</td>
+
+      <td>{{ student.gradeName }}</td>
+
+      <td>
+        <div class="attendance-container">
+          <span>
+            {{ student.absencePercentage }}%
+          </span>
+
+ <div class="progress-bar">
+  <div class="progress"
+       [style.width.%]="student.absencePercentage ?? 0"
+       [ngClass]="{
+         'green-bar': student.absencePercentage,
+       }">
+  </div>
+</div>
+        </div>
+      </td>
+
+      <td>{{ student.className }}</td>
+
+      <td>
+        <button class="view-btn">View</button>
+      </td>
+    </tr>
+  }
+</tbody>
+      </table>
+    </div>
+  </div>
+</div>
