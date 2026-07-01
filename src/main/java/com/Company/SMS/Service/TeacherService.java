@@ -2,11 +2,8 @@ package com.Company.SMS.Service;
 
 import com.Company.SMS.DTO.Teacher.TeacherREQ;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
-import com.Company.SMS.Repo.CourseRepo;
-import com.Company.SMS.Repo.TeacherRepo;
-import com.Company.SMS.entities.Course;
-import com.Company.SMS.entities.Teacher;
-import com.Company.SMS.entities.User;
+import com.Company.SMS.Repo.*;
+import com.Company.SMS.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +23,30 @@ public class TeacherService {
     TeacherRepo teacherRepo;
     @Autowired
     CourseRepo courseRepo;
+    @Autowired
+    RoleRepo roleRepo;
+    @Autowired
+    GradeRepo gradeRepo;
+    @Autowired
+    UserRepo userRepo;
+    @Autowired
+    TermRepo termRepo;
 
     public Long sumOfTeachers(){
         return teacherRepo.count();
     }
+
+
+
     @Transactional
     public TeacherRES addTeacher(TeacherREQ req) {
+        Role role = roleRepo.findById(req.getRoleId())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        Grade grade = gradeRepo.findById(req.getGradeId())
+                .orElseThrow(() -> new RuntimeException("Grade not found"));
+        Term term = termRepo.findById(req.getTermId())
+                .orElseThrow(() -> new RuntimeException("term not found"));
 
         User user = new User();
 
@@ -46,7 +61,7 @@ public class TeacherService {
         user.setGender(req.getGender());
         user.setNationality(req.getNationality());
         user.setBirthDate(req.getBirthDate());
-        user.setRole(req.getRole());
+        user.setRole(role);
         user.setIsDeleted(req.isDeleted());
         user.setReligion(req.getReligion());
 
@@ -62,7 +77,8 @@ public class TeacherService {
         course.setCourseName(req.getSubject());
         course.setCourseType(req.getSubjectType());
         course.setDescription(req.getSubjectDescription());
-        course.setTerm(req.getTerm());
+        course.setGrade(grade);
+        course.setTerm(term);
 
         teacherRepo.save(teacher);
         courseRepo.save(course);

@@ -7,6 +7,7 @@ import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,10 @@ public class MaterialService {
     //    all materials
     public List<MaterialRes> findAllMaterials(){
         List<MaterialRes> materials = courseRepo.findMaterials();
+        System.out.println(materials);
         return materials;
     }
 
-    // find by course name
 
-    public List<MaterialRes> findMaterialsByCourseName(@Param("courseName") String courseName){
-        List<MaterialRes> materials = courseRepo.findMaterialsByCourseName(courseName);
-        return materials;
-    }
 
 }

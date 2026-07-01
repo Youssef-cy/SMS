@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -14,30 +15,22 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
 
     //return all materials
     @Query("""
-    SELECT new com.Company.SMS.DTO.material.MaterialRes(
-        c.materials,
-        c.teacher.user.firstName,
-        c.courseName,
-        c.courseType,
-        s.classField.grade.name
-    )
-    FROM Course c
-    JOIN Session s ON s.course = c
-   
-""")
+        SELECT new com.Company.SMS.DTO.material.MaterialRes(
+            g.id,
+            g.name,
+            t.id,
+            t.term,
+            c.id,
+            c.courseName,
+            c.teacher.user.firstName,
+            c.materials,
+            c.courseType
+        )
+        FROM Course c
+        JOIN c.grade g
+        join c.term t
+    """)
     List<MaterialRes> findMaterials();
 
-    @Query("""
-    SELECT new com.Company.SMS.DTO.material.MaterialRes(
-        c.materials,
-        c.teacher.user.firstName,
-        c.courseName,
-        c.courseType,
-        s.classField.grade.name
-    )
-    FROM Course c
-    JOIN Session s ON s.course = c
-    WHERE c.courseName = :courseName
-""")
-    List<MaterialRes> findMaterialsByCourseName(@Param("courseName") String courseName);
+
 }

@@ -20,7 +20,6 @@ import java.util.Set;
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "GRADE_ID", nullable = false)
     private Long id;
 

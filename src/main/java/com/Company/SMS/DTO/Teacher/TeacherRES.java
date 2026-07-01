@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TeacherRES {
 
-    private Long id;
-    private String firstName;
-    private String email;
-    private String password;
-    private Long role;
-    private String Subject;
-    private boolean isDeleted;
+        private Long id;
+        private String firstName;
+        private String email;
+        private String password;
+        private Long role;
+        private String subject;
+        private boolean deleted;
 
 
 }

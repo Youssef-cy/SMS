@@ -15,8 +15,9 @@ public class SessionController {
     private SessionsService sessions;
 
     @GetMapping("/")
-    public ResponseEntity<List<SessionRES>> getAllSessions(@RequestParam Long classId) {
-        List<SessionRES> list = sessions.allSessions(classId);
+    public ResponseEntity<List<SessionRES>> getAllSessions(
+            @RequestParam Long courseId) {
+        List<SessionRES> list = sessions.allSessions(courseId);
         return ResponseEntity.ok(list);
     }
 

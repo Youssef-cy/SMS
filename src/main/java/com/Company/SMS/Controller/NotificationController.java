@@ -16,14 +16,14 @@ import java.util.List;
 public class NotificationController {
     @Autowired
     NotificationService notificationService;
-    @PostMapping("/Add")
+    @PostMapping
     public ResponseEntity<NotificationRES> createNotification(@RequestBody NotificationREQ notification){
         NotificationRES response = notificationService.createNotification(notification);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<NotificationRES>> getAllNotifications(){
         List<NotificationRES> List = notificationService.getNotifications();
         return new ResponseEntity<>(List , HttpStatus.OK);

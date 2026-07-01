@@ -14,21 +14,14 @@ public interface AttendanceRepo extends CrudRepository<Attendance, Long> {
 
 //   attendance persistent
     @Query("""
-SELECT new com.Company.SMS.DTO.Student.StudentRES(
-    s.student_id,
-    u.firstName,
-    c.name,
-    g.name,
+SELECT
+    
     (SUM(CASE WHEN a.status = 'A' THEN 1 ELSE 0 END) * 100.0) / COUNT(a.id)
-)
+
 FROM Attendance a
-JOIN a.student s
-JOIN s.user u
-JOIN s.studentClass c
-JOIN c.grade g
-GROUP BY s.student_id, u.firstName, c.name, g.name
+
 """)
-    List<StudentRES> getAttendanceStats();
+    double getAttendanceStats();
 
 //    attendance for today
 

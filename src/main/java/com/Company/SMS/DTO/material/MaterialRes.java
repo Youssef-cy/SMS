@@ -8,9 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MaterialRes {
-    private String MaterialLink;
-    private String TeacherName;
+    private Long gradeId;
+    private String gradeName;
+    private Long termId;
+    private Long term;
+    private Long courseId;
     private String courseName;
-    private String coursetype;
-    private String grade;
+    private String teacherName;
+    private String materials;
+    private String materialType;
+
 }

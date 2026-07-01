@@ -3,6 +3,7 @@ package com.Company.SMS.Controller;
 import com.Company.SMS.DTO.Dashboard.DashboardRes;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.Service.AttendanceService;
+import com.Company.SMS.Service.MarksService;
 import com.Company.SMS.Service.StudentService;
 import com.Company.SMS.Service.TeacherService;
 import com.Company.SMS.entities.Teacher;
@@ -22,17 +23,17 @@ public class DashBoardController {
     StudentService studentService;
     @Autowired
     AttendanceService attendanceService;
-
-    @GetMapping("/")
-    public DashboardRes Dashboard(){
-        DashboardRes dashboardRes = new DashboardRes(
-           studentService.sumOfStudent(),
-           teacherService.sumOfTeachers(),
-           studentService.getTop3StudentsEachGrade(),
-            attendanceService.getTodayAbsence()
-        );
-    return dashboardRes;
-    }
+    @Autowired
+    MarksService  marksService;
+//    @GetMapping
+//    public DashboardRes Dashboard(){
+//        DashboardRes dashboardRes = new DashboardRes(
+//           studentService.sumOfStudent(),
+//           teacherService.sumOfTeachers(),
+//            attendanceService.getAttendanceStats()
+//        );
+//    return dashboardRes;
+//    }
 
 
 

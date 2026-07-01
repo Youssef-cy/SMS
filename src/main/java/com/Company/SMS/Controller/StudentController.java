@@ -3,6 +3,7 @@ package com.Company.SMS.Controller;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.Service.StudentService;
+import com.Company.SMS.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,9 @@ public class StudentController {
     }
 
 
-    @GetMapping("/Top")
-    public List<TopStudentRES> getTopStudents(){
-        return studentService.getTop3StudentsEachGrade();
-    }
+//    @GetMapping("/Top")
+//    public List<TopStudentRES> getTopStudents(){
+//        return studentService.getTop3StudentsEachGrade();
+//    }
 
 }

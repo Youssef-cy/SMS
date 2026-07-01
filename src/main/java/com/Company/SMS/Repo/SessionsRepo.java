@@ -12,7 +12,8 @@ import java.util.List;
 
 @Repository
 public interface SessionsRepo extends JpaRepository<Session, Long> {
-//    RETRIEVE ALL SESSION FOR CLASS
+
+    //    RETRIEVE ALL SESSION FOR CLASS
     @Query("""
     SELECT new com.Company.SMS.DTO.Session.SessionRES(
         s.id,

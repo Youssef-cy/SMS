@@ -31,9 +31,14 @@ public class Course {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TEACHER_ID", nullable = false)
     private Teacher teacher;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "GRADE_ID", nullable = false)
+    private Grade grade;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

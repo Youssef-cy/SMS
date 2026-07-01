@@ -1,5 +1,6 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.Repo.AttendanceRepo;
 import com.Company.SMS.entities.Attendance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,4 +19,10 @@ public class AttendanceService {
 
         return attendanceRepo.getTodayAbsence(dayOfWeek);
     }
+
+    public double getAttendanceStats(){
+       return attendanceRepo.getAttendanceStats();
+
+    }
+
 }

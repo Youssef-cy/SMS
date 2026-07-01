@@ -15,13 +15,13 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @PostMapping("/Add")
+    @PostMapping
     public TeacherRES CreateTeacher(@RequestBody TeacherREQ req) {
       return teacherService.addTeacher(req);
     }
 
 
-    @GetMapping("/")
+    @GetMapping
     public List<TeacherRES> getAllTeacher(){
         return teacherService.allTeacher();
     }
