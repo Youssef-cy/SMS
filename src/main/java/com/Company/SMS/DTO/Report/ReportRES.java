@@ -17,6 +17,6 @@ public class ReportRES {
     private String fileLink;
     private LocalDate creationDate;
     private Long sendTo;
-
-
+    private String role;
+    private String type;
 }

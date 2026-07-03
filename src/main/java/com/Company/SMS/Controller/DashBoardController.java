@@ -25,15 +25,17 @@ public class DashBoardController {
     AttendanceService attendanceService;
     @Autowired
     MarksService  marksService;
-//    @GetMapping
-//    public DashboardRes Dashboard(){
-//        DashboardRes dashboardRes = new DashboardRes(
-//           studentService.sumOfStudent(),
-//           teacherService.sumOfTeachers(),
-//            attendanceService.getAttendanceStats()
-//        );
-//    return dashboardRes;
-//    }
+    @GetMapping
+    public DashboardRes Dashboard(){
+        return new DashboardRes(
+                studentService.sumOfStudent(),
+                teacherService.sumOfTeachers(),
+                attendanceService.getTodayAbsence(),
+                attendanceService.getAttendanceStats()
+
+        );
+
+    }
 
 
 

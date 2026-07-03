@@ -4,9 +4,10 @@ import com.Company.SMS.DTO.Report.ReportRES;
 import com.Company.SMS.entities.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface ReportRepo extends JpaRepository<Report,Long> {
 @Query("""
 
@@ -16,7 +17,10 @@ r.user.firstName,
 r.content,
 r.fileLink,
 r.createdAt,
-r.sentTo.userId
+r.sentTo.userId,
+r.user.role.roleName,
+r.reportType
+
 )from Report r
 
 """)

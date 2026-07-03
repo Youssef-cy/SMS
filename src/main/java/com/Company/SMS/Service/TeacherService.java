@@ -79,6 +79,7 @@ public class TeacherService {
         course.setDescription(req.getSubjectDescription());
         course.setGrade(grade);
         course.setTerm(term);
+        course.setMaterials(req.getMaterials());
 
         teacherRepo.save(teacher);
         courseRepo.save(course);

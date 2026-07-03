@@ -47,5 +47,8 @@ public class Report {
     @JoinColumn(name = "SENT_TO", nullable = false)
     private User sentTo;
 
+    @Column(name = "REPORT_TYPE")
+    private String reportType;
+
 
 }

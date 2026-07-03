@@ -35,4 +35,5 @@ public class TeacherREQ {
     private String employeeHistory;
     private Long numberYearsOfExperience;
     private Long termId;
+    private String materials;
 }

@@ -13,32 +13,33 @@ import java.util.List;
 @Repository
 public interface SessionsRepo extends JpaRepository<Session, Long> {
 
-    //    RETRIEVE ALL SESSION FOR CLASS
+    // ========================= GET ALL SESSIONS =========================
+
     @Query("""
-    SELECT new com.Company.SMS.DTO.Session.SessionRES(
-        s.id,
-        s.classField.name,
-        s.course.courseName,
-        s.course.teacher.user.firstName,
-        s.dayOfWeek,
-        s.startAt,
-        s.endAt
-    )
-    FROM Session s
-    WHERE s.classField.id = :classId
-""")
+        SELECT new com.Company.SMS.DTO.Session.SessionRES(
+            s.id,
+            s.classField.name,
+            s.course.courseName,
+            s.course.teacher.user.firstName,
+            s.dayOfWeek,
+            s.startAt,
+            s.endAt
+        )
+        FROM Session s
+        WHERE s.classField.id = :classId
+    """)
     List<SessionRES> findAllSessionsByClassId(@Param("classId") Long classId);
 
-//    RETRIEVE TEACHER LIST
+    // ========================= GET TEACHERS =========================
+
     @Query("""
-SELECT new com.Company.SMS.DTO.Session.TeacherListRES(
-c.id,
-c.courseName,
-c.teacher.user.firstName
-)from Course c
-""")
+        SELECT new com.Company.SMS.DTO.Session.TeacherListRES(
+            c.id,
+            c.courseName,
+            c.teacher.user.firstName
+        )
+        FROM Course c
+    """)
     List<TeacherListRES> findAllTeacherList();
-
-
 
 }
