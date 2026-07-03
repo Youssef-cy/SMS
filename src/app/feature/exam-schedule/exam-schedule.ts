@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Exam } from '../../core/service/exam';
 import { ExamRES } from '../../core/model/exam-res';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateExam } from '../create-exam/create-exam';
+import {  CreateExamComponent } from '../create-exam/create-exam';
 
 @Component({
   selector: 'app-exam-schedule',
@@ -46,7 +46,7 @@ get groupedExams() {
 
 opendilog(){
   this.dilog.open(
-    CreateExam,{
+    CreateExamComponent,{
       width:'400px'
     }
     

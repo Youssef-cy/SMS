@@ -139,6 +139,7 @@ background: var(--color-bg-main);
   padding-bottom: 60px;
 }
 .list-row {
+  margin: 0 20px;
   background-color: #fff;
   border-radius: 10px;
   padding: 12px 24px;

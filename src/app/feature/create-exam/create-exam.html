@@ -2,177 +2,101 @@
 
     <div class="create-exam">
 
-
         <header>
-
             <h2>Create New Exam</h2>
-
-            <p>
-                Fill in the details below to create a new Exam
-            </p>
-
+            <p>Fill in the details below to create a new Exam</p>
         </header>
-
-
 
         <div class="modal-body">
 
             <div class="form-grid">
 
-
-
+                <!-- Subject -->
                 <div class="form-group">
-
                     <label>Subject</label>
 
-                    <select>
-                        <option>Select Subject</option>
-                        <option>Mathematics</option>
-                        <option>Physics</option>
-                        <option>Chemistry</option>
-                        <option>Biology</option>
-                        <option>Arabic</option>
-                        <option>English</option>
+                    <select [(ngModel)]="exam.courseName" name="courseName">
+                        <option value="" disabled>Select Subject</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Arabic">Arabic</option>
+                        <option value="English">English</option>
                     </select>
-
                 </div>
 
-
-
+                <!-- Grade -->
                 <div class="form-group">
-
                     <label>Grade</label>
 
-                    <select>
-                        <option>Select Grade</option>
-                        <option>Grade 10</option>
-                        <option>Grade 11</option>
-                        <option>Grade 12</option>
+                    <select [(ngModel)]="exam.gradeId" name="gradeId">
+                        <option [ngValue]="0" disabled>Select Grade</option>
+                        <option [ngValue]="1">Grade 10</option>
+                        <option [ngValue]="2">Grade 11</option>
+                        <option [ngValue]="3">Grade 12</option>
                     </select>
-
                 </div>
 
-
-
+                <!-- Date -->
                 <div class="form-group">
-
                     <label>Date</label>
 
-                    <input type="date">
-
+                    <input
+                        type="date"
+                        [(ngModel)]="exam.examDate"
+                        name="examDate">
                 </div>
 
-
-
+                <!-- Time -->
                 <div class="form-group">
-
                     <label>Time</label>
 
-                    <input type="time">
-
+                    <input
+                        type="time"
+                        [(ngModel)]="exam.examTime"
+                        name="examTime">
                 </div>
 
-
+                <!-- Duration -->
                 <div class="form-group">
+                    <label>Duration (Minutes)</label>
 
-                    <label>Duration</label>
-
-                    <input type="number" placeholder="e.g. 60">
-
+                    <input
+                        type="number"
+                        [(ngModel)]="exam.duration"
+                        name="duration"
+                        placeholder="120">
                 </div>
 
-
-
-
+                <!-- Committee -->
                 <div class="form-group">
-
                     <label>Committee</label>
 
-                    <select>
-                        <option>Select committee</option>
-                        <option>Committee A</option>
-                        <option>Committee B</option>
-                        <option>Committee C</option>
+                    <select [(ngModel)]="exam.committeeName" name="committeeName">
+                        <option value="" disabled>Select Committee</option>
+                        <option value="Room A101">Room A101</option>
+                        <option value="Room B202">Room B202</option>
+                        <option value="Room C303">Room C303</option>
+                        <option value="Room D404">Room D404</option>
+                        <option value="Room E505">Room E505</option>
                     </select>
-
                 </div>
 
-
-
+                <!-- Status -->
                 <div class="form-group">
+                    <label>Status</label>
 
-                    <label>Exam Type</label>
-
-                    <select>
-                        <option>Select Type</option>
-                        <option>Final</option>
-                        <option>Monthly</option>
-                        <option>Quiz</option>
+                    <select [(ngModel)]="exam.status" name="status">
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Draft">Draft</option>
                     </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Monitor 1</label>
-
-                    <select>
-                        <option>Select person</option>
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Monitor 2</label>
-
-                    <select>
-                        <option>Select person</option>
-                    </select>
-
-                </div>
-
-
-
-                <div class="form-group full-width">
-
-                    <label>Notes (optional)</label>
-
-                    <textarea rows="3"
-                        placeholder="Any special requirements, room preferences, or additional information..."></textarea>
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label>Starting ID</label>
-
-                    <select>
-                        <option>Select number</option>
-                    </select>
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label>Ending ID</label>
-
-                    <select>
-                        <option>Select number</option>
-                    </select>
-
                 </div>
 
             </div>
 
         </div>
-
 
         <div class="modal-footer">
 
@@ -180,8 +104,9 @@
 
             <div class="footer-actions">
 
-                <app-save-btn></app-save-btn>
-                <app-publish-btn></app-publish-btn>
+                <button class="save-btn" (click)="createExam()">
+                    Save Exam
+                </button>
 
             </div>
 

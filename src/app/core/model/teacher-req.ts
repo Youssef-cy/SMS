@@ -23,5 +23,6 @@ export interface TeacherReq {
   education: string;
   employeeHistory: string;
   numberYearsOfExperience: number;
-  termId:number
+  termId:number;
+  mateials:string;
 }

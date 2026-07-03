@@ -361,3 +361,80 @@
 .save:hover {
   background: #0b2d5e;
 }
+
+
+.table-loading{
+    width:100%;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    animation:fade .3s;
+}
+
+.loading-header,
+.loading-row{
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    gap:10px;
+}
+
+.loading-head{
+    height:40px;
+    border-radius:10px;
+    background:#ececec;
+    animation:skeleton 1.2s infinite;
+}
+
+.loading-cell{
+    height:75px;
+    border-radius:12px;
+    background:#f2f2f2;
+    animation:skeleton 1.2s infinite;
+}
+
+.loading-message{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    font-size:18px;
+    font-weight:600;
+    color:#666;
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #e5e5e5;
+    border-top:4px solid #4f8cff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes skeleton{
+    0%{
+        background:#efefef;
+    }
+    50%{
+        background:#dddddd;
+    }
+    100%{
+        background:#efefef;
+    }
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}

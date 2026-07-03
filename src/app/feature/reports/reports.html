@@ -1,277 +1,89 @@
 <div class="reports-page">
+  <div class="top-banner">
+    <header>
+      <h1 class="page-title">Reports</h1>
 
-    <div class="top-banner">
-        <header>
-            <h1 class="page-title">Reports</h1>
-
-              <div class="header-actions">
-            <button class="btn-export">Export</button>
-            <button class="btn-generate">Generate Report</button>
-        </div>
-
-        </header>
-    </div>
-<div class="content">
-    
-    <div class="stats-grid">
-
-        <div class="stat-card1">
-            <h5>Total Reports</h5>
-            <h2>24</h2>
-            <p>All Types</p>
-        </div>
-
-        <div class="stat-card2">
-            <h5>Generated Today</h5>
-            <h2>6</h2>
-            <p>June 7, 2025</p>
-        </div>
-
-        <div class="stat-card3">
-            <h5>Attendance Report</h5>
-            <h2>9</h2>
-            <p>This Period</p>
-        </div>
-
-        <div class="stat-card4">
-            <h5>Pending Review</h5>
-            <h2>3</h2>
-            <p>This Period</p>
-        </div>
-
-    </div>
-
-
+      
+    </header>
+  </div>
+  <div class="content">
     <div class="filter-card">
+      <div class="filter-group">
+        <div class="input-group">
+          <label>Report Type</label>
 
-        <div class="filter-group">
+          <select [(ngModel)]="selectedType">
+            <option value="">All</option>
 
-            <div class="input-group">
-                <label>Report Type</label>
-
-                <select>
-                    <option>Attendance</option>
-                    <option>Behavior</option>
-                    <option>Exam Results</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Entity Type</label>
-
-                <select>
-                    <option>Student</option>
-                    <option>Teacher</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Start Date</label>
-
-                <input type="date">
-            </div>
-
-            <div class="input-group">
-                <label>End Date</label>
-
-                <input type="date">
-            </div>
-
-            <button class="btn-filter">
-                Filter
-            </button>
-
+            @for (type of reportTypes(); track type) {
+              <option [value]="type">
+                {{ type }}
+              </option>
+            }
+          </select>
         </div>
 
+        <div class="input-group">
+          <label>Create Date</label>
+
+          <input type="date" [(ngModel)]="selectedDate" />
+        </div>
+
+        <button class="btn-filter" (click)="filterReports()">Filter</button>
+
+        <div class="clear" (onclick)="resetFilter()">
+          Clear
+        </div>
+
+      </div>
     </div>
 
-    
+    <div class="card">
+      <div class="card-title">All Reports</div>
 
-    <div class="dashboard-grid">
+      <table class="reports-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>firstName</th>
+            <th>Role</th>
+            <th>type</th>
+            <th>content</th>
+            <th>fileLink</th>
+            <th>creationDate</th>
+          </tr>
+        </thead>
 
-        
+        <tbody></tbody>
+        <tbody>
+          @for (report of data(); track report.id) {
+            <tr>
+              <td>{{ report.id }}</td>
 
-        <div class="left-column">
-
-          
-
-            <div class="card">
-
-                <div class="card-title">
-                    All Reports
-                </div>
-
-                <table class="reports-table">
-
-                    <thead>
-
-                        <tr>
-                            <th>ID</th>
-                            <th>firstName</th>
-                            <th>content</th>
-                            <th>fileLink</th>
-                            <th>creationDate</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-                 <tbody>
-    @for (report of data(); track report.id) {
-        <tr>
-            <td>{{ report.id }}</td>
-
-            <td>
+              <td>
                 <span class="badge-attendance">
-                    {{ report.firstName }}
+                  {{ report.firstName }}
                 </span>
-            </td>
-            
-            <td>
+              </td>
+              <td>
+                {{ report.role }}
+              </td>
+              <td>{{ report.type }}</td>
+              <td>
                 {{ report.content }}
-            </td>
+              </td>
 
-            <td>
+              <td>
                 {{ report.fileLink }}
-            </td>
+              </td>
 
-            <td>
+              <td>
                 {{ report.creationDate }}
-            </td>
-        </tr>
-    }
-                    </tbody>
-
-                </table>
-
-            </div>
-
-           
-
-            <div class="card details-card">
-
-                <div class="card-title">
-                    Report Details
-                </div>
-
-                <div class="empty-report">
-
-                    Click a report row to view its details.
-
-                </div>
-
-            </div>
-
-        </div>
-
-        
-
-        <div class="right-column">
-
-            <div class="card">
-
-                <div class="card-title">
-                    Attendance Report
-                </div>
-
-                <div class="attendance-boxes">
-
-                    <div class="attendance good">
-
-                        <span>Present Rate</span>
-
-                        <h2>97.3%</h2>
-
-                    </div>
-
-                    <div class="attendance bad">
-
-                        <span>Absent Rate</span>
-
-                        <h2>2.7%</h2>
-
-                    </div>
-
-                </div>
-
-                <button class="pdf-btn">
-
-                    <i class="hgi hgi-file-download"></i>
-
-                    Export PDF
-
-                </button>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Students Leaderboard
-                </div>
-
-                <div class="leaderboard">
-
-                    <div class="student">
-
-                        <div>
-                            <h4>Salma Tamer</h4>
-                            <p>Grade 12 • Score 98</p>
-                        </div>
-
-                        <span class="status passed">
-                            Passed
-                        </span>
-
-                    </div>
-
-                    <div class="student">
-
-                        <div>
-                            <h4>Raghad Mostafa</h4>
-                            <p>Grade 11 • Score 87</p>
-                        </div>
-
-                        <span class="status pending">
-                            Pending
-                        </span>
-
-                    </div>
-
-                    <div class="student">
-
-                        <div>
-                            <h4>Jana Mohamed</h4>
-                            <p>Grade 11 • Score 94</p>
-                        </div>
-
-                        <span class="status passed">
-                            Passed
-                        </span>
-
-                    </div>
-
-                    <div class="student">
-
-                        <div>
-                            <h4>Farah Hussein</h4>
-                            <p>Grade 12 • Score 80</p>
-                        </div>
-
-                        <span class="status pending">
-                            Pending
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
-
-</div>
+  </div>
 </div>

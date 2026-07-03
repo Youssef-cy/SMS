@@ -4,5 +4,7 @@ export interface ReportRES {
   content: string;
   fileLink: string;
   creationDate: string;
-  sentTo: number
+  sentTo: number;
+  role:string;
+  type:string;
 }

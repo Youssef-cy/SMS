@@ -257,3 +257,43 @@ header {
     opacity: .9;
 }
 
+.exam-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.exam-table th,
+.exam-table td{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    vertical-align:middle;
+}
+
+.exam-table th:nth-child(1),
+.exam-table td:nth-child(1){width:20%;}
+
+.exam-table th:nth-child(2),
+.exam-table td:nth-child(2){width:12%;}
+
+.exam-table th:nth-child(3),
+.exam-table td:nth-child(3){width:15%;}
+
+.exam-table th:nth-child(4),
+.exam-table td:nth-child(4){width:16%;}
+
+.exam-table th:nth-child(5),
+.exam-table td:nth-child(5){width:12%;}
+
+.exam-table th:nth-child(6),
+.exam-table td:nth-child(6){
+    width:12%;
+    text-align:center;
+}
+
+.exam-table th:nth-child(7),
+.exam-table td:nth-child(7){
+    width:13%;
+    text-align:center;
+}

@@ -74,7 +74,8 @@ export class AddEmp {
 
       gradeId: [1, Validators.required],
 
-      termId: [1, Validators.required]
+      termId: [1, Validators.required],
+      materialLink:['',Validators.required]
     });
 
   }
@@ -87,25 +88,33 @@ export class AddEmp {
 
     this.service.createTeacher(this.form.value).subscribe({
 
-      next: (res) => {
-        console.log('Created:', res);
+     next: (res) => {
 
-Swal.fire({
-  title: 'Success',
-  text: 'Employee added successfully!',
-  icon: 'success',
-  confirmButtonText: 'OK'
-});
+  console.log(res);
 
-        this.form.reset({
-          gender: 'M',
-          roleId: 1,
-          gradeId: 1,
-          termId: 1,
-          isDeleted: false,
-          numberYearsOfExperience: 0
-        });
-      },
+  Swal.fire({
+    icon: 'success',
+    title: 'Employee Created Successfully',
+    html: `
+      <div style="text-align:left">
+        <p><strong>Email:</strong> ${res.email}</p>
+        <p><strong>Password:</strong> ${res.password}</p>
+      </div>
+    `,
+    confirmButtonText: 'OK',
+    confirmButtonColor: '#0F2747'
+  });
+
+  this.form.reset({
+    gender: 'M',
+    roleId: 1,
+    gradeId: 1,
+    termId: 1,
+    isDeleted: false,
+    numberYearsOfExperience: 0
+  });
+
+},
 
       error: (err) => {
         console.error(err);

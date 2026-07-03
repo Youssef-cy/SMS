@@ -1,13 +1,13 @@
 <div class="filter-bar">
   <div class="filter-group">
     <div class="filter-field">
-      <label for="viewType">grade</label>
+      <label for="viewType">Grade</label>
       <div class="select-wrapper">
-        <select id="viewType" (change)="onViewTypeChange($event)">
-          <option value="all" selected>all</option>
-          <option value="grade-1">grade-1</option>
-          <option value="grade-2">grade-2</option>
-          <option value="grade-3">grade-3</option>
+        <select [(ngModel)]="selectedGrade" (change)="onGradeChange()">
+          <option value="all">All Grades</option>
+          @for (grade of grades(); track grade) {
+            <option [value]="grade">{{ grade }}</option>
+          }
         </select>
       </div>
     </div>
@@ -15,21 +15,22 @@
     <div class="filter-field">
       <label for="class">Class</label>
       <div class="select-wrapper">
-        <select id="class" (change)="onClassChange($event)">
-          <option value="3-A">3-A</option>
-          <option value="3-B" selected>3-B</option>
-          <option value="3-C">3-C</option>
+        <select [(ngModel)]="selectedClass" (change)="emitFilter()">
+          <option value="all">Select Class</option>
+          @for (class of getFilteredClasses(); track class.id) {
+            <option [value]="class.id">{{ class.className }}</option>
+          }
         </select>
       </div>
     </div>
   </div>
 
-  <div class="filter-badge">
-   {{ selectedClass }}
-  </div>
+  <div class="filter-badge"></div>
 </div>
 
 <div class="info-banner">
   <span class="info-icon">✏️</span>
-  <span class="info-text">Click any cell to type directly. Press Tab to move to the next slot.</span>
+  <span class="info-text"
+    >Click any cell to type directly. Press Tab to move to the next slot.</span
+  >
 </div>

@@ -35,13 +35,13 @@
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   display: flex;
-  width: 207.61px;
-  height: 68.64px;
+  width: 206.61px;
+  height: 58.64px;
   margin-bottom: 20px;
 }
 
 .logo img {
-    margin-right: 80px;
+    margin-right: 50px;
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -74,7 +74,7 @@
     font-size:12px;
     text-transform:uppercase;
     letter-spacing:1px;
-    margin-bottom:10px;
+    margin-bottom:5px;
     font-weight:500;
 }
 
@@ -88,7 +88,7 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0 14px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
     font-size:15px;
     font-weight:600;
     transition:.25s;

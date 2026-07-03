@@ -1,5 +1,4 @@
 <div class="page">
-
   <!-- Teachers Panel -->
   <div class="panel teachers-panel">
     <div class="panel-header">
@@ -16,7 +15,8 @@
       cdkDropList
       [cdkDropListData]="teachers"
       [cdkDropListConnectedTo]="allSlotIds()"
-      (cdkDropListDropped)="drop($event)">
+      (cdkDropListDropped)="drop($event)"
+    >
       @for (teacher of teachers; track teacher.name) {
         <div class="teacher-card {{ teacher.colorClass }}" cdkDrag>
           <div class="teacher-avatar">{{ getAvatarInitial(teacher.name) }}</div>
@@ -41,55 +41,81 @@
     </div>
 
     <div class="grid-wrapper">
-      <!-- Header Row -->
-      <div class="grid-row header-row">
-        <div class="grid-cell day-header">Day</div>
-        @for (col of columns; track $index) {
-          @if (col.type === 'break') {
-            <div class="grid-cell break-header">{{ col.label }}</div>
-          } @else if (col.type === 'period') {
-            <div class="grid-cell period-header">{{ col.label }}</div>
-          }
-        }
-      </div>
+      @if (loading) {
+        <div class="table-loading">
+          <div class="loading-header">
+            @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track $index) {
+              <div class="loading-head"></div>
+            }
+          </div>
 
-      <!-- Day Rows -->
-      @for (day of days; track day; let dayIdx = $index) {
-        <div class="grid-row data-row">
-          <div class="grid-cell day-cell">{{ day }}</div>
+          @for (row of [1, 2, 3, 4, 5]; track $index) {
+            <div class="loading-row">
+              @for (col of [1, 2, 3, 4, 5, 6, 7, 8]; track $index) {
+                <div class="loading-cell"></div>
+              }
+            </div>
+          }
+
+          <div class="loading-message">
+            <div class="spinner"></div>
+            <span>Loading Weekly Schedule...</span>
+          </div>
+        </div>
+      } @else {
+        <!-- Header Row -->
+        <div class="grid-row header-row">
+          <div class="grid-cell day-header">Day</div>
 
           @for (col of columns; track $index) {
             @if (col.type === 'break') {
-              <div class="grid-cell break-cell">break</div>
-            } @else if (col.type === 'period') {
-              <div
-                class="grid-cell slot-cell"
-                [id]="getListId(dayIdx, col.periodIdx)"
-                cdkDropList
-                [cdkDropListData]="timetableData[dayIdx][col.periodIdx]"
-                [cdkDropListConnectedTo]="allSlotIds()"
-                (cdkDropListDropped)="drop($event)">
-
-                @for (session of timetableData[dayIdx][col.periodIdx]; track $index) {
-                  <div class="session-card {{ session.colorClass }}" cdkDrag>
-                    <div class="session-subject">{{ session.subject }}</div>
-                    <div class="session-teacher">{{ session.teacher }}</div>
-                  </div>
-                } @empty {
-                  <span class="empty-indicator">+</span>
-                }
-
-              </div>
+              <div class="grid-cell break-header">{{ col.label }}</div>
+            } @else {
+              <div class="grid-cell period-header">{{ col.label }}</div>
             }
           }
         </div>
+
+        <!-- Day Rows -->
+        @for (day of days; track day; let dayIdx = $index) {
+          <div class="grid-row data-row">
+            <div class="grid-cell day-cell">
+              {{ day }}
+            </div>
+
+            @for (col of columns; track $index) {
+              @if (col.type === 'break') {
+                <div class="grid-cell break-cell">break</div>
+              } @else {
+                <div
+                  class="grid-cell slot-cell"
+                  [id]="getListId(dayIdx, col.periodIdx)"
+                  cdkDropList
+                  [cdkDropListData]="timetableData[dayIdx][col.periodIdx]"
+                  [cdkDropListConnectedTo]="allSlotIds()"
+                  (cdkDropListDropped)="drop($event)"
+                >
+                  @for (session of timetableData[dayIdx][col.periodIdx]; track $index) {
+                    <div class="session-card" cdkDrag>
+                      <div class="session-subject">
+                        {{ session.courseName }}
+                      </div>
+
+                      <div class="session-teacher">
+                        {{ session.teacherName }}
+                      </div>
+                    </div>
+                  } @empty {
+                    <span class="empty-indicator">+</span>
+                  }
+                </div>
+              }
+            }
+          </div>
+        }
+
+        <div class="save" (click)="save()">Save</div>
       }
-
-      <div class="save" (click)="get()">
-        save
-      </div>
-
     </div>
   </div>
-
 </div>
