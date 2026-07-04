@@ -7,4 +7,5 @@ export interface ExamRES {
   examDate: string;   
   examTime: string;   
   status: string;
+  examType:string;
 }

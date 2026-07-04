@@ -73,34 +73,6 @@ header {
 }
 
 
-.search-box {
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 1px solid #E4E4E4;
-    border-radius: 20px;
-    padding: 0 12px;
-    height: 34px;
-    width: 230px;
-}
-
-.search-box i {
-    color: var(--color-text-muted);
-    margin-right: 8px;
-    font-size: 14px;
-}
-
-.search-box input {
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 13px;
-    background: transparent;
-}
-
-.search-box input::placeholder {
-    color: var(--color-text-main);
-}
 
 
 .materials-table tbody tr:nth-child(even) {
@@ -163,3 +135,65 @@ header {
     color: var(--color-status-leave-text);
 }
 
+
+
+/* Search Container */
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+    margin-right: 20px;
+}
+
+/* Search Box */
+.search-box {
+    align-items: center;
+    gap: 10px;
+    width: 320px;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: all 0.2s ease;
+}
+
+.search-box:hover,
+.search-box:focus-within {
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.search-box i {
+    color: #888;
+    font-size: 18px;
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-box input::placeholder {
+    color: #999;
+}
+
+/* No Data Row */
+.no-data {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* لو مفيش أي Materials */
+.grade-card .no-data {
+    background: #fafafa;
+    border: 1px dashed #d8d8d8;
+    border-radius: 10px;
+    margin: 20px;
+}

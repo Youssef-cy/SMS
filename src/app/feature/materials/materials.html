@@ -1,59 +1,90 @@
 <div class="materials-page">
 
- <div class="top-banner">
-        <header>
-            <h1 class="page-title">Uploaded Materials</h1>
+  <!-- Top Banner -->
+  <div class="top-banner">
+    <header>
+      <h1 class="page-title">Uploaded Materials</h1>
 
-            <div class="header-actions">
-                <button class="btn-icon">
-                    <i class="hgi hgi-stroke hgi-rounded hgi-bell-ring"></i>
-                </button>
-            </div>
-        </header>
-    </div>
+      <div class="header-actions">
+        <button class="btn-icon">
+          <i class="hgi hgi-stroke hgi-rounded hgi-bell-ring"></i>
+        </button>
+      </div>
+    </header>
+  </div>
 
-   @for (group of groupedMaterials(); track group.gradeId) {
-
-<div class="grade-card">
-
-  <div class="grade-header">
-    <h3>{{group.gradeName}}</h3>
-
+  <!-- Search (خارج الـ @for عشان يفضل ظاهر) -->
+  <div class="search-container">
     <div class="search-box">
       <i class="hgi hgi-search-01"></i>
-      <input type="text" placeholder="Search files..." (input)="onSearch($any($event.target).value)">
+      <input
+        type="text"
+        placeholder="Search files..."
+        (input)="onSearch($any($event.target).value)">
     </div>
   </div>
 
-  <table class="materials-table">
+  <!-- Grades -->
+  @for (group of groupedMaterials(); track group.gradeId) {
 
-    <thead>
-      <tr>
-        <th>File link</th>
-        <th>Teacher</th>
-        <th>Course</th>
-        <th>Type</th>
-      </tr>
-    </thead>
+    <div class="grade-card">
 
-    <tbody>
+      <div class="grade-header">
+        <h3>{{ group.gradeName }}</h3>
+      </div>
 
-      @for(item of group.materials; track item.courseId){
+      <table class="materials-table">
 
-      <tr>
-        <td>{{ item.materials }}</td>
-        <td>{{ item.teacherName }}</td>
-        <td>{{ item.courseName }}</td>
-        <td>{{ item.materialType }}</td>
-      </tr>
+        <thead>
+          <tr>
+            <th>File Link</th>
+            <th>Teacher</th>
+            <th>Course</th>
+            <th>Type</th>
+          </tr>
+        </thead>
 
-      }
+        <tbody>
 
-    </tbody>
+          @if (group.materials.length > 0) {
 
-  </table>
+            @for (item of group.materials; track item.courseId) {
 
-</div>
+              <tr>
+                <td>{{ item.materials }}</td>
+                <td>{{ item.teacherName }}</td>
+                <td>{{ item.courseName }}</td>
+                <td>{{ item.materialType }}</td>
+              </tr>
 
-}
+            }
+
+          } @else {
+
+            <tr>
+              <td colspan="4" class="no-data">
+                No materials found.
+              </td>
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+  @if (groupedMaterials().length === 0) {
+
+    <div class="grade-card">
+      <div class="no-data">
+        No materials found.
+      </div>
+    </div>
+
+  }
+
 </div>

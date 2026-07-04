@@ -52,8 +52,7 @@ export class Notifications implements OnInit {
 
   openDialog(){
         this.dilog.open(CreateNotificationsComponent,{
-     width:'1600px',
-     
+          width:'500px'
         })
       }
 

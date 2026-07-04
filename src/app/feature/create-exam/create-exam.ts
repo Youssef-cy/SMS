@@ -5,6 +5,7 @@ import { ExamREQ } from '../../core/model/exam-req';
 import { CancelBtn } from "../../shared/cancel-btn/cancel-btn";
 import { SaveBtn } from "../../shared/save-btn/save-btn";
 import { PublishBtn } from "../../shared/publish-btn/publish-btn";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-exam',
@@ -24,7 +25,8 @@ export class CreateExamComponent {
     committeeName: '',
     examDate: '',
     examTime: '',
-    status: 'Scheduled'
+    status: 'Scheduled',
+    examType:''
   };
 
   createExam() {
@@ -33,7 +35,16 @@ export class CreateExamComponent {
 
       next: (res) => {
         console.log(res);
-        alert('Exam created successfully');
+Swal.fire({ icon: 'success',
+    title: 'Employee Created Successfully',
+    html: `
+      <div style="text-align:left">
+        <p><strong>Subject:</strong> ${res.courseName}</p>
+        <p><strong>Date:</strong> ${res.examDate}</p>
+      </div>
+    `,
+    confirmButtonText: 'OK',
+    confirmButtonColor: '#0F2747'})
       },
       error: (err) => {
         console.log(err);

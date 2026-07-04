@@ -25,7 +25,18 @@
                         <option value="English">English</option>
                     </select>
                 </div>
+                <!-- Exam Type -->
+                <div class="form-group">
+                    <label>Type</label>
 
+                    <select [(ngModel)]="exam.examType" name="courseName">
+                        <option value="" disabled>Select examType</option>
+                        <option value="FINAL">Final</option>
+                        <option value="MIDTERM">Monthly</option>
+                        <option value="MONTHLY">MidTerm</option>
+                       
+                    </select>
+                </div>
                 <!-- Grade -->
                 <div class="form-group">
                     <label>Grade</label>

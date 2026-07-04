@@ -6,4 +6,5 @@ export interface ExamREQ {
   examDate: string;
   examTime: string;
   status: string;
+  examType:string;
 }
