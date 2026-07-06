@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Exam } from '../../core/service/exam';
@@ -29,27 +30,54 @@ export class CreateExamComponent {
     examType:''
   };
 
-  createExam() {
-    console.log(this.exam)
-    this.examService.createExam(this.exam).subscribe({
 
-      next: (res) => {
-        console.log(res);
-Swal.fire({ icon: 'success',
-    title: 'Employee Created Successfully',
-    html: `
-      <div style="text-align:left">
-        <p><strong>Subject:</strong> ${res.courseName}</p>
-        <p><strong>Date:</strong> ${res.examDate}</p>
-      </div>
-    `,
-    confirmButtonText: 'OK',
-    confirmButtonColor: '#0F2747'})
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+createExam(form: NgForm) {
+
+  if (form.invalid) {
+    form.control.markAllAsTouched();
+    return;
   }
 
+  console.log(form.value)
+
+  this.examService.createExam(this.exam).subscribe({
+   next: () => {
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Exam Created Successfully',
+    html: `
+      <div style="text-align:left">
+        <p><strong>Subject:</strong> ${this.exam.courseName}</p>
+        <p><strong>Date:</strong> ${this.exam.examDate}</p>
+      </div>
+    `,
+    confirmButtonColor: '#0F2747'
+  });
+
+  form.resetForm({
+    status: 'Scheduled',
+    gradeId: 0,
+    courseName: '',
+    committeeName: '',
+    examDate: '',
+    examTime: '',
+    duration: 0,
+    examType: ''
+  });
+
+},
+    error: (err) => {
+      console.log(err);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: 'Unable to create exam.'
+      });
+    }
+
+  });
+
+}
 }

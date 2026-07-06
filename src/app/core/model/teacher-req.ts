@@ -13,7 +13,7 @@ export interface TeacherReq {
    gender: 'M' | 'F'; // char في Java → string في TS
   nationality: string;
   birthDate: string; // LocalDate → string (ISO date)
-  roleId: number,
+  role: number,
   subject: string;
   subjectType: string;
   subjectDescription: string;

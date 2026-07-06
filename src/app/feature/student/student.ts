@@ -2,11 +2,12 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { StudentS } from '../../core/service/student-s';
 import { StudentI } from '../../core/model/student-i';
+import { TopNavbar } from "./components/top-navbar/top-navbar";
 
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TopNavbar],
   templateUrl: './student.html',
   styleUrls: ['./student.css']
 })

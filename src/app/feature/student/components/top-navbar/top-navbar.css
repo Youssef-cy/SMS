@@ -1,0 +1,13 @@
+.top-navbar {
+  background-color: #eae5e5;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dcd7d7;
+}
+.top-navbar h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}

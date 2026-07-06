@@ -1,10 +1,11 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { MaterialS } from '../../core/service/material-s';
 import { MaterialI } from '../../core/model/material-i';
+import { TopBanner } from "./components/top-banner/top-banner";
 
 @Component({
   selector: 'app-materials',
-  imports: [],
+  imports: [TopBanner],
   templateUrl: './materials.html',
   styleUrl: './materials.css',
 })

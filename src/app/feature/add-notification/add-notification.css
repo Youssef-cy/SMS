@@ -14,7 +14,6 @@
   max-width: 1040px;
   background: #ffffff;
   border-radius: 14px;
-  border-left: 5px solid #7a1f2b;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
@@ -22,6 +21,7 @@
 .modal-header {
   background: #ece2e2;
   padding: 22px 32px;
+  border-left: 5px solid #7a1f2b;
 
   h2 {
     margin: 0;

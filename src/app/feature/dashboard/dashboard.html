@@ -4,8 +4,8 @@
       <h1 class="page-title">Dashboard</h1>
 
       <div class="header-actions">
-        <button class="btn-icon" routerLink="notification">
-          <i class="hgi hgi-stroke hgi-rounded hgi-bell-ring"></i>
+        <button class="btn-icon" routerLink="notification"  >
+          <i class="hgi hgi-stroke hgi-rounded hgi-notification-02"></i>
         </button>
       </div>
     </header>
@@ -62,9 +62,8 @@
         <tbody>
           @for (exam of examData(); track exam.id) {
             <tr>
-              
               <td>{{ exam.courseName }}</td>
-              
+
               <td>
                 {{ exam.examDate }}
               </td>
@@ -73,7 +72,7 @@
               </td>
               <td>{{ exam.duration }}</td>
 
-              <td>{{ exam.examTime }} </td>
+              <td>{{ exam.examTime }}</td>
 
               <td>{{ exam.committeeName }}</td>
 

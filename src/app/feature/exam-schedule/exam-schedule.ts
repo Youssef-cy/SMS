@@ -3,10 +3,11 @@ import { Exam } from '../../core/service/exam';
 import { ExamRES } from '../../core/model/exam-res';
 import { MatDialog } from '@angular/material/dialog';
 import {  CreateExamComponent } from '../create-exam/create-exam';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-exam-schedule',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './exam-schedule.html',
   styleUrl: './exam-schedule.css',
 })

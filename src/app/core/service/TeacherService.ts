@@ -7,7 +7,7 @@ import { TeacherReq } from '../model/teacher-req';
   @Injectable({
     providedIn: 'root',
   })
-  export class EmployeeS {
+  export class TeacherService {
     
     constructor(private http: HttpClient) { }
 

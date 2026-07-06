@@ -13,17 +13,19 @@
 
 
 .top-banner {
+    
     background: var(--color-top-banner);
     padding: 18px 30px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
 .banner-left {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
 }
 
@@ -267,4 +269,6 @@
     margin-left: 20px;
     color: var(--color-text-main);
 }
+
+
 

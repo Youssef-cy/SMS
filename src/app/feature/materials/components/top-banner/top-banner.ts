@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-nav',
-  standalone: true,
+  selector: 'app-top-banner',
   imports: [RouterLink],
-  templateUrl: './nav.html',
-  styleUrls: ['./nav.css'],
+  templateUrl: './top-banner.html',
+  styleUrl: './top-banner.css',
 })
-export class Nav {}
+export class TopBanner {
+
+}

@@ -8,12 +8,8 @@
       <div class="form-row">
         <div class="form-field">
           <label for="announcementType">Announcement Type</label>
-          <div class="select-wrapper">
-            <select id="announcementType" formControlName="announcementType">
-              <option [ngValue]="null" disabled selected>Select Type</option>
-              <option *ngFor="let type of announcementTypes" [value]="type">{{ type }}</option>
-            </select>
-          </div>
+          
+            <input type="text" formControlName = "announcementType" , placeholder="Event">
         </div>
 
         <div class="form-field">
@@ -51,7 +47,7 @@
             id="notes"
             formControlName="notes"
             rows="5"
-            placeholder="Any special requirements, room preferences, or additional information..."
+            placeholder="Any Notes for this notification"
           ></textarea>
         </div>
       </div>

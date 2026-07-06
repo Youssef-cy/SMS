@@ -23,16 +23,15 @@ export class CreateNotificationsComponent {
   @Output() saveDraft = new EventEmitter<NotificationFormValue>();
   @Output() publish = new EventEmitter<NotificationFormValue>();
 
-  announcementTypes = ['General', 'Maintenance', 'Event', 'Urgent'];
   priorities = ['Low', 'Medium', 'High'];
-  people = ['All Residents', 'Building A', 'Building B', 'Staff Only'];
+  people = ['STUDENTS', 'ADMINS', 'TEACHERS', 'ENGINEERING '];
 
   form: FormGroup;
 
   constructor(private fb: FormBuilder,private create:Notification) {
     console.log("loadddded")
     this.form = this.fb.group({
-      announcementType: [null, Validators.required],
+      announcementType: ['', Validators.required],
       title: ['', Validators.required],
       priority: [null, Validators.required],
       receiver: [null, Validators.required],

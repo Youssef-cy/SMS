@@ -23,6 +23,10 @@ export const routes: Routes = [
         component:StudentsComponent
     },
     {
+        path:"notification",
+        component:Notifications
+    },
+    {
         path:"TOP",
         component:TopStudentsComponent
     },
@@ -42,8 +46,4 @@ export const routes: Routes = [
         path:"Materials",
         component:Materials
     },
-    {
-        path:"notification",
-        component:Notifications
-    }
 ];

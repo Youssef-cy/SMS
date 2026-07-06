@@ -16,7 +16,7 @@
       <label for="class">Class</label>
       <div class="select-wrapper">
         <select [(ngModel)]="selectedClass" (change)="emitFilter()">
-          <option value="all">Select Class</option>
+          <option value="all" selected>Select Class</option>
           @for (class of getFilteredClasses(); track class.id) {
             <option [value]="class.id">{{ class.className }}</option>
           }
