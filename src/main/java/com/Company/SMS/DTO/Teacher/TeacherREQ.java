@@ -24,7 +24,7 @@ public class TeacherREQ {
     private char gender;
     private String nationality;
     private LocalDate birthDate;
-    private Long roleId;
+    private Long role;
     private String subject;
     private String subjectType;
     private String subjectDescription;

@@ -1,5 +1,6 @@
 package com.Company.SMS.DTO.Exam;
 
+import com.Company.SMS.entities.ExamType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,5 @@ public class ExamREQ {
     private LocalDate examDate;
     private LocalTime examTime;
     private String status;
+    private ExamType examType;
 }

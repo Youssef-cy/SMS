@@ -4,13 +4,17 @@ import com.Company.SMS.DTO.Teacher.TeacherREQ;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.DTO.User.UserReq;
 import com.Company.SMS.DTO.User.UserRes;
+import com.Company.SMS.DTO.User.UserResPost;
+import com.Company.SMS.Repo.RoleRepo;
 import com.Company.SMS.Repo.UserRepo;
 import com.Company.SMS.entities.Course;
+import com.Company.SMS.entities.Role;
 import com.Company.SMS.entities.Teacher;
 import com.Company.SMS.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,12 +23,16 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     UserRepo userRepo;
-
+    @Autowired
+    RoleRepo roleRepo;
     public Long sumOfEmployees(){
         return userRepo.count();
     }
     @Transactional
     public UserRes addEmployee(UserReq req) {
+        System.out.println(req.getRole());
+        Role role = roleRepo.findById(req.getRole())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
 
         User user = new User();
 
@@ -39,25 +47,34 @@ public class EmployeeService {
         user.setGender(req.getGender());
         user.setNationality(req.getNationality());
         user.setBirthDate(req.getBirthDate());
-        user.setRole(req.getRole());
+        user.setRole(role);
         user.setIsDeleted(req.isDeleted());
         user.setReligion(req.getReligion());
+
+        user = userRepo.save(user);
+
         return new UserRes(
                 user.getUserId(),
                 user.getFirstName(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getRole().getId(),
+                user.getRole().getRoleName(),
                 user.getIsDeleted()
+
         );
+    }
+    public List<UserResPost> allEmployees(){
+            return userRepo.findAllUsers();
 
     }
 
-    public List<UserRes> allEmployees(){
-        if(userRepo.findAllUsers() != null && userRepo.findAllUsers().isEmpty()){
-            return userRepo.findAllUsers();
-        }
-        return Collections.emptyList();
+
+    public void deactivateEmployee(Long id){
+    User user = userRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    user.setIsDeleted(!user.getIsDeleted());
+    userRepo.save(user);
+
     }
 
 

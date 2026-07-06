@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRes {
+public class UserResPost {
     private Long id;
     private String firstName;
     private String email;
     private String password;
     private String role;
     private Boolean isDeleted;
+    private String subject;
+
 }

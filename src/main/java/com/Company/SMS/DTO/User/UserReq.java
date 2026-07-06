@@ -24,7 +24,7 @@ public class UserReq {
     private char gender;
     private String nationality;
     private LocalDate birthDate;
-    private Role role;
+    private Long role;
     private boolean isDeleted;
     private String religion;
 }

@@ -22,6 +22,7 @@ public class ExamController {
 
     @PostMapping
     public void createExam(@RequestBody ExamREQ req) {
+
         examService.createExam(req);
     }
 

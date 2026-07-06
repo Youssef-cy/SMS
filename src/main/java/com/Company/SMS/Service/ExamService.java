@@ -38,6 +38,7 @@ public class ExamService {
         exam.setExamTime(req.getExamTime());
         exam.setStatus(req.getStatus());
         exam.setGrade(grade);
+        exam.setExamType(req.getExamType());
 
         examRepo.save(exam);
     }

@@ -17,7 +17,8 @@ select new com.Company.SMS.DTO.Exam.ExamRES(
      e.location,
      e.examDate,
      e.examTime,
-     e.status
+     e.status,
+     e.examType
 )
 from ExamTable e
 order by e.grade.name, e.examDate

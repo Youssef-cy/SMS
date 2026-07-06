@@ -40,7 +40,7 @@ public class TeacherService {
 
     @Transactional
     public TeacherRES addTeacher(TeacherREQ req) {
-        Role role = roleRepo.findById(req.getRoleId())
+        Role role = roleRepo.findById(req.getRole())
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
         Grade grade = gradeRepo.findById(req.getGradeId())
