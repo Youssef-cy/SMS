@@ -33,4 +33,8 @@ public class Term {
 
     @Column(name = "NAME")
     private String name;
+
+    @NotNull
+    @Column(name = "YEAR", nullable = false)
+    private Long year;
 }

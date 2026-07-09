@@ -27,9 +27,9 @@ public class TeacherController {
         return teacherService.allTeacher();
     }
 
-    @GetMapping("/profile")
-    public TeacherInfo getTeacherProfile(@RequestParam Long teacherId) {
-        return teacherService.getTeacherProfile(teacherId);
-    }
+//    @GetMapping("/profile")
+//    public TeacherInfo getTeacherProfile(@RequestParam Long teacherId) {
+//        return teacherService.getTeacherProfile(teacherId);
+//    }
 
 }
