@@ -34,4 +34,7 @@ AND s.dayOfWeek = :dayOfWeek
 """)
     List<Attendance> getTodayAbsence(@Param("dayOfWeek") Integer dayOfWeek);
 
+
+
 }
+

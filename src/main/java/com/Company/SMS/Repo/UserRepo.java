@@ -1,10 +1,13 @@
 package com.Company.SMS.Repo;
 
+import com.Company.SMS.DTO.Teacher.TeacherInfo;
 import com.Company.SMS.DTO.User.UserRes;
 import com.Company.SMS.DTO.User.UserResPost;
+import com.Company.SMS.DTO.User.WorkerInfo;
 import com.Company.SMS.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,4 +29,28 @@ LEFT JOIN Teacher t ON t.user = u
 LEFT JOIN Course c ON c.teacher = t
 """)
     List<UserResPost> findAllUsers();
+
+
+    @Query("""
+select new com.Company.SMS.DTO.User.WorkerInfo(
+    u.firstName,
+    u.firstNameInArabic,
+    u.lastName,
+    u.lastNameInArabic,
+    u.nationalNumber,
+    u.email,
+    u.password,
+    u.address,
+    u.gender,
+    u.nationality,
+    u.birthDate,
+    u.role.id,
+    u.isDeleted,
+    u.religion
+)
+from User u
+where u.userId = :UserId
+""")
+    WorkerInfo getWorkerInfo(@Param("UserId") Long userId);
+
 }

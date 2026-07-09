@@ -1,5 +1,6 @@
 package com.Company.SMS.Repo;
 
+import com.Company.SMS.DTO.Course.CourseInfo;
 import com.Company.SMS.DTO.material.MaterialRes;
 import com.Company.SMS.entities.Course;
 import org.springframework.data.jpa.repository.JpaRepository;

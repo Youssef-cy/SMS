@@ -19,7 +19,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Class {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE ,generator = "class_seq")
+    @SequenceGenerator(
+            name = "class_seq",
+            sequenceName = "CLASS_SEQ",
+            allocationSize = 1
+    )
     @Column(name = "CLASS_ID", nullable = false)
     private Long id;
 

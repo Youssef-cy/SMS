@@ -27,12 +27,10 @@ public class Term {
     @Column(name = "TERM", nullable = false)
     private Long term;
 
-    @NotNull
-    @Column(name = "YEAR", nullable = false)
-    private Long year;
 
     @ManyToMany(mappedBy = "terms")
     private Set<Grade> grades = new LinkedHashSet<>();
 
-
+    @Column(name = "NAME")
+    private String name;
 }

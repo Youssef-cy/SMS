@@ -19,7 +19,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class Grade {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grade_seq")
+    @SequenceGenerator(
+            name = "grade_seq",
+            sequenceName = "GRADE_SEQ",
+            allocationSize = 1
+    )
     @Column(name = "GRADE_ID", nullable = false)
     private Long id;
 
@@ -35,6 +40,10 @@ public class Grade {
             inverseJoinColumns = @JoinColumn(name = "TERM_ID")
     )
     private Set<Term> terms = new LinkedHashSet<>();
+
+    @NotNull
+    @Column(name = "YEAR", nullable = false)
+    private Long year;
 
 
 }

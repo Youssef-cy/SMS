@@ -1,5 +1,6 @@
 package com.Company.SMS.DTO.Dashboard;
 
+import com.Company.SMS.DTO.Exam.ExamRES;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.entities.Attendance;
@@ -15,7 +16,6 @@ import java.util.List;
 public class DashboardRes {
     private Long totalStudents;
     private Long totalTeachers;
-    private List<Attendance> absent;
     private double attendanceStats;
-
+    private List<ExamRES> exams;
 }

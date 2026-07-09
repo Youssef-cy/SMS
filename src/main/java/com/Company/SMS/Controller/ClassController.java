@@ -1,12 +1,11 @@
 package com.Company.SMS.Controller;
 
+import com.Company.SMS.DTO.Class.ClassREQ;
 import com.Company.SMS.DTO.Class.ClassRes;
 import com.Company.SMS.Service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,14 @@ public class ClassController {
         List<ClassRes> List = classService.findAllClass();
         return ResponseEntity.ok(List);
     }
+
+
+    @PostMapping
+    public void addClass(@RequestBody ClassREQ classreq){
+
+        classService.saveClass(classreq);
+
+    }
+
 
 }

@@ -1,20 +1,25 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Teacher.TeacherInfo;
 import com.Company.SMS.DTO.Teacher.TeacherREQ;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.DTO.User.UserReq;
 import com.Company.SMS.DTO.User.UserRes;
 import com.Company.SMS.DTO.User.UserResPost;
+import com.Company.SMS.DTO.User.WorkerInfo;
 import com.Company.SMS.Repo.RoleRepo;
+import com.Company.SMS.Repo.TeacherRepo;
 import com.Company.SMS.Repo.UserRepo;
 import com.Company.SMS.entities.Course;
 import com.Company.SMS.entities.Role;
 import com.Company.SMS.entities.Teacher;
 import com.Company.SMS.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +30,9 @@ public class EmployeeService {
     UserRepo userRepo;
     @Autowired
     RoleRepo roleRepo;
+    @Autowired
+    TeacherRepo teacherRepo;
+
     public Long sumOfEmployees(){
         return userRepo.count();
     }
@@ -76,6 +84,8 @@ public class EmployeeService {
     userRepo.save(user);
 
     }
+
+
 
 
 }

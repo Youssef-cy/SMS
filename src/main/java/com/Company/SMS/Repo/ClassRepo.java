@@ -14,9 +14,12 @@ public interface ClassRepo extends JpaRepository<Class,Long> {
         SELECT new com.Company.SMS.DTO.Class.ClassRes(
         cl.id,
         cl.name,
-        cl.grade.name
+        cl.grade.name,
+        t.name
 
         )FROM Class cl
+        JOIN cl.grade g
+        JOIN g.terms t
 """)
 List<ClassRes> findAllClassRes();
 }

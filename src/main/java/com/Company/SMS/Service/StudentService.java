@@ -1,5 +1,6 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Student.StudentInfoProfileRES;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.Repo.AttendanceRepo;
@@ -8,7 +9,9 @@ import com.Company.SMS.Repo.StudentRepo;
 import com.Company.SMS.entities.Attendance;
 import com.Company.SMS.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +37,11 @@ public class StudentService {
 
     }
 
+
+    public StudentInfoProfileRES profile(Long id){
+        Student student = studentRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return studentRepo.getProfile(id);
+    }
 
 
 }

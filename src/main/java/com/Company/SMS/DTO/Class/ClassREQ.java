@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassRes {
-    private Long id;
+public class ClassREQ {
+
     private String className;
-    private String grade;
-    private String term;
+    private Long gradeId;
+    private Long capacity;
+
+
+
 }

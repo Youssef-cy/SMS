@@ -1,9 +1,16 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Class.ClassREQ;
 import com.Company.SMS.DTO.Class.ClassRes;
 import com.Company.SMS.Repo.ClassRepo;
+import com.Company.SMS.Repo.GradeRepo;
+import com.Company.SMS.entities.Class;
+import com.Company.SMS.entities.Grade;
+import com.Company.SMS.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +20,30 @@ import java.util.List;
 public class ClassService {
     @Autowired
     ClassRepo classRepo;
-
+    @Autowired
+    GradeRepo gradeRepo;
     public List<ClassRes> findAllClass(){
         List<ClassRes> classResList = classRepo.findAllClassRes();
         if(classResList !=null && !classResList.isEmpty()){
             return classResList;
         }
         return Collections.emptyList();
+    }
+
+
+    public void saveClass(ClassREQ classREQ){
+
+        com.Company.SMS.entities.Grade grade = gradeRepo.findById(classREQ.getGradeId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Class not found"));
+
+        Class newClass = new Class();
+        newClass.setName(classREQ.getClassName());
+        newClass.setGrade(grade);
+        newClass.setCapacity(classREQ.getCapacity());
+        classRepo.save(newClass);
+
     }
 
 }

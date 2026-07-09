@@ -1,14 +1,14 @@
 package com.Company.SMS.Controller;
 
+import com.Company.SMS.DTO.Student.StudentInfoProfileRES;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.Service.StudentService;
 import com.Company.SMS.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ public class StudentController {
     }
 
 
-//    @GetMapping("/Top")
-//    public List<TopStudentRES> getTopStudents(){
-//        return studentService.getTop3StudentsEachGrade();
-//    }
+    @GetMapping("/profile")
+    public StudentInfoProfileRES getProfile(@RequestParam Long studentId) {
+        return studentService.profile(studentId);
+    }
 
 }

@@ -1,9 +1,12 @@
 package com.Company.SMS.Repo;
 
+import com.Company.SMS.DTO.Course.CourseInfo;
+import com.Company.SMS.DTO.Teacher.TeacherInfo;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.entities.Teacher;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +28,46 @@ JOIN t.user u
 LEFT JOIN Course c ON c.teacher = t
 """)
     List<TeacherRES> getAllTeachers();
+
+    @Query("""
+select new com.Company.SMS.DTO.Teacher.TeacherInfo(
+    u.firstName,
+    u.firstNameInArabic,
+    u.lastName,
+    u.lastNameInArabic,
+    u.nationalNumber,
+    u.email,
+    u.password,
+    u.address,
+    u.gender,
+    u.nationality,
+    u.birthDate,
+    u.role.id,
+    u.isDeleted,
+    u.religion,
+    t.education,
+    t.employmentHistory,
+    t.numberOfYearsOfExperience,
+    null
+)
+from Teacher t
+join t.user u
+where t.id = :teacherId
+""")
+    TeacherInfo getTeacherProfile(@Param("teacherId") Long teacherId);
+
+    @Query("""
+select new com.Company.SMS.DTO.Course.CourseInfo(
+    c.courseName,
+    c.courseType,
+    c.description,
+    c.grade.id,
+    c.term.id,
+    c.materials
+)
+from Course c
+where c.teacher.id = :teacherId
+""")
+    List<CourseInfo> getTeacherCourses(@Param("teacherId") Long teacherId);
+
 }

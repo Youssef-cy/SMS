@@ -1,12 +1,11 @@
 package com.Company.SMS.Controller;
 
+import com.Company.SMS.DTO.Grades.GradeREQ;
 import com.Company.SMS.DTO.Grades.GradeRES;
 import com.Company.SMS.Service.GradeService;
 import com.Company.SMS.entities.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +22,9 @@ public class GradeController {
         return gradeService.findAll();
     }
 
+
+    @PostMapping
+    public void saveGrade(@RequestBody GradeREQ grade){
+        gradeService.addGrade(grade);
+    }
 }

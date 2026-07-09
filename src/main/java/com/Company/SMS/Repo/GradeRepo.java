@@ -14,9 +14,12 @@ public interface GradeRepo extends JpaRepository<Grade,Long> {
 
 select new com.Company.SMS.DTO.Grades.GradeRES(
     g.id,
-    g.name
-
-)from Grade g
+    g.name,
+    g.year,
+    t.name
+    
+)from Grade g 
+join g.terms t
 
 """)
     List<GradeRES> findAllGrade();

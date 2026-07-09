@@ -9,6 +9,8 @@ import com.Company.SMS.entities.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,6 +43,16 @@ public class ExamService {
         exam.setExamType(req.getExamType());
 
         examRepo.save(exam);
+    }
+
+
+    public List<ExamRES> getExamForThisWeek() {
+        LocalDate startOfWeek = LocalDate.now()
+                .with(DayOfWeek.SATURDAY);   // لو الأسبوع عندك يبدأ السبت
+
+        LocalDate endOfWeek = startOfWeek.plusDays(6);
+
+        return examRepo.getExamsThisWeek(startOfWeek, endOfWeek);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.Company.SMS.Controller;
 
+import com.Company.SMS.DTO.Teacher.TeacherInfo;
 import com.Company.SMS.DTO.Teacher.TeacherREQ;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.Service.TeacherService;
@@ -24,6 +25,11 @@ public class TeacherController {
     @GetMapping
     public List<TeacherRES> getAllTeacher(){
         return teacherService.allTeacher();
+    }
+
+    @GetMapping("/profile")
+    public TeacherInfo getTeacherProfile(@RequestParam Long teacherId) {
+        return teacherService.getTeacherProfile(teacherId);
     }
 
 }

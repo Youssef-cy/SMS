@@ -1,10 +1,12 @@
 package com.Company.SMS.Repo;
 
+import com.Company.SMS.DTO.Student.StudentInfoProfileRES;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +29,24 @@ left join Attendance a
 group by s.student_id, s.user.firstName, s.studentClass.name, s.studentClass.grade.name
 """)
     List<StudentRES> allStudents();
+
+
+
+    @Query("""
+select new com.Company.SMS.DTO.Student.StudentInfoProfileRES(
+    s.user.firstName,
+    s.user.lastName,
+    s.user.email,
+    s.user.birthDate,
+    s.user.gender,
+    s.student_id,
+    s.user.nationalNumber,
+    s.studentClass.name,
+    s.studentClass.grade.name
+)
+from Student s
+where s.student_id = :studentId
+""")
+    StudentInfoProfileRES getProfile(@Param("studentId") Long studentId);
+
 }

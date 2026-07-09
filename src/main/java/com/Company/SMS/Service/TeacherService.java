@@ -1,14 +1,17 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Teacher.TeacherInfo;
 import com.Company.SMS.DTO.Teacher.TeacherREQ;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.Repo.*;
 import com.Company.SMS.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,6 +104,9 @@ public class TeacherService {
         }
         return Collections.emptyList();
     }
+
+
+
 
 
 }

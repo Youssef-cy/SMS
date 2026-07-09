@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GradeRES {
-    private Long id;
-    private String grade;
+public class GradeREQ {
+
+    private String gradeName;
     private Long year;
-    private String term;
+    private Set<Long> termIds;
 
 }
