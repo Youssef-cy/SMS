@@ -2,12 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { TeacherService } from '../../core/service/TeacherService';
+import { WorkerService } from '../../core/service/worker-service';
 import Swal from 'sweetalert2';
 import { AddBtn } from '../../shared/add-btn/add-btn';
 import { SaveBtn } from '../../shared/save-btn/save-btn';
 import { CancelBtn } from '../../shared/cancel-btn/cancel-btn';
-import { WorkerService } from '../../core/service/worker-service';
 import { GradeService } from '../../core/service/grade-service';
 import { GradeRES } from '../../core/model/grade-res';
 import { RoleService } from '../../core/service/role-service';
@@ -25,7 +24,6 @@ export class AddEmp implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private teacherservice: TeacherService,
     private workerservice: WorkerService,
     private grades:GradeService,
     private roles:RoleService
@@ -118,7 +116,7 @@ export class AddEmp implements OnInit{
       data.termId;
 
     if (isTeacher) {
-      this.teacherservice.createTeacher(data).subscribe({
+      this.workerservice.createTeacher(data).subscribe({
         next: (res) => {
           Swal.fire({
             icon: 'success',

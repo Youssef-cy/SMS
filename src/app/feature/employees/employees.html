@@ -1,67 +1,21 @@
 <div class="employees-page">
-  <div class="top-banner">
-    <header>
-      <h1 class="page-title">Employees</h1>
+  <!-- topBanner -->
+  <app-top-banner></app-top-banner>
+  <!-- OVERVIEW -->
+  
+  <div class="cards">
+  <app-over-view></app-over-view>
 
-      <div class="header-actions">
-       <button class="btn-icon" [routerLink]="['/notification']">
-  <i class="hgi hgi-stroke hgi-rounded hgi-notification-02"></i>
-</button>
-        <div class="button" (click)="openDialog()"><app-add-btn></app-add-btn></div>
-      </div>
-    </header>
   </div>
 
-  <div class="page-content">
-    <div class="info-banner">
-      <i class="hgi hgi-information-circle"></i>
-      <p class="info-text">Manage all staff records — add, update, or remove employees.</p>
-    </div>
-
-<div class="filter-bar">
-  <select class="dropdown" (change)="onDepartmentChange($event)">
-    @for (department of departments(); track department) {
-      <option [value]="department">
-        {{ department }}
-      </option>
-    }
-  </select>
+  <!-- filterbar -->
+<div class="filter">
+<app-filter-bar></app-filter-bar>
 </div>
 
-<div class="table-card">
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Department</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+  <!-- table -->
+  <div class="table">
+  <app-teachet-table></app-teachet-table>
 
-    <tbody>
-      @for (teacher of filteredData(); track teacher.id) {
-      <tr>
-        <td>{{ teacher.firstName }}</td>
-        <td>{{ teacher.role }}</td>
-        <td>{{ teacher.subject ?? 'Student Affairs' }}</td>
-        <td>{{ teacher.deleted ? 'Deactivated' : 'Active' }}</td>
-        <td>
-          <div class="buttons">
-            <app-view-btn></app-view-btn>
-
-            <div class="space"></div>
-
-            <div class="deactivate" (click)="changeStatus(teacher.id)">
-              {{ teacher.deleted ? 'Activate' : 'Deactivate' }}
-            </div>
-          </div>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
   </div>
 </div>

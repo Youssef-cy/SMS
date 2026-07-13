@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MarkI } from '../model/mark-i';
+import { MarkI } from '../model/markRES';
 
 @Injectable({
   providedIn: 'root',

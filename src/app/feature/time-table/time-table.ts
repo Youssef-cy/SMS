@@ -14,10 +14,11 @@ import { FormsModule } from '@angular/forms';
 export class Timetable {
 
   grade = 'Grade 10';
-  classId: number = 1;
+  classId: number | null = null;
 
   onFilterChanged(event: any) {
     this.grade = event.grade;
-    this.classId = Number(event.classId);
+    const parsed = Number(event.classId);
+    this.classId = !isNaN(parsed) && parsed > 0 ? parsed : null;
   }
 }

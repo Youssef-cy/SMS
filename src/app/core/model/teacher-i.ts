@@ -4,6 +4,6 @@ export interface TeacherI {
   email: string;
   password: string;
   role: number;
-  subject: string;
   deleted: boolean;
+  subject: string;
 }

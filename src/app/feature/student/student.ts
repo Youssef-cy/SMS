@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StudentS } from '../../core/service/student-s';
 import { StudentI } from '../../core/model/student-i';
 import { TopNavbar } from "./components/top-navbar/top-navbar";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -16,7 +17,12 @@ export class StudentsComponent implements OnInit {
    grades = signal<string[]>([]);
   searchText = signal<string>('');
 selectedGrade = signal<string>('ALL');
-    constructor(private content:StudentS){}
+    constructor(private content:StudentS,
+          private routing: Router,
+
+
+
+    ){}
 
   ngOnInit(): void {
     this.getAll()
@@ -51,4 +57,11 @@ get filteredStudents() {
     return matchGrade && matchSearch;
   });
 } 
+
+
+
+  openProfile(id:number){
+    console.log(id);
+    this.routing.navigate(['/studentProfile', id]);
+  }
 }

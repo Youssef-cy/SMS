@@ -1,47 +1,17 @@
-import { Component, signal } from '@angular/core';
-import { EditBtn } from "../../shared/edit-btn/edit-btn";
-import { DashboardS } from '../../core/service/dashboard';
-import { DashboardI } from '../../core/model/dashboardI';
-import { RouterLink } from "@angular/router";
-import { ExamSchedule } from '../exam-schedule/exam-schedule';
-import { Exam } from '../../core/service/exam';
-import { ExamRES } from '../../core/model/exam-res';
+import { Component } from '@angular/core';
+import { TopBanner } from "./components/top-banner/top-banner";
+import { StatusCards } from "./components/status-cards/status-cards";
+import { ExamComponant } from "./components/exam-componant/exam-componant";
+import { AbsentChart } from "./components/absent-chart/absent-chart";
+import { BestGradesv } from "./components/best-grades/best-grades";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [EditBtn, RouterLink],
+  imports: [TopBanner, StatusCards, ExamComponant, AbsentChart, BestGradesv],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
 
-  constructor(private content:DashboardS,private exam:Exam){}
-  
-    data = signal<DashboardI | null>(null);
-    examData = signal<ExamRES[]>([])
-  
-  ngOnInit() {
-    this.getAllDashboard();
-    this.getExam()
-  }
-
-
-  getAllDashboard(){
-    this.content.getDashboardContent().subscribe({next:(data)=>{
-        console.log(data);
-        this.data.set(data);
-      }
-    });
-
-  }
-
-
-  getExam(){
-    this.exam.getExam().subscribe({
-      next:(data)=>{
-        this.examData.set(data)
-      }
-    })
-  }
-  
+    
 }

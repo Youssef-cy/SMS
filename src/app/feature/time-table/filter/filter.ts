@@ -22,7 +22,7 @@ grades = signal<string[]>([]);
 }>();
 
   selectedGrade = 'all';
-  selectedClass = 'all';
+  selectedClass: string | number = 'all';
 
   ngOnInit(): void {
     this.getAllClass();
@@ -38,7 +38,7 @@ grades = signal<string[]>([]);
 
         if (data.length > 0) {
           this.selectedGrade = data[0].grade;
-          this.selectedClass = data[0].id.toString();
+          this.selectedClass = data[0].id;
         } else {
           this.selectedGrade = 'all';
           this.selectedClass = 'all';
@@ -59,7 +59,7 @@ grades = signal<string[]>([]);
   onGradeChange() {
     const filtered = this.getFilteredClasses();
     if (filtered.length > 0) {
-      this.selectedClass = filtered[0].id.toString();
+      this.selectedClass = filtered[0].id;
     } else {
       this.selectedClass = 'all';
     }

@@ -8,6 +8,8 @@ import { Timetable } from './feature/time-table/time-table';
 import { Notifications } from './feature/notifications/notifications';
 import { TopStudentsComponent } from './feature/top-student/top-student';
 import { StudentsComponent } from './feature/student/student';
+import { EmployeeProfile } from './feature/employee-profile/employee-profile';
+import { StudentProfile } from './feature/student-profile/student-profile';
 
 export const routes: Routes = [
    {
@@ -46,4 +48,15 @@ export const routes: Routes = [
         path:"Materials",
         component:Materials
     },
+    {
+        path:"teacherProfile/:id",
+        component:EmployeeProfile
+    },
+    {
+        path:"studentProfile/:id",
+        component:StudentProfile
+
+    },
+    
+    
 ];

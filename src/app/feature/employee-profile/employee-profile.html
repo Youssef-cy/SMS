@@ -1,0 +1,119 @@
+<div class="profile_card">
+  <div class="profile_container">
+    <span class="profile-icon">👤</span>
+    <h3>Profile</h3>
+  </div>
+  <div class="notification">
+    <button class="btn-icon">
+      <i class="hgi hgi-stroke hgi-rounded hgi-notification-02"></i>
+    </button>
+  </div>
+</div>
+
+<div class="container" *ngIf="data() as profile">
+
+  <div class="card header-card">
+    <div class="header-left">
+      <div class="avatar">{{ getInitials(profile) }}</div>
+      <div class="header-info">
+        <h1>{{ getUser(profile)?.firstName }} {{ getUser(profile)?.lastName }}</h1>
+        <p class="subtitle">
+          {{ getUser(profile)?.role?.roleName }}
+          <ng-container *ngIf="isTeacherType(profile)"> . {{ profile.courseName }}</ng-container>
+        </p>
+      </div>
+    </div>
+    <span class="status-badge" [ngClass]="getUser(profile)?.isDeleted ? 'inactive' : 'active'">
+      {{ getUser(profile)?.isDeleted ? 'Inactive' : 'Active' }}
+    </span>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Personal information</h2>
+    <div class="info-grid">
+      <div class="info-group">
+        <label>First Name</label>
+        <p>{{ getUser(profile)?.firstName }}</p>
+      </div>
+      <div class="info-group">
+        <label>Last Name</label>
+        <p>{{ getUser(profile)?.lastName }}</p>
+      </div>
+      <div class="info-group">
+        <label>First Name (Arabic)</label>
+        <p class="arabic">{{ getUser(profile)?.firstNameInArabic }}</p>
+      </div>
+      <div class="info-group">
+        <label>Last Name (Arabic)</label>
+        <p class="arabic">{{ getUser(profile)?.lastNameInArabic }}</p>
+      </div>
+      <div class="info-group">
+        <label>National ID</label>
+        <p>{{ getUser(profile)?.nationalNumber }}</p>
+      </div>
+      <div class="info-group">
+        <label>Email</label>
+        <p>
+          <a [href]="'mailto:' + getUser(profile)?.email" class="link">
+            {{ getUser(profile)?.email }}
+          </a>
+        </p>
+      </div>
+      <div class="info-group">
+        <label>Gender</label>
+        <p>{{ getUser(profile)?.gender === 'M' ? 'Male' : 'Female' }}</p>
+      </div>
+      <div class="info-group">
+        <label>Date of Birth</label>
+        <p>{{ getUser(profile)?.birthDate | date: 'd/M/yyyy' }}</p>
+      </div>
+      <div class="info-group">
+        <label>Nationality</label>
+        <p>{{ getUser(profile)?.nationality }}</p>
+      </div>
+      <div class="info-group">
+        <label>Religion</label>
+        <p>{{ getUser(profile)?.religion }}</p>
+      </div>
+      <div class="info-group">
+        <label>Address</label>
+        <p>{{ getUser(profile)?.address }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="isTeacherType(profile)">
+    <h2 class="section-title">Job information</h2>
+    <div class="info-grid">
+      <div class="info-group">
+        <label>Role</label>
+        <p>{{ getUser(profile)?.role?.roleName }}</p>
+      </div>
+      <div class="info-group">
+        <label>Education</label>
+        <p>{{ profile.teacher?.education || '-' }}</p>
+      </div>
+      <div class="info-group">
+        <label>Years of experience</label>
+        <p>{{ profile.teacher?.numberOfYearsOfExperience }}</p>
+      </div>
+      <div class="info-group">
+        <label>Experience history</label>
+        <p>{{ profile.teacher?.employmentHistory || '-' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="isTeacherType(profile)">
+    <h2 class="section-title">Teacher information</h2>
+    <div class="info-grid">
+      <div class="info-group">
+        <label>Subject taught</label>
+        <p>{{ profile.courseName || '-' }}</p>
+      </div>
+      <div class="info-group">
+        <label>Subject Type</label>
+        <p>{{ profile.courseType || '-' }}</p>
+      </div>
+      <div class="info-group">
+        <label>Subject description</label>

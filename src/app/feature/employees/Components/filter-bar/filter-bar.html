@@ -1,0 +1,9 @@
+<div class="filter-bar">
+  <select class="dropdown" (change)="onDepartmentChange($event)">
+    @for (department of departments(); track department) {
+      <option [value]="department">
+        {{ department }}
+      </option>
+    }
+  </select>
+</div>

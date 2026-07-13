@@ -1,98 +1,18 @@
 <div class="dashboard-page">
-  <div class="top-banner">
-    <header>
-      <h1 class="page-title">Dashboard</h1>
-
-      <div class="header-actions">
-        <button class="btn-icon" routerLink="notification"  >
-          <i class="hgi hgi-stroke hgi-rounded hgi-notification-02"></i>
-        </button>
-      </div>
-    </header>
-  </div>
+  <!-- banner -->
+  <app-top-banner></app-top-banner>
 
   <div class="dashboard-content">
-    <div class="stats-grid">
-      <div class="stat-card students">
-        <span class="stat-title"> Total Students </span>
+    <!-- Status Cards -->
 
-        <h2>{{ data()?.totalStudents }}</h2>
-      </div>
+    <app-status-cards></app-status-cards>
 
-      <div class="stat-card employees">
-        <span class="stat-title"> Teachers </span>
-
-        <h2>{{ data()?.totalTeachers }}</h2>
-      </div>
-
-      <div class="stat-card top">
-        <span class="stat-title"> absent Persentage </span>
-
-        <h2>{{ data()?.absent?.length }}</h2>
-        <small>Today</small>
-      </div>
-
-      <div class="stat-card attendance">
-        <span class="stat-title"> Attendance Today </span>
-
-        <h2>{{ data()?.attendanceRate }}</h2>
-      </div>
+    <!-- charts -->
+    <div class="charts">
+      <app-best-grades></app-best-grades>
+      <app-absent-chart></app-absent-chart>
     </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>Exam Schedule — This Week</span>
-      </div>
-
-      <table class="exam-table">
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Date</th>
-            <th>ExamType</th>
-            <th>duration</th>
-            <th>Time</th>
-            <th>Location</th>
-            <th>Grade</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (exam of examData(); track exam.id) {
-            <tr>
-              <td>{{ exam.courseName }}</td>
-
-              <td>
-                {{ exam.examDate }}
-              </td>
-              <td>
-                {{ exam.examType }}
-              </td>
-              <td>{{ exam.duration }}</td>
-
-              <td>{{ exam.examTime }}</td>
-
-              <td>{{ exam.committeeName }}</td>
-
-              <td>{{ exam.gradeName }}</td>
-
-              <td>
-                {{ exam.status }}
-              </td>
-
-              <td>
-                <app-edit-btn></app-edit-btn>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="7" style="text-align: center; padding: 30px">No exams found</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+    <!-- examTable -->
+    <app-exam-componant></app-exam-componant>
   </div>
 </div>

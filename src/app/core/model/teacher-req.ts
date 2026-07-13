@@ -1,5 +1,3 @@
-import { Grade } from "./grade";
-import { Role } from "./role";
 
 export interface TeacherReq {
   firstName: string;

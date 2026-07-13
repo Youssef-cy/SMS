@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Marks } from '../../core/service/marks';
-import { MarkI } from '../../core/model/mark-i';
+import { MarkI } from '../../core/model/markRES';
 
 @Component({
   selector: 'app-top-students',

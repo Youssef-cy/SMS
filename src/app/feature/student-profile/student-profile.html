@@ -1,0 +1,69 @@
+<div class="page-wrapper" *ngIf="data() as student">
+  <div class="profile-card">
+
+    <div class="profile-header">
+      <div class="avatar-wrapper">
+        <img src="" alt="Student Avatar" class="avatar-image">
+        <button class="camera-badge">
+          <i class="fa-solid fa-camera"></i>
+        </button>
+      </div>
+      <h2 class="student-name">{{ student.firstName }} {{ student.lastName }}</h2>
+      <span class="status-tag">{{ student.gradeName || '-' }}</span>
+    </div>
+
+    <div class="profile-info-list">
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-solid fa-school icon-style"></i>
+          <span>Grade</span>
+        </div>
+        <div class="info-value">{{ student.gradeName || '-' }}</div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-solid fa-chalkboard-user icon-style"></i>
+          <span>Class</span>
+        </div>
+        <div class="info-value">{{ student.className || '-' }}</div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-regular fa-id-card icon-style"></i>
+          <span>National ID</span>
+        </div>
+        <div class="info-value">{{ student.nationalId || '-' }}</div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-solid fa-id-badge icon-style"></i>
+          <span>Student ID</span>
+        </div>
+        <div class="info-value">{{ student.studentId || '-' }}</div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-regular fa-envelope icon-style"></i>
+          <span>Email</span>
+        </div>
+        <div class="info-value">{{ student.email || '-' }}</div>
+      </div>
+
+     
+
+      <div class="info-row">
+        <div class="info-label">
+          <i class="fa-regular fa-calendar-check icon-style"></i>
+          <span>Date of Birth</span>
+        </div>
+        <div class="info-value">{{ student.birthday | date: 'd/M/yyyy' }}</div>
+      </div>
+
+    </div>
+  </div>
+</div>

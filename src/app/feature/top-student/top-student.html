@@ -1,117 +1,102 @@
 <div class="main-page-scroll-area">
   <div class="content-container">
-        <div class="rating-banner">
+    <div class="rating-banner">
       <div class="banner-text">
         <h3>Subject Rating - Current Term</h3>
         <p>Term 2, 2025-2026</p>
       </div>
       <div class="banner-dropdown">
-      <select
-  class="dropdown-select"
-  (change)="filterByGrade($any($event.target).value)">
-
-    <option>All grades</option>
-
-    @for (grade of grades(); track grade) {
-      <option>{{ grade }}</option>
-    }
-
-</select>
+        <select
+          class="dropdown-select"
+          (change)="filterByGrade($any($event.target).value)">
+          <option>All grades</option>
+          @for (grade of grades(); track grade) {
+            <option>{{ grade }}</option>
+          }
+        </select>
       </div>
     </div>
+
     <h3 class="section-title">Ranking</h3>
+
     @if (data().length >= 3) {
-<div class="podium-section">
+      <div class="podium-section">
 
-  <div class="podium-card rank-second">
-    <div class="badge-circle grey-badge">2nd</div>
-    <p class="student-name">{{ data()[1].studentName }}</p>
-    <p class="student-grade">{{ data()[1].gradeName }}</p>
-    <div class="score-box-stacked">
-      <span class="big-num">{{ data()[1].Mark }}%</span>
-    </div>
-  </div>
-
-  <div class="podium-card rank-first">
-    <div class="badge-circle yellow-badge">1st</div>
-    <p class="student-name">{{ data()[0].studentName }}</p>
-    <p class="student-grade">{{ data()[0].gradeName }}</p>
-    <div class="score-box-stacked">
-      <span class="big-num">{{ data()[0].Mark }}%</span>
-    </div>
-  </div>
-
-  <div class="podium-card rank-third">
-    <div class="badge-circle brown-badge">3rd</div>
-    <p class="student-name">{{ data()[2].studentName }}</p>
-    <p class="student-grade">{{ data()[2].gradeName }}</p>
-    <div class="score-box-stacked">
-      <span class="big-num">{{ data()[2].Mark }}%</span>
-    </div>
-  </div>
-
-</div>
-}
-    </div>
-    <div class="table-list">
-
-@for(student of data(); track student.studentId; let i = $index){
-
-  <div class="list-row">
-
-    <div class="info-group-left">
-
-      <span class="row-index">
-        {{ i + 1 }}
-      </span>
-
-      <div class="row-avatar">
-        {{ student.studentName.substring(0,2).toUpperCase() }}
-      </div>
-
-      <div class="row-details">
-        <h4>{{ student.studentName }}</h4>
-        <p>{{ student.gradeName }}</p>
-      </div>
-
-    </div>
-
-    <div class="row-progress-container">
-
-      <div class="progress-bar-base">
-        <div
-          class="progress-bar-fill"
-          [style.width.%]="student.Mark > 100 ? 100 : student.Mark">
+        <div class="podium-card rank-second">
+          <div class="badge-circle grey-badge">2nd</div>
+          <p class="student-name">{{ data()[1].studentName }}</p>
+          <p class="student-grade">{{ data()[1].gradeName }}</p>
+          <div class="score-box-stacked">
+            <span class="big-num">{{ data()[1].Mark }}</span>
+            <span class="slash-num-under">/100</span>
+          </div>
         </div>
+
+        <div class="podium-card rank-first">
+          <div class="badge-circle yellow-badge">1st</div>
+          <p class="student-name">{{ data()[0].studentName }}</p>
+          <p class="student-grade">{{ data()[0].gradeName }}</p>
+          <div class="score-box-stacked">
+            <span class="big-num">{{ data()[0].Mark }}</span>
+            <span class="slash-num-under">/100</span>
+          </div>
+        </div>
+
+        <div class="podium-card rank-third">
+          <div class="badge-circle brown-badge">3rd</div>
+          <p class="student-name">{{ data()[2].studentName }}</p>
+          <p class="student-grade">{{ data()[2].gradeName }}</p>
+          <div class="score-box-stacked">
+            <span class="big-num">{{ data()[2].Mark }}</span>
+            <span class="slash-num-under">/100</span>
+          </div>
+        </div>
+
       </div>
-
-      <span class="progress-under-text">
-        {{ student.Mark }}
-      </span>
-
-    </div>
-
-    <span class="row-score">
-      {{ student.Mark }}
-    </span>
-
-    <div class="badge-wrapper">
-
-      <span
-        class="row-badge"
-        [class.status-excellent]="student.Mark >= 90"
-        [class.status-highpass]="student.Mark < 90">
-
-        {{ student.Mark >= 90 ? 'Excellent' : 'High Pass' }}
-
-      </span>
-
-    </div>
-
-    <button class="view-btn">View</button>
-
+    }
   </div>
 
-}
+  <div class="table-list">
+    @for (student of data(); track student.studentId; let i = $index) {
+      <div class="list-row">
 
-</div>  </div>
+        <div class="info-group-left">
+          <span class="row-index">{{ i + 1 }}</span>
+
+          <div class="row-avatar">
+            {{ student.studentName.split(' ')[0].charAt(0).toUpperCase() }}{{ student.studentName.split(' ')[student.studentName.split(' ').length - 1].charAt(0).toUpperCase() }}
+          </div>
+
+          <div class="row-details">
+            <h4>{{ student.studentName }}</h4>
+            <p>{{ student.gradeName }}</p>
+          </div>
+        </div>
+
+        <div class="row-progress-container">
+          <div class="progress-bar-base">
+            <div
+              class="progress-bar-fill"
+              [style.width.%]="student.Mark > 100 ? 100 : student.Mark">
+            </div>
+          </div>
+          <span class="progress-under-text">{{ student.Mark }}/100</span>
+        </div>
+
+        <span class="row-score">{{ student.Mark }}</span>
+
+        <div class="badge-wrapper">
+          <span
+            class="row-badge"
+            [class.status-excellent]="student.Mark >= 90"
+            [class.status-highpass]="student.Mark < 90">
+            {{ student.Mark >= 90 ? 'Excellent' : 'High Pass' }}
+          </span>
+        </div>
+
+        <button class="view-btn">View</button>
+
+      </div>
+    }
+  </div>
+</div>

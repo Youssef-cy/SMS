@@ -44,6 +44,16 @@ export class SessionsService {
     );
   }
 
+  // ===========================
+  // Save All Sessions (Batch)
+  // ===========================
+  saveAllSessions(classId: number, requests: SessionREQ[]): Observable<SessionRES[]> {
+    return this.http.post<SessionRES[]>(
+      `${this.baseUrl}/SaveAll?classId=${classId}`,
+      requests
+    );
+  }
+
 
   getClass():Observable<ClassRES[]> {
     return this.http.get<ClassRES[]>(`${this.baseUrl}/Class`)

@@ -2,25 +2,41 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WorkerREQ } from '../model/worker-req';
-import { workerRES } from '../model/worker-res';
+import { WorkerRES } from '../model/worker-res';
+import { TeacherI } from '../model/teacher-i';
+import { TeacherReq } from '../model/teacher-req';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkerService {
   constructor(private http: HttpClient) {}
-  private baseUrl: string = 'http://localhost:8080/API/Employee';
+  private EmployeeUrl: string = 'http://localhost:8080/API/Employees';
+  private WorkerUrl: string = 'http://localhost:8080/API/Workers';
+  private TeacherUrl: string = 'http://localhost:8080/API/Teacher';
 
-  createWorker(worker: WorkerREQ): Observable<workerRES> {
-    return this.http.post<workerRES>(this.baseUrl, worker);
+  createWorker(worker: WorkerREQ): Observable<WorkerREQ> {
+    return this.http.post<WorkerREQ>(this.WorkerUrl, worker);
   }
 
-  allWorkers():Observable<workerRES[]>{
-    return this.http.get<workerRES[]>(this.baseUrl)
+  allWorkers(): Observable<WorkerRES> {
+    return this.http.get<WorkerRES>(this.EmployeeUrl);
   }
 
-  changeStatus(id:number):Observable<void>{
-    return this.http.put<void>(`${this.baseUrl}/${id}/deactivate`, {});
+  changeStatus(id: number): Observable<void> {
+    return this.http.put<void>(`${this.WorkerUrl}/${id}/deactivate`, {});
+  }
+
+  getTeachers(): Observable<TeacherI[]> {
+    return this.http.get<TeacherI[]>(this.TeacherUrl);
+  }
+
+  createTeacher(teacher: TeacherReq): Observable<TeacherI> {
+    return this.http.post<TeacherI>(this.TeacherUrl, teacher);
+  }
+
+  getProfile(id:number): Observable<any> {
+    return this.http.get<any>(`${this.EmployeeUrl}/Profile/${id}`)
   }
 
 }

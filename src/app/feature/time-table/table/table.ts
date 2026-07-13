@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DragDropModule, CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { forkJoin } from 'rxjs';
 
 import { SessionsService } from '../../../core/service/session-service';
 import { SessionRES } from '../../../core/model/session-res';
@@ -44,11 +43,12 @@ interface Teacher {
 export class Table implements OnInit {
   constructor(private sessionsService: SessionsService) {}
 
-  private _classId = 1;
+  private _classId: number | null = null;
   loading = false;
 
   @Input()
   set classId(value: any) {
+    if (value === null || value === undefined) return;
     const parsed = Number(value);
     if (!isNaN(parsed) && parsed > 0) {
       const changed = this._classId !== parsed;
@@ -60,7 +60,7 @@ export class Table implements OnInit {
   }
 
   get classId(): number {
-    return this._classId;
+    return this._classId ?? 0;
   }
 
   days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
@@ -139,8 +139,12 @@ export class Table implements OnInit {
           subject: t.courseName,
           colorClass: this.getTeacherColor(t.teacherName),
         }));
-        // Load sessions after teachers are loaded to map existing courses
-        this.loadSessions();
+        // Load sessions after teachers are loaded to map existing courses if classId is ready
+        if (this.classId > 0) {
+          this.loadSessions();
+        } else {
+          this.loading = false;
+        }
       },
       error: (err) => {
         console.error(err);
@@ -267,7 +271,7 @@ export class Table implements OnInit {
 
       // الخانة مشغولة بالفعل بحصة أخرى -> نرفض الإفلات
       if (targetData.length > 0) {
-        swal.fire('تنبيه', 'هذه الخانة مشغولة بالفعل بحصة أخرى', 'warning');
+        swal.fire('Warning', 'the is solt can not be able to hold two sessions', 'warning');
         return;
       }
 
@@ -372,16 +376,9 @@ export class Table implements OnInit {
       }
     }
 
-    if (requests.length === 0) {
-      return;
-    }
-
-    console.log(requests);
     this.loading = true;
 
-    const observables = requests.map((req) => this.sessionsService.addSession(req));
-
-    forkJoin(observables).subscribe({
+    this.sessionsService.saveAllSessions(this.classId, requests).subscribe({
       next: (responses) => {
         console.log('Saved all successfully', responses);
         this.loadSessions();

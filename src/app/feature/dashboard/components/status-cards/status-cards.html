@@ -1,0 +1,25 @@
+    <div class="stats-grid">
+      <div class="stat-card students">
+        <span class="stat-title"> Absent students </span>
+
+        <h2>{{ data()?.absentForStudents }}</h2>
+      </div>
+
+      <div class="stat-card employees">
+        <span class="stat-title"> Total Exams </span>
+
+        <h2>{{ data()?.countExams }}</h2>
+      </div>
+      
+      
+      <div class="stat-card attendance">
+        <span class="stat-title">Top Students </span>
+        
+        <h2>{{ data()?.totalTopStudents }}</h2>
+      </div>
+      <div class="stat-card employees">
+        <span class="stat-title"> Low Preforming Students </span>
+
+        <h2>{{ data()?.totalLowStudents }}</h2>
+      </div>
+    </div>

@@ -1,13 +1,34 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
+
+import { provideEchartsCore } from 'ngx-echarts';
+import * as echarts from 'echarts/core';
+
+import { BarChart, PieChart } from 'echarts/charts';
+
+import {
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent
+} from 'echarts/components';
+
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([
+  PieChart,
+  BarChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  TitleComponent,
+  CanvasRenderer
+]);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    provideAnimations()
+    provideRouter(routes),         
+    provideEchartsCore({ echarts }) 
   ]
 };

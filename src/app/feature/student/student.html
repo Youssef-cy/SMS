@@ -65,7 +65,7 @@
       <td>{{ student.className }}</td>
 
       <td>
-        <button class="view-btn">View</button>
+        <button class="view-btn" (click)="openProfile(student.studentId)" >View</button>
       </td>
     </tr>
   }

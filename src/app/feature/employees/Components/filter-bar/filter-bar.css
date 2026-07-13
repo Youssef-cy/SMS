@@ -1,0 +1,12 @@
+
+    .dropdown {
+        width: 100%;
+        background: #59595B;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 14px 18px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+

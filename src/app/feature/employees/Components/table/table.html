@@ -1,0 +1,36 @@
+
+  <div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (teacher of filteredData(); track teacher.id) {
+      <tr>
+        <td>{{ teacher.firstName }}</td>
+        <td>{{ teacher.role }}</td>
+        <td>{{ teacher.subject ?? 'Student Affairs' }}</td>
+        <td>{{ teacher.isDeleted ? 'Deactivated' : 'Active' }}</td>
+        <td>
+          <div class="buttons">
+             <button class="btn-view" (click)="navigateToView(teacher.id)">View</button>
+
+            <div class="space"></div>
+
+            <div class="deactivate" (click)="changeStatus(teacher.id)">
+              {{ teacher.isDeleted ? 'Activate' : 'Deactivate' }}
+            </div>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

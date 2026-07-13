@@ -145,3 +145,27 @@ select.ng-invalid.ng-touched:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(220,53,69,.15);
 }
+
+
+.btn {
+    border: 1px solid #8A0000;
+    color: #8A0000;
+    background: white;
+}
+
+.btn{
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn:hover{
+    opacity: .9;
+}
+
+.btn h3{
+
+    padding: 10px 15px;
+
+}
