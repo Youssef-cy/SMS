@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,32 +30,6 @@ LEFT JOIN Course c ON c.teacher = t
 """)
     List<TeacherRES> getAllTeachers();
 
-    @Query("""
-select new com.Company.SMS.DTO.Teacher.TeacherInfo(
-    u.firstName,
-    u.firstNameInArabic,
-    u.lastName,
-    u.lastNameInArabic,
-    u.nationalNumber,
-    u.email,
-    u.password,
-    u.address,
-    u.gender,
-    u.nationality,
-    u.birthDate,
-    u.role.id,
-    u.isDeleted,
-    u.religion,
-    t.education,
-    t.employmentHistory,
-    t.numberOfYearsOfExperience,
-    null
-)
-from Teacher t
-join t.user u
-where t.id = :teacherId
-""")
-    TeacherInfo getTeacherProfile(@Param("teacherId") Long teacherId);
 
     @Query("""
 select new com.Company.SMS.DTO.Course.CourseInfo(

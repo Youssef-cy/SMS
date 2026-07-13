@@ -1,5 +1,6 @@
 package com.Company.SMS.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class Term {
 
 
     @ManyToMany(mappedBy = "terms")
+    @JsonIgnore
     private Set<Grade> grades = new LinkedHashSet<>();
 
     @Column(name = "NAME")

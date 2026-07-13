@@ -20,4 +20,12 @@ public class MarksService {
        return  markRepo.getStudentsOrderedByGrade();
    }
 
+   public Long countOfBestStudents(){
+       return getMarks().stream().count();
+   }
+
+    public Long getFailedStudentsCount() {
+        return (long) markRepo.getFailedStudents().size();
+    }
+
 }

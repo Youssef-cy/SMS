@@ -32,5 +32,5 @@ public class TeacherInfo {
     private String employeeHistory;
     private Long numberYearsOfExperience;
 
-    private List<CourseInfo> courses;
+    private CourseInfo courses;
 }

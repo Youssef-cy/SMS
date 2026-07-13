@@ -39,9 +39,9 @@ public class StudentService {
 
 
     public StudentInfoProfileRES profile(Long id){
-        Student student = studentRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return studentRepo.getProfile(id);
     }
+
 
 
 }

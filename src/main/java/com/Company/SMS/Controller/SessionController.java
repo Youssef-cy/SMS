@@ -50,6 +50,17 @@ public class SessionController {
     }
 
 
+    // ========================= SAVE ALL SESSIONS =========================
+    @PostMapping("/SaveAll")
+    public ResponseEntity<List<SessionRES>> saveAllSessions(
+            @RequestParam Long classId,
+            @RequestBody List<SessionREQ> requests) {
+
+        List<SessionRES> response = sessions.saveAllSessions(classId, requests);
+        return ResponseEntity.ok(response);
+    }
+
+
     @GetMapping("/Class")
     public List<ClassRes> getAllClasses() {
     return classes.findAllClass();

@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 @Service
 public class SessionsService {
@@ -78,6 +79,70 @@ public class SessionsService {
                 saved.getStartAt(),
                 saved.getEndAt()
         );
+    }
+
+    // ========================= SAVE ALL SESSIONS (BATCH UPDATE/DELETE) =========================
+    @Transactional
+    public List<SessionRES> saveAllSessions(Long classId, List<SessionREQ> requests) {
+        List<Session> existingSessions = repo.findAllByClassFieldId(classId);
+
+        Map<String, Session> existingMap = new HashMap<>();
+        for (Session s : existingSessions) {
+            String key = s.getDayOfWeek() + "-" + s.getStartAt();
+            existingMap.put(key, s);
+        }
+
+        List<Session> toSave = new ArrayList<>();
+        Set<String> processedKeys = new HashSet<>();
+
+        for (SessionREQ req : requests) {
+            String key = req.getDayOfWeek() + "-" + req.getStartAt();
+            processedKeys.add(key);
+
+            Session session = existingMap.get(key);
+            Course course = courseRepo.findById(req.getCourseid())
+                    .orElseThrow(() -> new EntityNotFoundException("Course not found"));
+
+            if (session != null) {
+                session.setCourse(course);
+                session.setEndAt(req.getEndAt());
+                session.setUpdatedAt(req.getUpdated());
+            } else {
+                Class classEntity = classRepo.findById(req.getClassid())
+                        .orElseThrow(() -> new EntityNotFoundException("Class not found"));
+                session = new Session();
+                session.setClassField(classEntity);
+                session.setCourse(course);
+                session.setDayOfWeek(req.getDayOfWeek().longValue());
+                session.setStartAt(req.getStartAt());
+                session.setEndAt(req.getEndAt());
+                session.setUpdatedAt(req.getUpdated());
+            }
+            toSave.add(session);
+        }
+
+        for (Session s : existingSessions) {
+            String key = s.getDayOfWeek() + "-" + s.getStartAt();
+            if (!processedKeys.contains(key)) {
+                repo.delete(s);
+            }
+        }
+
+        List<Session> savedList = repo.saveAll(toSave);
+
+        List<SessionRES> response = new ArrayList<>();
+        for (Session saved : savedList) {
+            response.add(new SessionRES(
+                    saved.getId(),
+                    saved.getClassField().getName(),
+                    saved.getCourse().getCourseName(),
+                    saved.getCourse().getTeacher().getUser().getFirstName(),
+                    saved.getDayOfWeek(),
+                    saved.getStartAt(),
+                    saved.getEndAt()
+            ));
+        }
+        return response;
     }
 
     // ========================= GET TEACHERS =========================

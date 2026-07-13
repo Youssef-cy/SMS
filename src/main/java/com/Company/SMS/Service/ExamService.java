@@ -25,6 +25,10 @@ public class ExamService {
         return examRepo.allExams();
     }
 
+    public Long countOfExams() {
+        return allExams().stream().count();
+    }
+
 
     public void createExam(ExamREQ req) {
 
@@ -48,7 +52,7 @@ public class ExamService {
 
     public List<ExamRES> getExamForThisWeek() {
         LocalDate startOfWeek = LocalDate.now()
-                .with(DayOfWeek.SATURDAY);   // لو الأسبوع عندك يبدأ السبت
+                .with(DayOfWeek.SATURDAY);
 
         LocalDate endOfWeek = startOfWeek.plusDays(6);
 

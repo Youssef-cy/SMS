@@ -53,4 +53,29 @@ where u.userId = :UserId
 """)
     WorkerInfo getWorkerInfo(@Param("UserId") Long userId);
 
+
+//    count all employees
+
+    @Query("""
+SELECT COUNT(u)
+FROM User u
+WHERE u.role.id = 1
+""")
+    Long countEmployees();
+
+    @Query("""
+SELECT COUNT(u)
+FROM User u
+WHERE u.isDeleted = false and u.role.id = 1
+""")
+    Long countActiveUsers();
+@Query("""
+SELECT COUNT(u)
+FROM User u
+WHERE u.isDeleted = true and u.role.id = 1
+""")
+    Long countOnLeaveUsers();
+
+
+
 }

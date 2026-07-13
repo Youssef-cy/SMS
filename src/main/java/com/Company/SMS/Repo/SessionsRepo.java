@@ -30,6 +30,8 @@ public interface SessionsRepo extends JpaRepository<Session, Long> {
     """)
     List<SessionRES> findAllSessionsByClassId(@Param("classId") Long classId);
 
+    List<Session> findAllByClassFieldId(Long classId);
+
     // ========================= GET TEACHERS =========================
 
     @Query("""

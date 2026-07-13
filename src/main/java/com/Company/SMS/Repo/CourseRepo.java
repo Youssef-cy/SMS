@@ -34,4 +34,6 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
     List<MaterialRes> findMaterials();
 
 
+
+    List<Course> findByTeacher_User_UserId(Long userId);
 }

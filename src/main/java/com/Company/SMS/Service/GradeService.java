@@ -1,9 +1,11 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Grades.GradeAverageRES;
 import com.Company.SMS.DTO.Grades.GradeREQ;
 import com.Company.SMS.DTO.Grades.GradeRES;
 import com.Company.SMS.DTO.User.UserRes;
 import com.Company.SMS.Repo.GradeRepo;
+import com.Company.SMS.Repo.MarkRepo;
 import com.Company.SMS.Repo.TermRepo;
 import com.Company.SMS.entities.Grade;
 import com.Company.SMS.entities.Term;
@@ -25,6 +27,8 @@ public class GradeService {
     private GradeRepo gradeRepo;
     @Autowired
     TermRepo termRepo;
+    @Autowired
+    MarkRepo markRepo;
 
     public List<GradeRES> findAll(){
         return gradeRepo.findAllGrade();
@@ -42,6 +46,11 @@ public class GradeService {
         grade.setYear(gradeREQ.getYear());
         grade.setTerms(terms);
         gradeRepo.save(grade);
+    }
+
+
+    public List<GradeAverageRES> getAverageGradesByGrade() {
+       return markRepo.getAverageGradesByGrade();
     }
 
 }

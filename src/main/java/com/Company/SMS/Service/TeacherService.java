@@ -98,13 +98,10 @@ public class TeacherService {
 
     }
 
-    public List<TeacherRES> allTeacher(){
-        if(teacherRepo.getAllTeachers() != null && !teacherRepo.getAllTeachers().isEmpty()){
-            return teacherRepo.getAllTeachers();
-        }
-        return Collections.emptyList();
+    public List<Course> Profile(Long id){
+        System.out.println("proffffffff");
+        return courseRepo.findByTeacher_User_UserId(id);
     }
-
 
 
 

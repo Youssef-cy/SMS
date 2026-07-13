@@ -1,5 +1,6 @@
 package com.Company.SMS.Service;
 
+import com.Company.SMS.DTO.Attendance.AttendanceChartRES;
 import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.Repo.AttendanceRepo;
 import com.Company.SMS.entities.Attendance;
@@ -23,6 +24,10 @@ public class AttendanceService {
     public double getAttendanceStats(){
        return attendanceRepo.getAttendanceStats();
 
+    }
+
+    public List<AttendanceChartRES> getAttendanceChart(){
+        return attendanceRepo.getAbsentStudentsByDay();
     }
 
 }

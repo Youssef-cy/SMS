@@ -30,12 +30,8 @@ public class EmployeeService {
     UserRepo userRepo;
     @Autowired
     RoleRepo roleRepo;
-    @Autowired
-    TeacherRepo teacherRepo;
 
-    public Long sumOfEmployees(){
-        return userRepo.count();
-    }
+
     @Transactional
     public UserRes addEmployee(UserReq req) {
         System.out.println(req.getRole());
@@ -86,6 +82,22 @@ public class EmployeeService {
     }
 
 
+    public Long countEmployees(){
+        return userRepo.countEmployees();
+    }
 
+    public Long countActiveUsers(){
+        return userRepo.countActiveUsers();
+    }
+
+    public Long countOnLeaveUsers(){
+        return userRepo.countOnLeaveUsers();
+    }
+
+    public User profile(Long id ){
+
+        return userRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    }
 
 }

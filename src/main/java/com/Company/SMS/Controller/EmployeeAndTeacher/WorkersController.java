@@ -1,29 +1,23 @@
-package com.Company.SMS.Controller;
+package com.Company.SMS.Controller.EmployeeAndTeacher;
 
 import com.Company.SMS.DTO.User.UserReq;
 import com.Company.SMS.DTO.User.UserRes;
-import com.Company.SMS.DTO.User.UserResPost;
 import com.Company.SMS.Service.EmployeeService;
+import com.Company.SMS.Service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/API/Employee")
-public class EmployeeController {
+@RequestMapping("/API/Workers")
+public class WorkersController {
 
     @Autowired
     EmployeeService employeeService;
-    @GetMapping
-    public List<UserResPost> getEmployees(){
-        System.out.println(employeeService.allEmployees());
-        return employeeService.allEmployees();
-    }
+    @Autowired
+    TeacherService teacherService;
 
     @PostMapping
     public ResponseEntity<UserRes> addEmployee(@RequestBody UserReq user){
@@ -42,9 +36,5 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/Count")
-    public Long getCount(){
-        return employeeService.sumOfEmployees();
-    }
 
 }

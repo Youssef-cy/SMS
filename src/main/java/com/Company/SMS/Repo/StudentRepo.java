@@ -49,4 +49,7 @@ where s.student_id = :studentId
 """)
     StudentInfoProfileRES getProfile(@Param("studentId") Long studentId);
 
+
+
+
 }

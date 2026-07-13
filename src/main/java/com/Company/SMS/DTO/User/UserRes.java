@@ -14,4 +14,5 @@ public class UserRes {
     private String password;
     private String role;
     private Boolean isDeleted;
+
 }

@@ -25,9 +25,9 @@ public class StudentController {
     }
 
 
-    @GetMapping("/profile")
-    public StudentInfoProfileRES getProfile(@RequestParam Long studentId) {
-        return studentService.profile(studentId);
+    @GetMapping("/Profile/{id}")
+    public StudentInfoProfileRES getProfile(@PathVariable Long id) {
+        return studentService.profile(id);
     }
 
 }

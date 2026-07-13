@@ -1,6 +1,8 @@
 package com.Company.SMS.Repo;
 
+import com.Company.SMS.DTO.Grades.GradeAverageRES;
 import com.Company.SMS.DTO.Marks.MarksRes;
+import com.Company.SMS.DTO.Student.LowPerformanceStudentRES;
 import com.Company.SMS.DTO.Student.TopStudentRES;
 import com.Company.SMS.entities.Mark;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,4 +37,30 @@ public interface MarkRepo extends JpaRepository<Mark,Long> {
                          SUM(m.score) DESC
 """)
     List<MarksRes> getStudentsOrderedByGrade();
+
+
+    @Query("""
+select m.student.student_id
+from Mark m
+group by m.student.student_id
+having avg(m.score) < 50
+""")
+    List<Long> getFailedStudents();
+
+
+
+
+
+    @Query("""
+select new com.Company.SMS.DTO.Grades.GradeAverageRES(
+    s.studentClass.grade.name,
+    avg(m.score)
+)
+from Mark m
+join m.student s
+group by s.studentClass.grade.name
+order by s.studentClass.grade.name
+""")
+    List<GradeAverageRES> getAverageGradesByGrade();
+
 }

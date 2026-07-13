@@ -24,21 +24,19 @@ public class DashBoardController {
     MarksService  marksService;
     @Autowired
     ExamService examService;
+    @Autowired
+    private GradeService gradeService;
+
     @GetMapping
     public DashboardRes Dashboard(){
         return new DashboardRes(
-                studentService.sumOfStudent(),
-                teacherService.sumOfTeachers(),
                 attendanceService.getAttendanceStats(),
+                examService.countOfExams(),
+                marksService.countOfBestStudents(),
+                marksService.getFailedStudentsCount(),
+                gradeService.getAverageGradesByGrade(),
+                attendanceService.getAttendanceChart(),
                 examService.getExamForThisWeek()
-
         );
-
     }
-
-
-
-
-
-
 }
