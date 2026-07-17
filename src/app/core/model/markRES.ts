@@ -3,6 +3,6 @@ export interface MarkI {
   gradeName: string;
   studentId: number;
   studentName: string;
-  Mark: number;
+  mark: number;
 
 }

@@ -1,0 +1,66 @@
+<div class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>Create Notifications</h2>
+    </div>
+
+    <form [formGroup]="form" class="modal-body">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="announcementType">Announcement Type</label>
+          
+            <input type="text" formControlName = "announcementType" , placeholder="Event">
+        </div>
+
+        <div class="form-field">
+          <label for="title">Title</label>
+          <input id="title" type="text" formControlName="title" placeholder="Title" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="priority">Priority</label>
+          <div class="select-wrapper">
+            <select id="priority" formControlName="priority">
+              <option [ngValue]="null" disabled selected>Select Priority</option>
+              <option *ngFor="let p of priorities" [value]="p">{{ p }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="receiver">Receiver</label>
+          <div class="select-wrapper">
+            <select id="receiver" formControlName="receiver">
+              <option [ngValue]="null" disabled selected>Select Person</option>
+              <option *ngFor="let person of people" [value]="person">{{ person }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row single">
+        <div class="form-field">
+          <label for="notes">Notes (optional)</label>
+          <textarea
+            id="notes"
+            formControlName="notes"
+            rows="5"
+            placeholder="Any Notes for this notification"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+      <div class="footer-right">
+        <button type="button" class="btn btn-draft" (click)="onSaveDraft()">Save Draft</button>
+        <button type="button" class="btn btn-publish" (click)="onPublish()">
+          <span class="check">✓</span> Publish
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

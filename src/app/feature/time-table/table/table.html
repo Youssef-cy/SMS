@@ -96,7 +96,8 @@
                   (cdkDropListDropped)="drop($event)"
                 >
                   @for (session of timetableData[dayIdx][col.periodIdx]; track $index) {
-                    <div class="session-card" cdkDrag>
+                    <div class="session-card {{ session.colorClass }}" cdkDrag>
+                      <div class="delete-icon" (mousedown)="$event.stopPropagation()" (click)="deleteSingleSession(session, dayIdx, col.periodIdx, $index)">&#10005;</div>
                       <div class="session-subject">
                         {{ session.courseName }}
                       </div>
@@ -114,7 +115,10 @@
           </div>
         }
 
-        <div class="save" (click)="save()">Save</div>
+        <div class="actions-row">
+          <div class="clear-all-btn" (click)="clearAll()"><i class="hgi hgi-stroke hgi-rounded hgi-delete-02"></i> Delete All Sessions</div>
+          <div class="save" (click)="save()"><i class="hgi hgi-stroke hgi-rounded hgi-floppy-disk"></i> Save Sessions</div>
+        </div>
       }
     </div>
   </div>

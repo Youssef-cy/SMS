@@ -4,11 +4,12 @@ import { ReportRES } from '../../core/model/report-res';
 import { ReportS } from '../../core/service/report-s';
 import { RemoveBtn } from "../../shared/remove-btn/remove-btn";
 import { CancelBtn } from "../../shared/cancel-btn/cancel-btn";
+import { AddBtn } from "../../shared/add-btn/add-btn";
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [FormsModule, RemoveBtn, CancelBtn],
+  imports: [FormsModule, RemoveBtn, CancelBtn, AddBtn],
   templateUrl: './reports.html',
   styleUrl: './reports.css',
 })
@@ -31,7 +32,6 @@ export class Reports implements OnInit {
   getAll() {
     this.content.getAllReports().subscribe({
       next: (res) => {
-        console.log(res);
 
         this.allReports = res;
         this.data.set(res);

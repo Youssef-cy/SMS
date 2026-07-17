@@ -1,7 +1,7 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { WorkerService } from '../../core/service/worker-service';
 import Swal from 'sweetalert2';
 import { AddBtn } from '../../shared/add-btn/add-btn';
@@ -21,12 +21,15 @@ import { Role } from '../../core/model/role';
 })
 export class AddEmp implements OnInit{
   form: FormGroup;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private workerservice: WorkerService,
     private grades:GradeService,
-    private roles:RoleService
+    private roles:RoleService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public editData: any,
+    @Optional() private dialogRef: MatDialogRef<AddEmp>
   ) {
     this.form = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -78,8 +81,86 @@ export class AddEmp implements OnInit{
   Roles = signal<Role[]>([])
 
   ngOnInit(): void {
-    this.getAllGrades(),
-    this.getAllRoles()
+    this.getAllGrades();
+    this.getAllRoles();
+
+    this.form.get('role')?.valueChanges.subscribe(() => {
+      this.updateTeacherValidations();
+    });
+
+    if (this.editData && this.editData.id) {
+      this.isEditMode = true;
+      this.workerservice.getProfile(this.editData.id).subscribe({
+        next: (res) => {
+          const profile = Array.isArray(res) ? res[0] : res;
+          const user = profile?.teacher?.user ?? profile;
+          
+          this.form.patchValue({
+            firstName: user.firstName,
+            firstNameAnArabic: user.firstNameInArabic,
+            lastName: user.lastName,
+            lastNameAnArabic: user.lastNameInArabic,
+            nationalId: user.nationalNumber,
+            email: user.email,
+            address: user.address,
+            gender: user.gender,
+            nationality: user.nationality,
+            birthDate: user.birthDate,
+            role: user.role?.id,
+            isDeleted: user.isDeleted,
+            religion: user.religion,
+          });
+
+          this.form.get('password')?.clearValidators();
+          this.form.get('password')?.updateValueAndValidity();
+
+          if (profile.teacher) {
+            this.form.patchValue({
+              education: profile.teacher.education,
+              employeeHistory: profile.teacher.employmentHistory,
+              numberYearsOfExperience: profile.teacher.numberOfYearsOfExperience,
+              subject: profile.courseName,
+              subjectType: profile.courseType,
+              subjectDescription: profile.description,
+              gradeId: profile.gradeId,
+              termId: profile.termId,
+              materialLink: profile.materials
+            });
+          }
+        },
+        error: (err) => {}
+      });
+    }
+  }
+
+  get isTeacherRoleSelected(): boolean {
+    const roleId = this.form.get('role')?.value;
+    const role = this.Roles().find((r) => r.id == roleId);
+    return role?.name?.toLowerCase().includes('teacher') ?? false;
+  }
+
+  updateTeacherValidations() {
+    const teacherControls = ['subject', 'subjectType', 'materialLink', 'gradeId', 'termId'];
+    
+    if (this.isTeacherRoleSelected) {
+      teacherControls.forEach(ctrl => {
+        this.form.get(ctrl)?.setValidators([Validators.required]);
+        this.form.get(ctrl)?.updateValueAndValidity();
+      });
+    } else {
+      teacherControls.forEach(ctrl => {
+        this.form.get(ctrl)?.clearValidators();
+        this.form.get(ctrl)?.updateValueAndValidity();
+      });
+      this.form.patchValue({
+        subject: '',
+        subjectType: '',
+        subjectDescription: '',
+        gradeId: null,
+        termId: null,
+        materialLink: ''
+      });
+    }
   }
 
   getAllGrades(){
@@ -106,85 +187,112 @@ export class AddEmp implements OnInit{
       return;
     }
 
-    const data = this.form.value;
+    let data = { ...this.form.value };
 
-    const isTeacher =
-      data.subject?.trim() &&
-      data.subjectType?.trim() &&
-      data.materialLink?.trim() &&
-      data.gradeId &&
-      data.termId;
+    if (!this.isTeacherRoleSelected) {
+      delete data.subject;
+      delete data.subjectType;
+      delete data.subjectDescription;
+      delete data.gradeId;
+      delete data.termId;
+      delete data.materialLink;
+    }
 
-    if (isTeacher) {
-      this.workerservice.createTeacher(data).subscribe({
-        next: (res) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Teacher Created Successfully',
-            html: `
-            <div style="text-align:left">
-              <p><strong>Email:</strong> ${res.email}</p>
-              <p><strong>Password:</strong> ${res.password}</p>
-            </div>
-          `,
-            confirmButtonColor: '#0F2747',
-          });
+    const isTeacher = this.isTeacherRoleSelected;
 
-          this.form.reset({
-            gender: 'M',
-            role: 1,
-            gradeId: 1,
-            termId: 1,
-            isDeleted: false,
-            numberYearsOfExperience: 0,
-          });
-        },
-
-        error: (err) => {
-          console.error(err);
-
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Error while creating teacher',
-          });
-        },
-      });
+    if (this.isEditMode) {
+      const id = this.editData.id;
+      if (isTeacher) {
+        this.workerservice.updateTeacher(id, data).subscribe({
+          next: () => {
+            Swal.fire({ icon: 'success', title: 'Teacher Updated Successfully', confirmButtonColor: '#0F2747' });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to update teacher', 'error')
+        });
+      } else {
+        this.workerservice.updateWorker(id, data).subscribe({
+          next: () => {
+            Swal.fire({ icon: 'success', title: 'Worker Updated Successfully', confirmButtonColor: '#0F2747' });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to update worker', 'error')
+        });
+      }
     } else {
-      this.workerservice.createWorker(data).subscribe({
-        next: (res) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Worker Created Successfully',
-            html: `
-            <div style="text-align:left">
-              <p><strong>Email:</strong> ${res.email}</p>
-              <p><strong>Password:</strong> ${res.password}</p>
-            </div>
-          `,
-            confirmButtonColor: '#0F2747',
-          });
+      if (isTeacher) {
+        this.workerservice.createTeacher(data).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Teacher Created Successfully',
+              html: `
+              <div style="text-align:left">
+                <p><strong>Email:</strong> ${res.email}</p>
+                <p><strong>Password:</strong> ${res.password}</p>
+              </div>
+            `,
+              confirmButtonColor: '#0F2747',
+            });
 
-          this.form.reset({
-            gender: 'M',
-            role: 1,
-            gradeId: 1,
-            termId: 1,
-            isDeleted: false,
-            numberYearsOfExperience: 0,
-          });
-        },
+            this.form.reset({
+              gender: 'M',
+              role: 1,
+              gradeId: 1,
+              termId: 1,
+              isDeleted: false,
+              numberYearsOfExperience: 0,
+            });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
 
-        error: (err) => {
-          console.error(err);
+          error: (err) => {
+            console.error(err);
 
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Error while creating worker',
-          });
-        },
-      });
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error while creating teacher',
+            });
+          },
+        });
+      } else {
+        this.workerservice.createWorker(data).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Worker Created Successfully',
+              html: `
+              <div style="text-align:left">
+                <p><strong>Email:</strong> ${res.email}</p>
+                <p><strong>Password:</strong> ${res.password}</p>
+              </div>
+            `,
+              confirmButtonColor: '#0F2747',
+            });
+
+            this.form.reset({
+              gender: 'M',
+              role: 1,
+              gradeId: 1,
+              termId: 1,
+              isDeleted: false,
+              numberYearsOfExperience: 0,
+            });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+
+          error: (err) => {
+            console.error(err);
+
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error while creating worker',
+            });
+          },
+        });
+      }
     }
   }
   cancel(): void {
@@ -196,6 +304,7 @@ export class AddEmp implements OnInit{
       isDeleted: false,
       numberYearsOfExperience: 0,
     });
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   onlyNumbers(event: KeyboardEvent) {

@@ -59,4 +59,20 @@ export class SessionsService {
     return this.http.get<ClassRES[]>(`${this.baseUrl}/Class`)
   }
 
+  // ===========================
+  // Clear All Sessions for a Class
+  // ===========================
+  clearAllSessions(classId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/ClearAll?classId=${classId}`
+    );
+  }
+
+  // ===========================
+  // Delete Single Session
+  // ===========================
+  deleteSession(sessionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${sessionId}`);
+  }
+
 }

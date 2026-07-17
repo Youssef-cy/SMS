@@ -1,6 +1,6 @@
 :host{
   flex: 1;
-  height: 100vh;
+  height: 110vh;
   overflow-y: auto;
   background-color: var(--bg);
 }
@@ -202,7 +202,7 @@ header {
 }
 
 .reports-table {
-    width: 100%;
+    width: 187vh;
     border-collapse: collapse;
 }
 

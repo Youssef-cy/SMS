@@ -1,0 +1,251 @@
+/* =========================
+   Modal
+========================= */
+
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    height: 100vh;
+    width: 100%;
+}
+
+.add-employee-modal{
+    width:1100px;
+
+    overflow:auto;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+/* =========================
+   Header
+========================= */
+
+.modal-header{
+    padding:22px 28px;
+    background:#F8F6F6;
+    border-left:6px solid #8B1E1E;
+    border-bottom:1px solid #E9E5E5;
+}
+
+.modal-header h2{
+    margin:0;
+    font-size:32px;
+    color:#2b2020;
+    font-weight:700;
+}
+
+.modal-header p{
+    margin-top:6px;
+    color:#857979;
+    font-size:14px;
+}
+
+/* =========================
+   Body
+========================= */
+
+.modal-body{
+    padding:28px;
+}
+
+.modal-body h3{
+    margin:30px 0 18px;
+    font-size:17px;
+    color:#8B1E1E;
+    font-weight:600;
+    border-bottom:1px solid #ECEAEA;
+    padding-bottom:8px;
+}
+
+/* =========================
+   Grid
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px 22px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-size:14px;
+    color:#5A5555;
+    font-weight:600;
+}
+
+/* =========================
+   Inputs
+========================= */
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width: 187vh;
+    height:46px;
+
+    padding:0 14px;
+
+    border:1px solid #E5DDDD;
+    border-radius:8px;
+
+    background:#fff;
+
+    font-size:14px;
+
+    transition:.25s;
+}
+
+.form-group textarea{
+    min-height:90px;
+    padding-top:12px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#0F2747;
+
+    box-shadow:0 0 0 3px rgba(15,39,71,.08);
+
+}
+
+.form-group input::placeholder{
+    color:#B5AAAA;
+}
+
+/* =========================
+   Checkbox
+========================= */
+
+label{
+    font-size:14px;
+}
+
+input[type=checkbox]{
+
+    width:18px;
+    height:18px;
+
+    accent-color:#0F2747;
+
+    margin-right:8px;
+}
+
+/* =========================
+   Footer
+========================= */
+
+.modal-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 28px;
+
+    border-top:1px solid #ECECEC;
+
+    background:#FAFAFA;
+
+}
+
+/* =========================
+   Save Button
+========================= */
+
+.save{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.save:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* =========================
+   Scrollbar
+========================= */
+
+.add-employee-modal::-webkit-scrollbar{
+    width:8px;
+}
+
+.add-employee-modal::-webkit-scrollbar-thumb{
+    background:#C8C8C8;
+    border-radius:20px;
+}
+
+.add-employee-modal::-webkit-scrollbar-track{
+    background:#F2F2F2;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media(max-width:900px){
+
+.form-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.modal-header h2{
+
+    font-size:26px;
+
+}
+
+}
+
+
+.error-msg {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
+  font-weight: 500;
+}
+
+
+.invalid {
+  border: 1px solid #dc3545 !important;
+  outline: none;
+}
+
+.invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}

@@ -17,7 +17,7 @@ export class TopBanner {
   
   openDialog() {
     this.dialog.open(AddEmp, {
-      width: '400px',
+      width: '500px',
     });
   }
 

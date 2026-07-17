@@ -37,7 +37,7 @@ grades = signal<string[]>([]);
         this.grades.set(uniqueGrades);
 
         if (data.length > 0) {
-          this.selectedGrade = data[0].grade;
+          this.selectedGrade = 'all';
           this.selectedClass = data[0].id;
         } else {
           this.selectedGrade = 'all';
@@ -71,5 +71,11 @@ grades = signal<string[]>([]);
       grade: this.selectedGrade,
       classId: this.selectedClass
     });
+  }
+
+  clearFilters() {
+    this.selectedGrade = 'all';
+    this.selectedClass = 'all';
+    this.emitFilter();
   }
 }

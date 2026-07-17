@@ -33,7 +33,7 @@
     .status-badge {
         padding: 6px 18px;
         border-radius: 30px;
-        font-size: 13px;
+        font-size: 10px;
         font-weight: 600;
     }
 
@@ -77,6 +77,15 @@
 
     .deactivate  {
         background: #670808;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 18px;
+        cursor: pointer;
+    }
+
+    .activate {
+        background: #0d8a43;
         color: white;
         border: none;
         border-radius: 6px;

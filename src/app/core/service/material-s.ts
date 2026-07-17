@@ -14,4 +14,8 @@ export class MaterialS {
    getMaterialsContent():Observable<MaterialI[]>{
     return this.http.get<MaterialI[]>(this.baseUrl);
    }
+
+   updateMaterial(courseId: number, material: string): Observable<string> {
+    return this.http.put(`${this.baseUrl}/${courseId}`, material, { responseType: 'text' });
+   }
 }

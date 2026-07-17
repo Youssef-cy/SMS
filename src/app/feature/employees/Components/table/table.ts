@@ -2,6 +2,8 @@ import { Component, computed, signal } from '@angular/core';
 import { WorkerService } from '../../../../core/service/worker-service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEmp } from '../../../add-emp/add-emp';
 
 @Component({
   selector: 'app-teachet-table',
@@ -13,6 +15,7 @@ export class Table {
   constructor(
     private workerservice: WorkerService,
     private routing: Router,
+    private dialog: MatDialog,
   ) {}
 
   data = signal<any>(null);
@@ -64,10 +67,24 @@ export class Table {
     this.routing.navigate(['/teacherProfile', id]);
   }
 
+  openEditDialog(id: number) {
+    const dialogRef = this.dialog.open(AddEmp, {
+      width: '500px',
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getallTeacher();
+      }
+    });
+  }
+
   changeStatus(id: number) {
     this.workerservice.changeStatus(id).subscribe({
       next: () => {
         this.getallTeacher();
+        this.workerservice.reloadEmployees$.next();
 
         Swal.fire({
           icon: 'success',

@@ -1,0 +1,162 @@
+<div class="modal-overlay">
+  <div class="create-exam">
+    <header>
+      <h2>{{ isEditMode ? 'Edit Exam' : 'Create New Exam' }}</h2>
+      <p>Fill in the details below to {{ isEditMode ? 'update the' : 'create a new' }} Exam</p>
+    </header>
+<form #f="ngForm" (ngSubmit)="createExam(f)">
+
+    <div class="modal-body">
+      <div class="form-grid">
+        <!-- Subject -->
+        <div class="form-group">
+          <label>Subject</label>
+
+          <select [(ngModel)]="exam.courseName" name="courseName" required #courseName="ngModel">
+            <option value="" disabled>Select Subject</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="Arabic">Arabic</option>
+            <option value="English">English</option>
+          </select>
+
+          <small class="error-msg" *ngIf="courseName.invalid && courseName.touched">
+            Subject is required.
+          </small>
+        </div>
+        <!-- Exam Type -->
+        <div class="form-group">
+          <label>Type</label>
+
+          <select [(ngModel)]="exam.examType" name="examType" required #examType="ngModel">
+            <option value="" disabled>Select Exam Type</option>
+            <option value="FINAL">Final</option>
+            <option value="MIDTERM">Midterm</option>
+            <option value="MONTHLY">Monthly</option>
+          </select>
+
+          <small class="error-msg" *ngIf="examType.invalid && examType.touched">
+            Exam Type is required.
+          </small>
+        </div>
+        <!-- Grade -->
+        <div class="form-group">
+          <label>Grade</label>
+
+          <select [(ngModel)]="exam.gradeId" name="gradeId" required #gradeId="ngModel">
+            <option [ngValue]="0" disabled>Select Grade</option>
+            <option [ngValue]="1">Grade 10</option>
+            <option [ngValue]="2">Grade 11</option>
+            <option [ngValue]="3">Grade 12</option>
+          </select>
+
+          <small class="error-msg" *ngIf="gradeId.invalid && gradeId.touched">
+            Grade is required.
+          </small>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label>Date</label>
+
+          <input
+            type="date"
+            [(ngModel)]="exam.examDate"
+            name="examDate"
+            required
+            #examDate="ngModel"
+          />
+
+          <small class="error-msg" *ngIf="examDate.invalid && examDate.touched">
+            Exam Date is required.
+          </small>
+        </div>
+
+        <!-- Time -->
+        <div class="form-group">
+          <label>Time</label>
+
+          <input
+            type="time"
+            [(ngModel)]="exam.examTime"
+            name="examTime"
+            required
+            #examTime="ngModel"
+          />
+
+          <small class="error-msg" *ngIf="examTime.invalid && examTime.touched">
+            Exam Time is required.
+          </small>
+        </div>
+
+        <!-- Duration -->
+        <div class="form-group">
+          <label>Duration (Minutes)</label>
+
+          <input
+            type="number"
+            [(ngModel)]="exam.duration"
+            name="duration"
+            required
+            min="1"
+            #duration="ngModel"
+          />
+
+          <small class="error-msg" *ngIf="duration.invalid && duration.touched">
+            <span *ngIf="duration.errors?.['required']"> Duration is required. </span>
+
+            <span *ngIf="duration.errors?.['min']"> Duration must be greater than 0. </span>
+          </small>
+        </div>
+
+        <!-- Committee -->
+        <div class="form-group">
+          <label>Committee</label>
+
+          <select
+            [(ngModel)]="exam.committeeName"
+            name="committeeName"
+            required
+            #committeeName="ngModel"
+          >
+            <option value="" disabled>Select Committee</option>
+            <option value="Room A101">Room A101</option>
+            <option value="Room B202">Room B202</option>
+            <option value="Room C303">Room C303</option>
+            <option value="Room D404">Room D404</option>
+            <option value="Room E505">Room E505</option>
+          </select>
+
+          <small class="error-msg" *ngIf="committeeName.invalid && committeeName.touched">
+            Committee is required.
+          </small>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label>Status</label>
+
+          <select [(ngModel)]="exam.status" name="status" required #status="ngModel">
+            <option value="Scheduled">Scheduled</option>
+            <option value="Pending">Pending</option>
+          </select>
+
+          <small class="error-msg" *ngIf="status.invalid && status.touched">
+            Status is required.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="btn"><h3>Esc</h3></div>
+      <div class="footer-actions">
+        <button class="save-btn" type="submit">{{ isEditMode ? 'Update Exam' : 'Save Exam' }}</button>
+      </div>
+    </div>
+    </form>
+  </div>
+  
+</div>

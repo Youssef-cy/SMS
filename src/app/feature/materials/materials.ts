@@ -2,6 +2,7 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { MaterialS } from '../../core/service/material-s';
 import { MaterialI } from '../../core/model/material-i';
 import { TopBanner } from "./components/top-banner/top-banner";
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-materials',
@@ -69,5 +70,36 @@ export class Materials implements OnInit {
 
   onSearch(value: string) {
     this.searchText.set(value);
+  }
+
+  updateMaterialContent(item: MaterialI) {
+    swal.fire({
+      title: 'Update Material',
+      text: `Enter material link for ${item.courseName}`,
+      input: 'text',
+      inputPlaceholder: 'e.g. https://example.com/material.pdf',
+      showCancelButton: true,
+      confirmButtonText: 'Update',
+      cancelButtonText: 'Cancel',
+      inputValidator: (value) => {
+        if (!value || value.trim() === '') {
+          return 'Please enter a valid material link or name!';
+        }
+        return null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.content.updateMaterial(item.courseId, result.value).subscribe({
+          next: () => {
+            swal.fire('Updated!', 'Material has been successfully updated.', 'success');
+            this.getMaterials();
+          },
+          error: (err) => {
+            console.error(err);
+            swal.fire('Error!', 'Failed to update material.', 'error');
+          }
+        });
+      }
+    });
   }
 }

@@ -40,7 +40,7 @@
 }
 
 .fill {
-    width: 100%;
+    width: 187vh;
     max-width: 48px;
     background: var(--color-info-banner-bg);
     border-radius: 6px 6px 0 0;
@@ -74,7 +74,7 @@
 .h10 { height: 130px; }
 
 .exam-table {
-    width: 100%;
+    width: 187vh;
     border-collapse: collapse;
 }
 
@@ -151,7 +151,7 @@
 }
 
 .exam-table{
-    width:100%;
+    width: 187vh;
     border-collapse:collapse;
     table-layout:fixed;
 }

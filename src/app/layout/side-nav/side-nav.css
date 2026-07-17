@@ -6,7 +6,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 120vh;
   width: 233px;
   background: var(--primry);
 }
@@ -15,9 +15,10 @@
   width: 100%;
   flex: 1;
   background: var(--primry);
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  padding: 20px 18px 0 18px;
+  padding: 20px 18px 20px 18px;
   color: var(--white);
   align-items: center;
   min-height: 0;

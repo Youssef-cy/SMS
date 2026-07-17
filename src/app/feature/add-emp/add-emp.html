@@ -3,8 +3,8 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
       <!-- HEADER -->
       <div class="modal-header">
-        <h2>Add new Employee</h2>
-        <p>Creates a record in Employee and Teacher table.</p>
+        <h2>{{ isEditMode ? 'Edit Employee' : 'Add new Employee' }}</h2>
+        <p>{{ isEditMode ? 'Updates the employee record.' : 'Creates a record in Employee and Teacher table.' }}</p>
       </div>
 
       <!-- BODY -->
@@ -315,106 +315,110 @@
         </div>
 
         <!-- ================= Teacher Information ================= -->
-        <h3>Teacher Information</h3>
+        <ng-container *ngIf="isTeacherRoleSelected">
+          <h3>Teacher Information</h3>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Subject *</label>
-            <input
-              type="text"
-              formControlName="subject"
-              [class.invalid]="form.get('subject')?.invalid && form.get('subject')?.touched"
-            />
-            <small
-              class="error-msg"
-              *ngIf="form.get('subject')?.invalid && form.get('subject')?.touched"
-            >
-              <span *ngIf="form.get('subject')?.errors?.['required']">Subject is required.</span>
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Subject Type *</label>
-            <input
-              type="text"
-              formControlName="subjectType"
-              [class.invalid]="form.get('subjectType')?.invalid && form.get('subjectType')?.touched"
-            />
-            <small
-              class="error-msg"
-              *ngIf="form.get('subjectType')?.invalid && form.get('subjectType')?.touched"
-            >
-              <span *ngIf="form.get('subjectType')?.errors?.['required']"
-                >Subject type is required.</span
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Subject *</label>
+              <input
+                type="text"
+                formControlName="subject"
+                [class.invalid]="form.get('subject')?.invalid && form.get('subject')?.touched"
+              />
+              <small
+                class="error-msg"
+                *ngIf="form.get('subject')?.invalid && form.get('subject')?.touched"
               >
-            </small>
-          </div>
+                <span *ngIf="form.get('subject')?.errors?.['required']">Subject is required.</span>
+              </small>
+            </div>
 
-          <div class="form-group">
-            <label>Subject Description</label>
-            <input type="text" formControlName="subjectDescription" />
-          </div>
-
-          <div class="form-group">
-            <label>Material Link *</label>
-            <input
-              type="text"
-              formControlName="materialLink"
-              [class.invalid]="
-                form.get('materialLink')?.invalid && form.get('materialLink')?.touched
-              "
-            />
-            <small
-              class="error-msg"
-              *ngIf="form.get('materialLink')?.invalid && form.get('materialLink')?.touched"
-            >
-              <span *ngIf="form.get('materialLink')?.errors?.['required']"
-                >Material link is required.</span
+            <div class="form-group">
+              <label>Subject Type *</label>
+              <input
+                type="text"
+                formControlName="subjectType"
+                [class.invalid]="
+                  form.get('subjectType')?.invalid && form.get('subjectType')?.touched
+                "
+              />
+              <small
+                class="error-msg"
+                *ngIf="form.get('subjectType')?.invalid && form.get('subjectType')?.touched"
               >
-            </small>
-          </div>
+                <span *ngIf="form.get('subjectType')?.errors?.['required']"
+                  >Subject type is required.</span
+                >
+              </small>
+            </div>
 
-          <div class="form-group">
-            <label>Grade Name *</label>
-            <select
-              formControlName="gradeId"
-              [class.invalid]="form.get('gradeId')?.invalid && form.get('gradeId')?.touched"
-            >
-              <option value="" disabled>Select Grade</option>
+            <div class="form-group">
+              <label>Subject Description</label>
+              <input type="text" formControlName="subjectDescription" />
+            </div>
 
-              @for (grade of grade(); track grade.id) {
-                <option [value]="grade.id">
-                  {{ grade.grade }}
-                </option>
-              }
-            </select>
-
-            <small
-              class="error-msg"
-              *ngIf="form.get('gradeId')?.invalid && form.get('gradeId')?.touched"
-            >
-              <span *ngIf="form.get('gradeId')?.errors?.['required']"> Grade is required. </span>
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label>Term ID *</label>
-            <input
-              type="number"
-              formControlName="termId"
-              [class.invalid]="form.get('termId')?.invalid && form.get('termId')?.touched"
-            />
-            <small
-              class="error-msg"
-              *ngIf="form.get('termId')?.invalid && form.get('termId')?.touched"
-            >
-              <span *ngIf="form.get('termId')?.errors?.['required']">Term ID is required.</span>
-              <span *ngIf="form.get('termId')?.errors?.['min']"
-                >Term ID must be a positive number.</span
+            <div class="form-group">
+              <label>Material Link *</label>
+              <input
+                type="text"
+                formControlName="materialLink"
+                [class.invalid]="
+                  form.get('materialLink')?.invalid && form.get('materialLink')?.touched
+                "
+              />
+              <small
+                class="error-msg"
+                *ngIf="form.get('materialLink')?.invalid && form.get('materialLink')?.touched"
               >
-            </small>
+                <span *ngIf="form.get('materialLink')?.errors?.['required']"
+                  >Material link is required.</span
+                >
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label>Grade Name *</label>
+              <select
+                formControlName="gradeId"
+                [class.invalid]="form.get('gradeId')?.invalid && form.get('gradeId')?.touched"
+              >
+                <option value="" disabled>Select Grade</option>
+
+                @for (grade of grade(); track grade.id) {
+                  <option [value]="grade.id">
+                    {{ grade.grade }}
+                  </option>
+                }
+              </select>
+
+              <small
+                class="error-msg"
+                *ngIf="form.get('gradeId')?.invalid && form.get('gradeId')?.touched"
+              >
+                <span *ngIf="form.get('gradeId')?.errors?.['required']"> Grade is required. </span>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label>Term ID *</label>
+              <input
+                type="number"
+                formControlName="termId"
+                [class.invalid]="form.get('termId')?.invalid && form.get('termId')?.touched"
+              />
+              <small
+                class="error-msg"
+                *ngIf="form.get('termId')?.invalid && form.get('termId')?.touched"
+              >
+                <span *ngIf="form.get('termId')?.errors?.['required']">Term ID is required.</span>
+                <span *ngIf="form.get('termId')?.errors?.['min']"
+                  >Term ID must be a positive number.</span
+                >
+              </small>
+            </div>
           </div>
-        </div>
+        </ng-container>
 
         <!-- ================= Account Settings ================= -->
         <h3>Account Settings</h3>
@@ -430,7 +434,8 @@
         <app-cancel-btn type="button" (click)="cancel()"> </app-cancel-btn>
 
         <div class="save">
-          <app-add-btn></app-add-btn>
+          <app-add-btn *ngIf="!isEditMode"></app-add-btn>
+          <app-save-btn *ngIf="isEditMode"></app-save-btn>
         </div>
       </div>
     </form>

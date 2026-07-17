@@ -36,6 +36,7 @@
             <th>Location</th>
             <th>ExamType</th>
             <th>Status</th>
+            <th style="text-align: center;">Actions</th>
           </tr>
         </thead>
 
@@ -64,6 +65,11 @@
                   {{ exam.status }}
 
                 </span>
+              </td>
+
+              <td style="display: flex; justify-content: center; gap: 10px; align-items: center;">
+                <button (click)="openEditDialog(exam)" style="background-color: #0F2747; color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; border: none; font-weight: 600;"><i class="hgi hgi-stroke hgi-edit-02"></i> Edit</button>
+                <button (click)="deleteExam(exam.id)" style="background-color: #db5267; color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; border: none; font-weight: 600;"><i class="hgi hgi-stroke hgi-delete-02"></i> Delete</button>
               </td>
 
             </tr>

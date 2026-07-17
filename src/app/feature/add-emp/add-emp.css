@@ -2,87 +2,92 @@
    Modal
 ========================= */
 
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:1000;
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
 }
 
-.add-employee-modal{
-    width:1100px;
-    max-width:95%;
-    max-height:92vh;
-    overflow:auto;
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
+.add-employee-modal {
+    width: 100%;
+    max-width: 1100px;
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
 }
 
 /* =========================
    Header
 ========================= */
 
-.modal-header{
-    padding:22px 28px;
-    background:#F8F6F6;
-    border-left:6px solid #8B1E1E;
-    border-bottom:1px solid #E9E5E5;
+.modal-header {
+    padding: 24px 30px;
+    background: #F8F6F6;
+    border-left: 6px solid #8B1E1E;
+    border-bottom: 1px solid #ECECEC;
 }
 
-.modal-header h2{
-    margin:0;
-    font-size:32px;
-    color:#2b2020;
-    font-weight:700;
+.modal-header h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #2B2020;
 }
 
-.modal-header p{
-    margin-top:6px;
-    color:#857979;
-    font-size:14px;
+.modal-header p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #8A7C7C;
 }
 
 /* =========================
    Body
 ========================= */
 
-.modal-body{
-    padding:28px;
+.modal-body {
+    padding: 30px;
 }
 
-.modal-body h3{
-    margin:30px 0 18px;
-    font-size:17px;
-    color:#8B1E1E;
-    font-weight:600;
-    border-bottom:1px solid #ECEAEA;
-    padding-bottom:8px;
+.modal-body h3 {
+    margin: 28px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ECECEC;
+    color: #8B1E1E;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 /* =========================
    Grid
 ========================= */
 
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px 22px;
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 22px;
 }
 
-.form-group{
-    display:flex;
-    flex-direction:column;
+.form-group {
+    display: flex;
+    flex-direction: column;
 }
 
-.form-group label{
-    margin-bottom:8px;
-    font-size:14px;
-    color:#5A5555;
-    font-weight:600;
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
 }
 
 /* =========================
@@ -91,159 +96,170 @@
 
 .form-group input,
 .form-group select,
-.form-group textarea{
+.form-group textarea {
 
-    width:100%;
-    height:46px;
+    width: 100%;
+    height: 48px;
 
-    padding:0 14px;
+    padding: 0 15px;
 
-    border:1px solid #E5DDDD;
-    border-radius:8px;
+    border: 1px solid #DDD;
+    border-radius: 8px;
 
-    background:#fff;
+    background: #fff;
 
-    font-size:14px;
+    font-size: 14px;
 
-    transition:.25s;
+    transition: .25s;
+
+    box-sizing: border-box;
 }
 
-.form-group textarea{
-    min-height:90px;
-    padding-top:12px;
+.form-group textarea {
+    height: 120px;
+    padding: 14px 15px;
+    resize: vertical;
 }
 
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus{
+.form-group textarea:focus {
 
-    outline:none;
+    outline: none;
 
-    border-color:#0F2747;
+    border-color: #0F2747;
 
-    box-shadow:0 0 0 3px rgba(15,39,71,.08);
+    box-shadow: 0 0 0 3px rgba(15,39,71,.12);
 
 }
 
-.form-group input::placeholder{
-    color:#B5AAAA;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #B9B0B0;
 }
 
 /* =========================
    Checkbox
 ========================= */
 
-label{
-    font-size:14px;
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-input[type=checkbox]{
-
-    width:18px;
-    height:18px;
-
-    accent-color:#0F2747;
-
-    margin-right:8px;
+.checkbox-group input {
+    width: 18px;
+    height: 18px;
+    accent-color: #0F2747;
 }
 
 /* =========================
    Footer
 ========================= */
 
-.modal-footer{
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    display:flex;
+    padding: 20px 30px;
 
-    justify-content:space-between;
+    border-top: 1px solid #ECECEC;
 
-    align-items:center;
-
-    padding:22px 28px;
-
-    border-top:1px solid #ECECEC;
-
-    background:#FAFAFA;
-
+    background: #FAFAFA;
 }
 
 /* =========================
-   Save Button
+   Buttons
 ========================= */
 
-.save{
+.save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    display:flex;
+    min-width: 130px;
+    height: 46px;
 
-    align-items:center;
+    cursor: pointer;
 
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:.25s;
-
+    transition: .25s;
 }
 
-.save:hover{
+.save:hover {
+    transform: translateY(-2px);
+}
 
-    transform:translateY(-2px);
+/* =========================
+   Error
+========================= */
 
+.error-msg {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 3px rgba(220,53,69,.15);
 }
 
 /* =========================
    Scrollbar
 ========================= */
 
-.add-employee-modal::-webkit-scrollbar{
-    width:8px;
+.add-employee-modal::-webkit-scrollbar {
+    width: 8px;
 }
 
-.add-employee-modal::-webkit-scrollbar-thumb{
-    background:#C8C8C8;
-    border-radius:20px;
+.add-employee-modal::-webkit-scrollbar-thumb {
+    background: #C8C8C8;
+    border-radius: 20px;
 }
 
-.add-employee-modal::-webkit-scrollbar-track{
-    background:#F2F2F2;
+.add-employee-modal::-webkit-scrollbar-track {
+    background: #F3F3F3;
 }
 
 /* =========================
    Responsive
 ========================= */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-.form-grid{
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 
-    grid-template-columns:1fr;
+    .modal-header h2 {
+        font-size: 24px;
+    }
+
+    .modal-body,
+    .modal-header,
+    .modal-footer {
+        padding: 20px;
+    }
 
 }
 
-.modal-header h2{
+@media (max-width: 600px) {
 
-    font-size:26px;
+    .add-employee-modal {
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
 
-}
+    .modal-header h2 {
+        font-size: 22px;
+    }
 
-}
-
-
-.error-msg {
-  color: #dc3545;
-  font-size: 13px;
-  margin-top: 4px;
-  display: block;
-  font-weight: 500;
-}
-
-
-.invalid {
-  border: 1px solid #dc3545 !important;
-  outline: none;
-}
-
-.invalid:focus {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
 }

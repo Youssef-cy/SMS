@@ -40,7 +40,16 @@
             @for (item of group.materials; track item.courseId) {
 
               <tr>
-                <td>{{ item.materials }}</td>
+                <td class="material-cell">
+                  @if (item.materials && item.materials !== 'null' && item.materials !== '') {
+                    <span class="material-text">{{ item.materials }}</span>
+                  } @else {
+                    <div class="not-found-container">
+                      <span class="not-found-text">Material not found</span>
+                      <button class="update-btn" (click)="updateMaterialContent(item)"><i class="hgi hgi-stroke hgi-rounded hgi-upload-02"></i> Update</button>
+                    </div>
+                  }
+                </td>
                 <td>{{ item.teacherName }}</td>
                 <td>{{ item.courseName }}</td>
                 <td>{{ item.materialType }}</td>

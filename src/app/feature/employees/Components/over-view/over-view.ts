@@ -18,7 +18,10 @@ export class OverView {
 
 
   ngOnInit() {
-   this.getallTeacher();
+    this.getallTeacher();
+    this.workerservice.reloadEmployees$.subscribe(() => {
+      this.getallTeacher();
+    });
   }
 
   getallTeacher() {

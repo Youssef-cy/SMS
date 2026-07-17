@@ -20,5 +20,13 @@ export class Exam {
     return this.http.post<ExamREQ>(this.baseUrl,exam)
   }
 
+  updateExam(id: number, exam: ExamREQ): Observable<ExamREQ> {
+    return this.http.put<ExamREQ>(`${this.baseUrl}/${id}`, exam);
+  }
+
+  deleteExam(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
 
 }

@@ -1,0 +1,262 @@
+import { Component, OnInit, signal, Inject, Optional } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+import { WorkerService } from '../../../core/service/worker-service';
+import Swal from 'sweetalert2';
+import { AddBtn } from '../../../shared/add-btn/add-btn';
+import { SaveBtn } from '../../../shared/save-btn/save-btn';
+import { CancelBtn } from '../../../shared/cancel-btn/cancel-btn';
+import { GradeService } from '../../../core/service/grade-service';
+import { GradeRES } from '../../../core/model/grade-res';
+import { RoleService } from '../../../core/service/role-service';
+import { Role } from '../../../core/model/role';
+
+@Component({
+  selector: 'app-add-emp',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, AddBtn, SaveBtn, CancelBtn],
+  templateUrl: './add-emp.html',
+  styleUrl: './add-emp.css',
+})
+export class AddEmp implements OnInit{
+  form: FormGroup;
+  isEditMode = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private workerservice: WorkerService,
+    private grades:GradeService,
+    private roles:RoleService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public editData: any,
+    @Optional() private dialogRef: MatDialogRef<AddEmp>
+  ) {
+    this.form = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      firstNameAnArabic: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(50)],
+      ],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastNameAnArabic: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(50)],
+      ],
+
+      nationalId: [null, [Validators.required, Validators.pattern(/^[0-9]{14}$/)]],
+
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+
+      address: ['', [Validators.required, Validators.minLength(3)]],
+
+      gender: ['M', Validators.required],
+
+      nationality: ['', Validators.required],
+
+      birthDate: ['', Validators.required],
+
+      role: [1, [Validators.required, Validators.min(1)]],
+
+      isDeleted: [false],
+
+      religion: ['', Validators.required],
+
+      education: ['', Validators.required],
+
+      employeeHistory: [''],
+
+      numberYearsOfExperience: [0, [Validators.required, Validators.min(0), Validators.max(60)]],
+
+      subject: [''],
+      subjectType: [''],
+      subjectDescription: [''],
+      gradeId: [null],
+      termId: [null],
+      materialLink: [''],
+    });
+  }
+
+  grade = signal<GradeRES[]>([])
+  Roles = signal<Role[]>([])
+
+  getAllRoles(){
+    this.roles.getAllRoles().subscribe({
+      next:(data)=>{
+
+        this.Roles.set(data)
+      }
+    })
+  }
+
+  getAllGrades(){
+    this.grades.getAllGrades().subscribe({
+      next:(data)=>{
+
+        this.grade.set(data)
+      }
+    })
+  }
+
+  get isTeacherRoleSelected(): boolean {
+    const roleId = this.form.get('role')?.value;
+    const role = this.Roles().find((r) => r.id == roleId);
+    // Be robust: checking if the name includes 'Teacher' or 'teacher'
+    return role?.name?.toLowerCase().includes('teacher') ?? false;
+  }
+
+  ngOnInit(): void {
+    this.getAllGrades();
+    this.getAllRoles();
+
+    // Clear teacher fields if role changes to non-teacher
+    this.form.get('role')?.valueChanges.subscribe(() => {
+      if (!this.isTeacherRoleSelected) {
+        this.form.patchValue({
+          subject: '',
+          subjectType: '',
+          subjectDescription: '',
+          gradeId: null,
+          termId: null,
+          materialLink: ''
+        });
+      }
+    });
+
+    if (this.editData && this.editData.id) {
+      this.isEditMode = true;
+      // Fetch full profile
+      this.workerservice.getProfile(this.editData.id).subscribe({
+        next: (res) => {
+          const profile = Array.isArray(res) ? res[0] : res;
+          const user = profile?.teacher?.user ?? profile;
+          
+          this.form.patchValue({
+            firstName: user.firstName,
+            firstNameAnArabic: user.firstNameInArabic,
+            lastName: user.lastName,
+            lastNameAnArabic: user.lastNameInArabic,
+            nationalId: user.nationalNumber,
+            email: user.email,
+            address: user.address,
+            gender: user.gender,
+            nationality: user.nationality,
+            birthDate: user.birthDate,
+            role: user.role?.id,
+            isDeleted: user.isDeleted,
+            religion: user.religion,
+          });
+
+          // Disable password validation in edit mode since they might not want to change it
+          this.form.get('password')?.clearValidators();
+          this.form.get('password')?.updateValueAndValidity();
+
+          if (profile.teacher) {
+            this.form.patchValue({
+              education: profile.teacher.education,
+              employeeHistory: profile.teacher.employmentHistory,
+              numberYearsOfExperience: profile.teacher.numberOfYearsOfExperience,
+              subject: profile.courseName,
+              subjectType: profile.courseType,
+              subjectDescription: profile.description,
+              gradeId: profile.gradeId,
+              termId: profile.termId,
+              materialLink: profile.materials
+            });
+          }
+        },
+        error: (err) => {}
+      });
+    }
+  }
+
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const data = this.form.value;
+    const isTeacher = this.isTeacherRoleSelected;
+
+    if (this.isEditMode) {
+      const id = this.editData.id;
+      if (isTeacher) {
+        this.workerservice.updateTeacher(id, data).subscribe({
+          next: () => {
+            Swal.fire({ icon: 'success', title: 'Teacher Updated Successfully', confirmButtonColor: '#0F2747' });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to update teacher', 'error')
+        });
+      } else {
+        this.workerservice.updateWorker(id, data).subscribe({
+          next: () => {
+            Swal.fire({ icon: 'success', title: 'Worker Updated Successfully', confirmButtonColor: '#0F2747' });
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to update worker', 'error')
+        });
+      }
+    } else {
+      if (isTeacher) {
+        this.workerservice.createTeacher(data).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Teacher Created Successfully',
+              html: `
+              <div style="text-align:left">
+                <p><strong>Email:</strong> ${res.email}</p>
+                <p><strong>Password:</strong> ${res.password}</p>
+              </div>
+            `,
+              confirmButtonColor: '#0F2747',
+            });
+            this.form.reset();
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to create teacher', 'error')
+        });
+      } else {
+        this.workerservice.createWorker(data).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Worker Created Successfully',
+              html: `
+              <div style="text-align:left">
+                <p><strong>Email:</strong> ${res.email}</p>
+                <p><strong>Password:</strong> ${res.password}</p>
+              </div>
+            `,
+              confirmButtonColor: '#0F2747',
+            });
+            this.form.reset();
+            if (this.dialogRef) this.dialogRef.close(true);
+          },
+          error: (err) => Swal.fire('Error', 'Failed to create worker', 'error')
+        });
+      }
+    }
+  }
+  cancel(): void {
+    this.form.reset({
+      gender: 'M',
+      role: 1,
+      gradeId: 1,
+      termId: 1,
+      isDeleted: false,
+      numberYearsOfExperience: 0,
+    });
+  }
+
+  onlyNumbers(event: KeyboardEvent) {
+  const charCode = event.which || event.keyCode;
+
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+}

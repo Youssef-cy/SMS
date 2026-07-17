@@ -1,21 +1,34 @@
-:host{
+:host {
   flex: 1;
-  height: 100vh;
+  height: 110vh;
   overflow-y: auto;
   background-color: var(--bg);
-}
-.dashboard-page {
-    background: var(--color-bg-main);
-    width: 187vh;
-    min-height: 1000px;
-    font-family: "Segoe UI", sans-serif;
+  display: block;
 }
 
+.dashboard-page {
+  background: var(--color-bg-main);
+  min-height: 100%;
+  font-family: "Segoe UI", "Inter", sans-serif;
+  width: 100%; 
+}
 
 .dashboard-content {
-    padding: 24px;
+  padding: 24px;
+  max-width: 1600px; /* Optional max width for huge screens */
+  margin: 0 auto;
 }
 
-.charts{
-    display: flex;
+.charts {
+  display: flex;
+  gap: 24px; /* Added gap between charts */
+  margin-bottom: 24px;
+  flex-direction: column; /* Mobile first */
+}
+
+/* Tablet and desktop */
+@media (min-width: 1024px) {
+  .charts {
+    flex-direction: row;
+  }
 }

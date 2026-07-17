@@ -1,0 +1,28 @@
+<div class="chart-container" [style.height]="height">
+  <!-- Loading State -->
+  <div class="state-overlay loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading chart data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="state-overlay error" *ngIf="hasError && !isLoading">
+    <div class="error-icon">⚠️</div>
+    <p>Failed to load chart data.</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="state-overlay empty" *ngIf="isEmpty && !isLoading && !hasError">
+    <div class="empty-icon">📊</div>
+    <p>No data available to display.</p>
+  </div>
+
+  <!-- Actual Chart -->
+  <div class="chart-wrapper" *ngIf="!isLoading && !hasError && !isEmpty">
+    <div
+      echarts
+      [options]="mergedOptions()"
+      class="echarts-instance">
+    </div>
+  </div>
+</div>

@@ -1,13 +1,13 @@
 :host{
   flex: 1;
-  height: 100vh;
+  height: 110vh;
   overflow-y: auto;
   background-color: var(--bg);
 }
 .materials-page {
     padding: 5px;
-background: var(--color-bg-main);
-    width: 187vh;
+    background: var(--color-bg-main);
+    width: 100%;
     min-height: 1000px;
     font-family: "Segoe UI", sans-serif;
 }
@@ -162,4 +162,46 @@ background: var(--color-bg-main);
     border: 1px dashed #d8d8d8;
     border-radius: 10px;
     margin: 20px;
+}
+
+.material-cell {
+  vertical-align: middle;
+}
+
+.material-text {
+  font-weight: 500;
+  color: var(--color-primary-dark);
+}
+
+.not-found-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.not-found-text {
+  color: #ff4d4f;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: #fff1f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #ffa39e;
+}
+
+.update-btn {
+  background-color: var(--color-primary-dark);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.update-btn:hover {
+  background-color: #3b36a1;
+  transform: translateY(-1px);
 }

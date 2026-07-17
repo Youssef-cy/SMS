@@ -6,9 +6,7 @@
         <p>Term 2, 2025-2026</p>
       </div>
       <div class="banner-dropdown">
-        <select
-          class="dropdown-select"
-          (change)="filterByGrade($any($event.target).value)">
+        <select class="dropdown-select" (change)="filterByGrade($any($event.target).value)">
           <option>All grades</option>
           @for (grade of grades(); track grade) {
             <option>{{ grade }}</option>
@@ -21,13 +19,12 @@
 
     @if (data().length >= 3) {
       <div class="podium-section">
-
         <div class="podium-card rank-second">
           <div class="badge-circle grey-badge">2nd</div>
           <p class="student-name">{{ data()[1].studentName }}</p>
           <p class="student-grade">{{ data()[1].gradeName }}</p>
           <div class="score-box-stacked">
-            <span class="big-num">{{ data()[1].Mark }}</span>
+            <span class="big-num">{{ data()[1].mark }}</span>
             <span class="slash-num-under">/100</span>
           </div>
         </div>
@@ -37,7 +34,7 @@
           <p class="student-name">{{ data()[0].studentName }}</p>
           <p class="student-grade">{{ data()[0].gradeName }}</p>
           <div class="score-box-stacked">
-            <span class="big-num">{{ data()[0].Mark }}</span>
+            <span class="big-num">{{ data()[0].mark }}</span>
             <span class="slash-num-under">/100</span>
           </div>
         </div>
@@ -47,24 +44,28 @@
           <p class="student-name">{{ data()[2].studentName }}</p>
           <p class="student-grade">{{ data()[2].gradeName }}</p>
           <div class="score-box-stacked">
-            <span class="big-num">{{ data()[2].Mark }}</span>
+            <span class="big-num">{{ data()[2].mark }}</span>
             <span class="slash-num-under">/100</span>
           </div>
         </div>
-
       </div>
     }
   </div>
 
   <div class="table-list">
-    @for (student of data(); track student.studentId; let i = $index) {
+    @for (student of data(); track $index; let i = $index) {
       <div class="list-row">
-
         <div class="info-group-left">
           <span class="row-index">{{ i + 1 }}</span>
 
           <div class="row-avatar">
-            {{ student.studentName.split(' ')[0].charAt(0).toUpperCase() }}{{ student.studentName.split(' ')[student.studentName.split(' ').length - 1].charAt(0).toUpperCase() }}
+            {{ student.studentName.split(' ')[0].charAt(0).toUpperCase()
+            }}{{
+              student.studentName
+                .split(' ')
+                [student.studentName.split(' ').length - 1].charAt(0)
+                .toUpperCase()
+            }}
           </div>
 
           <div class="row-details">
@@ -77,25 +78,27 @@
           <div class="progress-bar-base">
             <div
               class="progress-bar-fill"
-              [style.width.%]="student.Mark > 100 ? 100 : student.Mark">
-            </div>
+              [style.width.%]="student.mark > 100 ? 100 : student.mark"
+            ></div>
           </div>
-          <span class="progress-under-text">{{ student.Mark }}/100</span>
+          <span class="progress-under-text">{{ student.mark }}/100</span>
         </div>
 
-        <span class="row-score">{{ student.Mark }}</span>
+        <span class="row-score">{{ student.mark }}</span>
 
         <div class="badge-wrapper">
           <span
             class="row-badge"
-            [class.status-excellent]="student.Mark >= 90"
-            [class.status-highpass]="student.Mark < 90">
-            {{ student.Mark >= 90 ? 'Excellent' : 'High Pass' }}
+            [class.status-excellent]="student.mark >= 90"
+            [class.status-highpass]="student.mark < 90"
+          >
+            {{ student.mark >= 90 ? 'Excellent' : 'High Pass' }}
           </span>
         </div>
 
-        <button class="view-btn">View</button>
-
+        <button class="view-btn" (click)="viewStudent(student)">
+          <i class="hgi hgi-stroke hgi-eye"></i> View
+        </button>
       </div>
     }
   </div>

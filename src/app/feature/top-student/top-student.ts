@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Marks } from '../../core/service/marks';
 import { MarkI } from '../../core/model/markRES';
 
@@ -8,7 +9,7 @@ import { MarkI } from '../../core/model/markRES';
   styleUrls: ['./top-student.css'],
 })
 export class TopStudentsComponent implements OnInit {
-  constructor(private content: Marks) {}
+  constructor(private content: Marks, private router: Router) {}
 
   allData = signal<MarkI[]>([]);
   grades = signal<string[]>([]);
@@ -37,5 +38,14 @@ export class TopStudentsComponent implements OnInit {
     }
 
     this.data.set(this.allData().filter((x) => x.gradeName === grade));
+  }
+
+  viewStudent(student: any) {
+    const id = student.studentId || student.StudentId || student.student_id || student.id;
+    if (id) {
+      this.router.navigate(['/studentProfile', id]);
+    } else {
+      console.error('Could not find student ID in:', student);
+    }
   }
 }

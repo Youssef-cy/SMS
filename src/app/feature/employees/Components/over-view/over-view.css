@@ -8,7 +8,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
     gap: 20px;
-    width: 85%;
+    width: 90%;
 }
 
 .stat-card{

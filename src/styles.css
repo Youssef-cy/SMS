@@ -37,6 +37,7 @@
   --border: rgba(255,255,255,.35);
 }
 
-body{
-    overflow: hidden;
+body {
+  overflow: hidden;
+  zoom: 0.9;
 }

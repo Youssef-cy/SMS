@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { DragDropModule, CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import * as XLSX from 'xlsx';
 
 import { SessionsService } from '../../../core/service/session-service';
 import { SessionRES } from '../../../core/model/session-res';
@@ -41,7 +42,7 @@ interface Teacher {
   styleUrl: './table.css',
 })
 export class Table implements OnInit {
-  constructor(private sessionsService: SessionsService) {}
+  constructor(private sessionsService: SessionsService, private cdr: ChangeDetectorRef) {}
 
   private _classId: number | null = null;
   loading = false;
@@ -56,6 +57,10 @@ export class Table implements OnInit {
       if (changed && this.teachers && this.teachers.length > 0) {
         this.loadSessions();
       }
+    } else {
+      this._classId = null;
+      this.timetableData = Array.from({ length: 5 }, () => Array.from({ length: 8 }, () => []));
+      this.cdr.detectChanges();
     }
   }
 
@@ -66,8 +71,6 @@ export class Table implements OnInit {
   days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
 
   columns: Column[] = [
-    { type: 'day' },
-
     { type: 'period', label: '8:00 - 8:50', periodIdx: 0, start: '08:00:00', end: '08:50:00' },
     { type: 'period', label: '8:50 - 9:40', periodIdx: 1, start: '08:50:00', end: '09:40:00' },
     { type: 'period', label: '9:40 - 10:30', periodIdx: 2, start: '09:40:00', end: '10:30:00' },
@@ -97,11 +100,7 @@ export class Table implements OnInit {
     'green',
     'purple',
     'orange',
-    'teal',
-    'red',
-    'yellow',
-    'indigo',
-    'cyan',
+    'teal'
   ];
   private colorMap = new Map<string, string>();
 
@@ -115,8 +114,12 @@ export class Table implements OnInit {
       return this.colorMap.get(teacherName)!;
     }
 
-    const randomIndex = Math.floor(Math.random() * this.colorPalette.length);
-    const color = this.colorPalette[randomIndex];
+    let hash = 0;
+    for (let i = 0; i < teacherName.length; i++) {
+      hash = teacherName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % this.colorPalette.length;
+    const color = this.colorPalette[index];
 
     this.colorMap.set(teacherName, color);
 
@@ -144,11 +147,13 @@ export class Table implements OnInit {
           this.loadSessions();
         } else {
           this.loading = false;
+          this.cdr.detectChanges();
         }
       },
       error: (err) => {
         console.error(err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -194,11 +199,8 @@ export class Table implements OnInit {
             return;
           }
 
-          // Find the teacher's courseId from this.teachers
-          const matchedTeacher = this.teachers.find(
-            (t) => t.name === session.teacherName && t.subject === session.courseName
-          );
-          const courseId = matchedTeacher ? matchedTeacher.courseId : undefined;
+          // Backend now securely provides courseId directly inside SessionRES
+          const courseId = session.courseId;
 
           // نمنع وجود أكتر من حصة في نفس الخانة حتى لو الباك اند رجّع بيانات مكررة/غلط
           const cell = this.timetableData[dayIndex][column.periodIdx];
@@ -219,13 +221,16 @@ export class Table implements OnInit {
             dayOfWeek: Number(session.dayOfWeek),
             startAt: session.startAt,
             endAt: session.endAt,
+            colorClass: this.getTeacherColor(session.teacherName),
           });
         });
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -296,6 +301,7 @@ export class Table implements OnInit {
         dayOfWeek: dayIndex + 1,
         startAt: column.start,
         endAt: column.end,
+        colorClass: teacher.colorClass,
       });
 
       return;
@@ -365,6 +371,7 @@ export class Table implements OnInit {
           }
 
           requests.push({
+            id: session.id,
             classid: this.classId,
             courseid: session.courseId!,
             dayOfWeek: session.dayOfWeek,
@@ -380,16 +387,160 @@ export class Table implements OnInit {
 
     this.sessionsService.saveAllSessions(this.classId, requests).subscribe({
       next: (responses) => {
-        console.log('Saved all successfully', responses);
         this.loadSessions();
         this.loading = false;
+        this.cdr.detectChanges();
         swal.fire('Success', 'Sessions saved successfully', 'success');
       },
       error: (err) => {
         console.error(err);
         this.loading = false;
+        this.cdr.detectChanges();
         swal.fire('Error', 'Failed to save sessions', 'error');
       },
     });
+  }
+
+  // ========================= CLEAR ALL =========================
+  clearAll() {
+    swal
+      .fire({
+        title: 'Clear All Sessions?',
+        text: 'This will remove all sessions for this class!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, clear it!',
+      })
+      .then((result) => {
+        if (result.isConfirmed && this.classId > 0) {
+          this.sessionsService.clearAllSessions(this.classId).subscribe({
+            next: () => {
+              // Reset the grid
+              this.timetableData = Array.from({ length: 5 }, () =>
+                Array.from({ length: 8 }, () => []),
+              );
+              this.cdr.detectChanges();
+              swal.fire('Cleared!', 'All sessions for this class have been removed.', 'success');
+            },
+            error: (err) => {
+              console.error(err);
+              swal.fire('Error!', 'Failed to clear sessions.', 'error');
+            },
+          });
+        }
+      });
+  }
+
+  removeSession(dayIdx: number, periodIdx: number, sessionIdx: number) {
+    if (this.timetableData[dayIdx] && this.timetableData[dayIdx][periodIdx]) {
+      this.timetableData[dayIdx][periodIdx].splice(sessionIdx, 1);
+      this.cdr.detectChanges();
+    }
+  }
+
+  deleteSingleSession(session: any, dayIdx: number, periodIdx: number, sessionIdx: number) {
+    swal.fire({
+      title: 'Delete Session?',
+      text: 'Are you sure you want to delete this session?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (session.id) {
+          this.sessionsService.deleteSession(session.id).subscribe({
+            next: () => {
+              swal.fire('Deleted!', 'Session has been deleted.', 'success');
+              this.loadSessions();
+            },
+            error: (err) => {
+              console.error(err);
+              swal.fire('Error!', 'Failed to delete session.', 'error');
+            }
+          });
+        } else {
+          this.removeSession(dayIdx, periodIdx, sessionIdx);
+          swal.fire('Removed!', 'Unsaved session removed.', 'success');
+        }
+      }
+    });
+  }
+
+  // ========================= EXPORT TO EXCEL =========================
+  exportToExcel() {
+    if (!this.classId) {
+      swal.fire('Warning', 'No class selected to export', 'warning');
+      return;
+    }
+
+    // Get class name
+    let className = 'Class ' + this.classId;
+    for (const row of this.timetableData) {
+      for (const cell of row) {
+        if (cell.length > 0 && cell[0].className) {
+          className = cell[0].className;
+          break;
+        }
+      }
+    }
+
+    // Headers mapped to standard periods and breaks
+    const headers = [
+      'Day',
+      '8:00 - 8:50',
+      '8:50 - 9:40',
+      '9:40 - 10:30',
+      'Break',
+      '11:00 - 11:50',
+      '11:50 - 12:40',
+      '12:40 - 1:30',
+      'Break',
+      '1:50 - 2:40',
+      '2:40 - 3:30'
+    ];
+
+    const rows: any[] = [];
+
+    for (let d = 0; d < this.days.length; d++) {
+      const dayName = this.days[d];
+      const rowData: any = {
+        'Day': dayName
+      };
+
+      const getSessionText = (cell: any[]) => {
+        if (cell && cell.length > 0) {
+          const session = cell[0];
+          return `${session.courseName} (${session.teacherName})`;
+        }
+        return '';
+      };
+
+      rowData[headers[1]] = getSessionText(this.timetableData[d][0]);
+      rowData[headers[2]] = getSessionText(this.timetableData[d][1]);
+      rowData[headers[3]] = getSessionText(this.timetableData[d][2]);
+      rowData[headers[4]] = 'Break';
+      rowData[headers[5]] = getSessionText(this.timetableData[d][3]);
+      rowData[headers[6]] = getSessionText(this.timetableData[d][4]);
+      rowData[headers[7]] = getSessionText(this.timetableData[d][5]);
+      rowData[headers[8]] = 'Break';
+      rowData[headers[9]] = getSessionText(this.timetableData[d][6]);
+      rowData[headers[10]] = getSessionText(this.timetableData[d][7]);
+
+      rows.push(rowData);
+    }
+
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(rows, { header: headers });
+
+    // Create workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Timetable');
+
+    // Save/Download Excel file
+    XLSX.writeFile(workbook, `Timetable_${className.replace(/\s+/g, '_')}.xlsx`);
   }
 }

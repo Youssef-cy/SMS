@@ -1,0 +1,43 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background-color: white;
+}
+.form-group label {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+.required {
+  color: #c0392b;
+  margin-right: 2px;
+}
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  background: #fff;
+}
+.form-group input::placeholder {
+  color: #b5b5b5;
+}
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #7a1224;
+}
+.input-error {
+  border-color: #c0392b !important;
+}
+

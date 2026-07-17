@@ -1,5 +1,4 @@
-
-  <div class="table-card">
+<div class="table-card">
   <table class="data-table">
     <thead>
       <tr>
@@ -13,23 +12,31 @@
 
     <tbody>
       @for (teacher of filteredData(); track teacher.id) {
-      <tr>
-        <td>{{ teacher.firstName }}</td>
-        <td>{{ teacher.role }}</td>
-        <td>{{ teacher.subject ?? 'Student Affairs' }}</td>
-        <td>{{ teacher.isDeleted ? 'Deactivated' : 'Active' }}</td>
-        <td>
-          <div class="buttons">
-             <button class="btn-view" (click)="navigateToView(teacher.id)">View</button>
+        <tr>
+          <td>{{ teacher.firstName }}</td>
+          <td>{{ teacher.role }}</td>
+          <td>{{ teacher.subject ?? 'Student Affairs' }}</td>
+          <td>
+            <span class="status-badge" [class.active]="!teacher.isDeleted" [class.inactive]="teacher.isDeleted">
+              {{ teacher.isDeleted ? 'Deactivated' : 'Active' }}
+            </span>
+          </td>
+          <td>
+            <div class="buttons">
+              <button class="btn-view" (click)="openEditDialog(teacher.id)"><i class="hgi hgi-stroke hgi-edit-02"></i> Edit</button>
 
-            <div class="space"></div>
+              <div class="space"></div>
 
-            <div class="deactivate" (click)="changeStatus(teacher.id)">
-              {{ teacher.isDeleted ? 'Activate' : 'Deactivate' }}
+              <button class="btn-view" (click)="navigateToView(teacher.id)"><i class="hgi hgi-stroke hgi-eye"></i> View</button>
+
+              <div class="space"></div>
+
+              <button [class]="teacher.isDeleted ? 'activate' : 'deactivate'" (click)="changeStatus(teacher.id)">
+                {{ teacher.isDeleted ? 'Active' : 'Deactive' }}
+              </button>
             </div>
-          </div>
-        </td>
-      </tr>
+          </td>
+        </tr>
       }
     </tbody>
   </table>

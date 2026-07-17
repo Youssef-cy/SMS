@@ -1,6 +1,7 @@
-<div
-  echarts
+<app-base-chart
   [options]="attendanceChart"
-  [merge]="attendanceChart"
-  class="chart">
-</div>
+  [isLoading]="isLoading()"
+  [hasError]="hasError()"
+  [isEmpty]="isEmpty()"
+  height="450px">
+</app-base-chart>
