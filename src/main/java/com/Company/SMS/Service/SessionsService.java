@@ -3,6 +3,7 @@ package com.Company.SMS.Service;
 import com.Company.SMS.DTO.Session.SessionREQ;
 import com.Company.SMS.DTO.Session.SessionRES;
 import com.Company.SMS.DTO.Session.TeacherListRES;
+import com.Company.SMS.Repo.AttendanceRepo;
 import com.Company.SMS.Repo.ClassRepo;
 import com.Company.SMS.Repo.CourseRepo;
 import com.Company.SMS.Repo.GradeRepo;
@@ -33,6 +34,8 @@ public class SessionsService {
     private CourseRepo courseRepo;
     @Autowired
     private GradeRepo gradeRepo;
+    @Autowired
+    private AttendanceRepo attendanceRepo;
 
     // ========================= GET ALL SESSIONS =========================
 
@@ -72,6 +75,7 @@ public class SessionsService {
 
         return new SessionRES(
                 saved.getId(),
+                saved.getCourse().getId(),
                 saved.getClassField().getName(),
                 saved.getCourse().getCourseName(),
                 saved.getCourse().getTeacher().getUser().getFirstName(),
@@ -86,25 +90,30 @@ public class SessionsService {
     public List<SessionRES> saveAllSessions(Long classId, List<SessionREQ> requests) {
         List<Session> existingSessions = repo.findAllByClassFieldId(classId);
 
-        Map<String, Session> existingMap = new HashMap<>();
+        Map<Long, Session> existingMap = new HashMap<>();
         for (Session s : existingSessions) {
-            String key = s.getDayOfWeek() + "-" + s.getStartAt();
-            existingMap.put(key, s);
+            existingMap.put(s.getId(), s);
         }
 
         List<Session> toSave = new ArrayList<>();
-        Set<String> processedKeys = new HashSet<>();
+        Set<Long> processedKeys = new HashSet<>();
 
         for (SessionREQ req : requests) {
-            String key = req.getDayOfWeek() + "-" + req.getStartAt();
-            processedKeys.add(key);
-
-            Session session = existingMap.get(key);
+            Session session = null;
+            if (req.getId() != null) {
+                session = existingMap.get(req.getId());
+                if (session != null) {
+                    processedKeys.add(req.getId());
+                }
+            }
+            
             Course course = courseRepo.findById(req.getCourseid())
                     .orElseThrow(() -> new EntityNotFoundException("Course not found"));
 
             if (session != null) {
                 session.setCourse(course);
+                session.setDayOfWeek(req.getDayOfWeek().longValue());
+                session.setStartAt(req.getStartAt());
                 session.setEndAt(req.getEndAt());
                 session.setUpdatedAt(req.getUpdated());
             } else {
@@ -122,8 +131,9 @@ public class SessionsService {
         }
 
         for (Session s : existingSessions) {
-            String key = s.getDayOfWeek() + "-" + s.getStartAt();
-            if (!processedKeys.contains(key)) {
+            if (!processedKeys.contains(s.getId())) {
+                // Nullify attendance references first to avoid FK constraint violation
+                attendanceRepo.nullifySessionReferences(s.getId());
                 repo.delete(s);
             }
         }
@@ -134,6 +144,7 @@ public class SessionsService {
         for (Session saved : savedList) {
             response.add(new SessionRES(
                     saved.getId(),
+                    saved.getCourse().getId(),
                     saved.getClassField().getName(),
                     saved.getCourse().getCourseName(),
                     saved.getCourse().getTeacher().getUser().getFirstName(),
@@ -174,5 +185,24 @@ public class SessionsService {
         return classRepo.findAll();
     }
 
+    // ========================= CLEAR ALL SESSIONS FOR A CLASS =========================
+    @Transactional
+    public void clearAllByClass(Long classId) {
+        List<Session> sessions = repo.findAllByClassFieldId(classId);
+        for (Session s : sessions) {
+            attendanceRepo.nullifySessionReferences(s.getId());
+            repo.delete(s);
+        }
+    }
+
+    // ========================= DELETE SINGLE SESSION =========================
+    @Transactional
+    public void deleteSession(Long id) {
+        if (!repo.existsById(id)) {
+            throw new EntityNotFoundException("Session not found");
+        }
+        attendanceRepo.nullifySessionReferences(id);
+        repo.deleteById(id);
+    }
 
 }

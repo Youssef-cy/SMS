@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Data
 public class SessionREQ {
+    private Long id;
     private Long classid;
     private Long courseid;
     private Integer dayOfWeek;

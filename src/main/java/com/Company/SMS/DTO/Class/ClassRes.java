@@ -12,4 +12,6 @@ public class ClassRes {
     private String className;
     private String grade;
     private String term;
+    private Long capacity;
+    private Long studentsCount;
 }

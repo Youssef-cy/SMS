@@ -49,6 +49,32 @@ public class ExamService {
         examRepo.save(exam);
     }
 
+    public void updateExam(Long id, ExamREQ req) {
+        ExamTable exam = examRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Exam not found"));
+
+        Grade grade = gradeRepo.findById(req.getGradeId())
+                .orElseThrow(() -> new RuntimeException("Grade not found"));
+
+        exam.setCourseName(req.getCourseName());
+        exam.setDuration(req.getDuration());
+        exam.setLocation(req.getCommitteeName());
+        exam.setExamDate(req.getExamDate());
+        exam.setExamTime(req.getExamTime());
+        exam.setStatus(req.getStatus());
+        exam.setGrade(grade);
+        exam.setExamType(req.getExamType());
+
+        examRepo.save(exam);
+    }
+
+    public void deleteExam(Long id) {
+        if (!examRepo.existsById(id)) {
+            throw new RuntimeException("Exam not found");
+        }
+        examRepo.deleteById(id);
+    }
+
 
     public List<ExamRES> getExamForThisWeek() {
         LocalDate startOfWeek = LocalDate.now()

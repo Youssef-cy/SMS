@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/API/Workers")
 public class WorkersController {
@@ -21,20 +24,23 @@ public class WorkersController {
 
     @PostMapping
     public ResponseEntity<UserRes> addEmployee(@RequestBody UserReq user){
-        System.out.println(user);
+        log.info("Adding employee: {}", user);
         UserRes userRes = employeeService.addEmployee(user);
         return ResponseEntity.ok(userRes);
     }
 
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<Map<String, String>> deactivateEmployee(@PathVariable Long id){
-        System.out.println(id);
+        log.info("Deactivating employee with ID: {}", id);
         employeeService.deactivateEmployee(id);
         return ResponseEntity.ok(
                 Map.of("message", "Deactivated")
         );
     }
 
-
-
+    @PutMapping("/{id}")
+    public ResponseEntity<UserRes> updateEmployee(@PathVariable Long id, @RequestBody UserReq userReq) {
+        UserRes updatedUser = employeeService.updateEmployee(id, userReq);
+        return ResponseEntity.ok(updatedUser);
+    }
 }

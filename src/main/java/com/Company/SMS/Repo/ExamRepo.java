@@ -1,7 +1,6 @@
 package com.Company.SMS.Repo;
 
 import com.Company.SMS.DTO.Exam.ExamRES;
-import com.Company.SMS.DTO.Student.LowPerformanceStudentRES;
 import com.Company.SMS.entities.ExamTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -47,3 +46,4 @@ order by e.examDate
 
 
 }
+

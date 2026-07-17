@@ -3,7 +3,6 @@ package com.Company.SMS.DTO.Session;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -12,6 +11,7 @@ import java.time.LocalTime;
 public class SessionRES {
 
     private Long id;
+    private Long courseId;
     private String className;
     private String courseName;
     private String teacherName;

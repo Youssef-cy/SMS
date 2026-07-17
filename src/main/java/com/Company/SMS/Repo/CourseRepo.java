@@ -1,13 +1,10 @@
 package com.Company.SMS.Repo;
 
-import com.Company.SMS.DTO.Course.CourseInfo;
 import com.Company.SMS.DTO.material.MaterialRes;
 import com.Company.SMS.entities.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -37,3 +34,4 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
 
     List<Course> findByTeacher_User_UserId(Long userId);
 }
+

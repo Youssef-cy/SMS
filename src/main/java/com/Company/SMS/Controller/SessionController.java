@@ -6,7 +6,6 @@ import com.Company.SMS.DTO.Session.SessionRES;
 import com.Company.SMS.DTO.Session.TeacherListRES;
 import com.Company.SMS.Service.ClassService;
 import com.Company.SMS.Service.SessionsService;
-import com.Company.SMS.entities.Class;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +63,20 @@ public class SessionController {
     @GetMapping("/Class")
     public List<ClassRes> getAllClasses() {
     return classes.findAllClass();
+    }
+
+    // ========================= CLEAR ALL SESSIONS FOR A CLASS =========================
+    @DeleteMapping("/ClearAll")
+    public ResponseEntity<Void> clearAll(@RequestParam Long classId) {
+        sessions.clearAllByClass(classId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // ========================= DELETE SINGLE SESSION =========================
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSession(@PathVariable Long id) {
+        sessions.deleteSession(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

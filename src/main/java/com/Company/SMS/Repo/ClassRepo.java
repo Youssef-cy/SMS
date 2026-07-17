@@ -15,9 +15,10 @@ public interface ClassRepo extends JpaRepository<Class,Long> {
         cl.id,
         cl.name,
         cl.grade.name,
-        t.name
-
-        )FROM Class cl
+        t.name,
+        cl.capacity,
+        (SELECT COUNT(s) FROM Student s WHERE s.studentClass.id = cl.id)
+        ) FROM Class cl
         JOIN cl.grade g
         JOIN g.terms t
 """)

@@ -24,9 +24,25 @@ public class ClassController {
 
     @PostMapping
     public void addClass(@RequestBody ClassREQ classreq){
-
         classService.saveClass(classreq);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateClass(@PathVariable Long id, @RequestBody ClassREQ classreq) {
+        classService.updateClass(id, classreq);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClass(@PathVariable Long id) {
+        classService.deleteClass(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllClasses() {
+        classService.deleteAllClasses();
+        return ResponseEntity.ok().build();
     }
 
 

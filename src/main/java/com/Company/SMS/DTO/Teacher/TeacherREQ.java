@@ -1,8 +1,5 @@
 package com.Company.SMS.DTO.Teacher;
 
-import com.Company.SMS.entities.Grade;
-import com.Company.SMS.entities.Role;
-import com.Company.SMS.entities.Term;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,3 +34,4 @@ public class TeacherREQ {
     private Long termId;
     private String materials;
 }
+

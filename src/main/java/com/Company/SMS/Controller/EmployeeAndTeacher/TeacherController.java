@@ -6,8 +6,6 @@ import com.Company.SMS.Service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/API/Teacher")
 public class TeacherController {
@@ -19,6 +17,8 @@ public class TeacherController {
       return teacherService.addTeacher(req);
     }
 
-
-
+    @PutMapping("/{id}")
+    public TeacherRES updateTeacher(@PathVariable Long id, @RequestBody TeacherREQ req) {
+        return teacherService.updateTeacher(id, req);
+    }
 }

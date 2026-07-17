@@ -18,6 +18,7 @@ public interface SessionsRepo extends JpaRepository<Session, Long> {
     @Query("""
         SELECT new com.Company.SMS.DTO.Session.SessionRES(
             s.id,
+            s.course.id,
             s.classField.name,
             s.course.courseName,
             s.course.teacher.user.firstName,
@@ -44,4 +45,5 @@ public interface SessionsRepo extends JpaRepository<Session, Long> {
     """)
     List<TeacherListRES> findAllTeacherList();
 
+    List<Session> findByClassField_IdAndDayOfWeekOrderByStartAtAsc(Long classId, Long dayOfWeek);
 }

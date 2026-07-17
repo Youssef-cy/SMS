@@ -1,7 +1,6 @@
 package com.Company.SMS.DTO.User;
 
 
-import com.Company.SMS.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

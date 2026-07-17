@@ -5,7 +5,6 @@ import com.Company.SMS.DTO.Student.StudentRES;
 import com.Company.SMS.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -49,7 +48,9 @@ where s.student_id = :studentId
 """)
     StudentInfoProfileRES getProfile(@Param("studentId") Long studentId);
 
-
-
+    List<Student> findByStudentClassIdOrderByUserFirstNameAsc(Long classId);
+    
+    long countByStudentClassId(Long classId);
 
 }
+

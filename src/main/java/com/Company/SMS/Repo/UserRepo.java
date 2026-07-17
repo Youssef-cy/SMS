@@ -1,7 +1,5 @@
 package com.Company.SMS.Repo;
 
-import com.Company.SMS.DTO.Teacher.TeacherInfo;
-import com.Company.SMS.DTO.User.UserRes;
 import com.Company.SMS.DTO.User.UserResPost;
 import com.Company.SMS.DTO.User.WorkerInfo;
 import com.Company.SMS.entities.User;
@@ -59,23 +57,25 @@ where u.userId = :UserId
     @Query("""
 SELECT COUNT(u)
 FROM User u
-WHERE u.role.id = 1
+WHERE u.role.id IN (1, 2)
 """)
     Long countEmployees();
 
     @Query("""
 SELECT COUNT(u)
 FROM User u
-WHERE u.isDeleted = false and u.role.id = 1
+WHERE u.isDeleted = false and u.role.id IN (1, 2)
 """)
     Long countActiveUsers();
+
 @Query("""
 SELECT COUNT(u)
 FROM User u
-WHERE u.isDeleted = true and u.role.id = 1
+WHERE u.isDeleted = true and u.role.id IN (1, 2)
 """)
     Long countOnLeaveUsers();
 
 
 
 }
+

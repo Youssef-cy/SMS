@@ -36,5 +36,7 @@ public class Attendance {
     @Column(name = "STATUS")
     private Character status;
 
+    @Column(name = "DATE_TIME")
+    private java.time.LocalDateTime dateTime;
 
 }
