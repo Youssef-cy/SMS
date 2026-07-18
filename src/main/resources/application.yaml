@@ -16,3 +16,7 @@ spring:
       mode: always
   application:
     name: SMS
+
+jwt:
+  secret: yNcWGArQWpoh4lHACl/cbhnWdgCv9ML92Rq+SMnl3zc=
+  expiry: 8640000
