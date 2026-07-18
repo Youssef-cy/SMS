@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { SideNav } from "./layout/side-nav/side-nav";
 
 @Component({
@@ -11,4 +11,9 @@ import { SideNav } from "./layout/side-nav/side-nav";
 })
 export class App {
   protected readonly title = signal('SMS');
+  private router = inject(Router);
+
+  showSideNav() {
+    return this.router.url !== '/login';
+  }
 }

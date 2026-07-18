@@ -1,0 +1,90 @@
+<section class="login-container">
+
+  <div class="brand-panel">
+    <div class="circle shape-big">
+      <div class="brand-text">
+        <h1>{{ 'Welcome Back' | translate }}</h1>
+        <p>{{ 'Please login to your account' | translate }}</p>
+      </div>
+    </div>
+    <div class="circle shape-mid"></div>
+    <div class="circle shape-small"></div>
+  </div>
+
+  <div class="form-panel">
+    <div class="sidebar-footer">
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-lang-switch">
+        <button type="button" class="lang-btn" [class.active]="isEn()" (click)="toggleLanguage('en')">
+          EN
+        </button>
+        <span class="lang-separator">|</span>
+        <button type="button" class="lang-btn" [class.active]="isAr()" (click)="toggleLanguage('ar')">
+          العربية
+        </button>
+      </div>
+    </div>
+
+    <header class="logo-header">
+      <img src="Ntg2.jpeg" alt="NTG Clarity Networks Logo" class="logo-img">
+    </header>
+
+    <main class="form-content">
+      <h2 class="form-title">{{ 'Login' | translate }}</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submit()" class="login-form">
+
+        <div class="input-group">
+          <input type="email" [placeholder]="'Enter Your Email' | translate" formControlName="email" id="email"
+                 autocomplete="email">
+          @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+            <div class="error-container">
+              @if (loginForm.controls.email.hasError("email")) {
+                <span class="err-msg">{{ 'Please enter a valid email format (example@company.com)' | translate }}</span>
+              }
+              @if (loginForm.controls.email.hasError("required")) {
+                <span class="err-msg">{{ 'The email field is required' | translate }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="input-group">
+          <input type="password" [placeholder]="'Enter Your Password' | translate" formControlName="password"
+                 id="password">
+          @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+            <div class="error-container">
+              @if (loginForm.controls.password.hasError("required")) {
+                <span class="err-msg">{{ 'The password field is required' | translate }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me" for="rememberMe">
+            <input type="checkbox" id="rememberMe">
+            <span>{{ 'Remember me' | translate }}</span>
+          </label>
+          <a href="#" class="forgot-link">{{ 'Forgot Password?' | translate }}</a>
+        </div>
+
+        @if (errorMessage) {
+          <div class="error-container global-error" style="background-color: #fee2e2; border: 1px solid #fca5a5; padding: 10px; border-radius: 8px; margin-bottom: 5px; text-align: center;">
+            <span class="err-msg" style="color: #b91c1c; font-weight: 500; font-size: 0.9rem;">{{ errorMessage }}</span>
+          </div>
+        }
+
+        <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || isLoading">
+          @if (isLoading) {
+            <span>{{ 'Loading...' | translate }}</span>
+          } @else {
+            {{ 'Login' | translate }}
+          }
+        </button>
+
+      </form>
+    </main>
+  </div>
+
+</section>

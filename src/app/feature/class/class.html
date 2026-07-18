@@ -7,39 +7,58 @@
 
     <div class="bar">
       <div class="box">
-        <select class="select" [(ngModel)]="selectedGradeId" (change)="filterClasses()">
+        <select class="select" [(ngModel)]="selectedGradeId" (change)="filterClasses()" [disabled]="loading">
           <option *ngFor="let g of grades" [value]="g.id">{{ g.grade }}</option>
         </select>
       </div>
       <div style="display: flex; gap: 10px">
-        <button class="btn" (click)="openDilog()"><i class="hgi hgi-stroke hgi-add-01"></i> add class</button>
+        <button class="btn" (click)="openDilog()" [disabled]="loading"><i class="hgi hgi-stroke hgi-add-01"></i> add class</button>
         <button
           class="btn"
-          (click)="deleteAllClasses()"
-          style="background-color: #ff4d4f; border-color: #ff4d4f; color: white"
+          (click)="deleteSelectedClasses()"
+          [disabled]="loading || selectedClassIds.size === 0"
+          style="background-color: #ff4d4f; border-color: #ff4d4f; color: white; opacity: {{ selectedClassIds.size === 0 ? '0.5' : '1' }};"
         >
-          Delete All
+          Delete Selected ({{ selectedClassIds.size }})
         </button>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card blue" *ngFor="let classObj of classes">
-        <div class="row">
-          <div>
-            <h3>{{ classObj.className }}</h3>
-            <p>{{ classObj.grade }}</p>
+    @if (loading) {
+      <div class="grid">
+        @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track $index) {
+          <div class="card skeleton-card"></div>
+        }
+      </div>
+    } @else if (classes.length === 0) {
+      <div class="empty-state">
+        <i class="hgi hgi-stroke hgi-search-01" style="font-size: 48px; color: #ccc;"></i>
+        <p>No classes found for this grade.</p>
+      </div>
+    } @else {
+      <div class="grid">
+        <div class="card blue" *ngFor="let classObj of classes">
+          <div class="row">
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <input type="checkbox" class="class-checkbox"
+                     [checked]="selectedClassIds.has(classObj.id)"
+                     (change)="toggleSelection(classObj.id)" />
+              <div>
+                <h3>{{ classObj.className }}</h3>
+                <p>{{ classObj.grade }}</p>
+              </div>
+            </div>
+            <span class="tag b-tag">{{ classObj.capacity }} Students</span>
           </div>
-          <span class="tag b-tag">{{ classObj.capacity }} Students</span>
-        </div>
-        <div class="btns">
-          <button class="action" (click)="openDilog(classObj)"><i class="hgi hgi-stroke hgi-edit-02"></i> Edit</button>
-          <button class="action" (click)="deleteClass(classObj.id)" style="color: #ff4d4f">
-            Delete
-          </button>
-          <button class="action"><i class="hgi hgi-stroke hgi-eye"></i> View Students</button>
+          <div class="btns">
+            <button class="action" (click)="openDilog(classObj)"><i class="hgi hgi-stroke hgi-edit-02"></i> Edit</button>
+            <button class="action" (click)="deleteClass(classObj.id)" style="color: #ff4d4f">
+              Delete
+            </button>
+            <button class="action"><i class="hgi hgi-stroke hgi-eye"></i> View Students</button>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </main>
 </div>

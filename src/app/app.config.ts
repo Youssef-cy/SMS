@@ -1,6 +1,9 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/service/auth-interceptor';
+import { errorInterceptor } from './core/service/error.interceptor';
 
 import { provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
@@ -28,7 +31,11 @@ echarts.use([
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),         
-    provideEchartsCore({ echarts }) 
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([
+      authInterceptor,
+      errorInterceptor
+    ])),
+    provideEchartsCore({ echarts })
   ]
 };

@@ -12,62 +12,77 @@ import { EmployeeProfile } from './feature/employees/employee-profile/employee-p
 import { StudentProfile } from './feature/student-profile/student-profile';
 import { Class } from './feature/class/class';
 import { Attendance } from './feature/attendance/attendance';
+import { Login } from './feature/login/login';
+import { authGuard } from './core/service/auth-guard';
 
 export const routes: Routes = [
-   {
+    {
+        path: "login",
+        component: Login
+    },
+    {
         path: "",
-        component: Dashboard
+        component: Dashboard,
+        canActivate: [authGuard]
     },
     {
         path: "Employees",
-        component: Employees
+        component: Employees,
+        canActivate: [authGuard]
     },
     {
-        path:"Students",
-        component:StudentsComponent
+        path: "Students",
+        component: StudentsComponent,
+        canActivate: [authGuard]
     },
     {
-        path:"notification",
-        component:Notifications
+        path: "notification",
+        component: Notifications,
+        canActivate: [authGuard]
     },
     {
-        path:"TOP",
-        component:TopStudentsComponent
+        path: "TOP",
+        component: TopStudentsComponent,
+        canActivate: [authGuard]
     },
     {
         path: "Exam_schedule",
-        component: ExamSchedule
+        component: ExamSchedule,
+        canActivate: [authGuard]
     },
     {
         path: "Timetable",
-        component: Timetable
+        component: Timetable,
+        canActivate: [authGuard]
     },
     {
-        path:"Reports",
-        component:Reports
+        path: "Reports",
+        component: Reports,
+        canActivate: [authGuard]
     },
     {
-        path:"Materials",
-        component:Materials
+        path: "Materials",
+        component: Materials,
+        canActivate: [authGuard]
     },
     {
-        path:"teacherProfile/:id",
-        component:EmployeeProfile
+        path: "teacherProfile/:id",
+        component: EmployeeProfile,
+        canActivate: [authGuard]
     },
     {
-        path:"studentProfile/:id",
-        component:StudentProfile
-
+        path: "studentProfile/:id",
+        component: StudentProfile,
+        canActivate: [authGuard]
     },
     {
-        path:"Class",
-        component:Class
-
+        path: "Class",
+        component: Class,
+        canActivate: [authGuard]
     },
     {
-        path:"Attendance",
-        component:Attendance
+        path: "Attendance",
+        component: Attendance,
+        canActivate: [authGuard]
     }
-    
-    
 ];

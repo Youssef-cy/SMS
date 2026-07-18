@@ -7,6 +7,7 @@ import { GradeService } from '../../../core/service/grade-service';
 import { GradeRES } from '../../../core/model/grade-res';
 import { ClassRES } from '../../../core/model/class-res';
 import { ClassREQ } from '../../../core/model/class-req';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-class-form',
@@ -63,13 +64,25 @@ export class ClassFormComponent implements OnInit {
       
       if (this.isEditMode && this.data) {
         this.classService.updateClass(this.data.id, req).subscribe({
-          next: () => this.dialogRef.close(true),
-          error: (err) => console.error(err)
+          next: () => {
+            swal.fire('Success', 'Class updated successfully', 'success');
+            this.dialogRef.close(true);
+          },
+          error: (err) => {
+            console.error(err);
+            swal.fire('Error', 'Failed to update class', 'error');
+          }
         });
       } else {
         this.classService.addClass(req).subscribe({
-          next: () => this.dialogRef.close(true),
-          error: (err) => console.error(err)
+          next: () => {
+            swal.fire('Success', 'Class created successfully', 'success');
+            this.dialogRef.close(true);
+          },
+          error: (err) => {
+            console.error(err);
+            swal.fire('Error', 'Failed to create class', 'error');
+          }
         });
       }
     } else {
