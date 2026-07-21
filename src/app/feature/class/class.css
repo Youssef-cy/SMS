@@ -2,14 +2,15 @@
   display: block;
   margin: 0;
   padding: 0;
-  width: 90%;
-  height: 100vh;
+  width: 100%;
+  height: 110vh;
   overflow: scroll;
 }
 .page {
   display: flex;
   background-color: #f3f4f6; 
   font-family: system-ui, -apple-system, sans-serif;
+  height: 110vh;
 }
 
 .body {
@@ -23,7 +24,7 @@
   background-color: #E9E3E6;
   margin-bottom: 20px;
   margin-right: 180px;
-  width: 187vh;
+  width: 100%;
 }
 
 .head h2 {

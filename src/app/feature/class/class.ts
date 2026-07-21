@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,13 +19,24 @@ import { forkJoin } from 'rxjs';
 })
 export class Class implements OnInit {
 
-  classes: ClassRES[] = [];
-  allClasses: ClassRES[] = [];
-  grades: GradeRES[] = [];
-  selectedGradeId: number | null = null;
-  
-  loading: boolean = false;
-  selectedClassIds: Set<number> = new Set();
+  allClasses = signal<ClassRES[]>([]);
+  grades = signal<GradeRES[]>([]);
+  selectedGradeId = signal<number | null>(null);
+  loading = signal<boolean>(false);
+  selectedClassIds = signal<Set<number>>(new Set());
+
+  classes = computed(() => {
+    const gradeId = this.selectedGradeId();
+    const allGrades = this.grades();
+    const allCls = this.allClasses();
+    if (gradeId !== null && allGrades.length > 0) {
+      const selectedGradeObj = allGrades.find(g => g.id == gradeId);
+      if (selectedGradeObj) {
+        return allCls.filter(c => c.grade === selectedGradeObj.grade);
+      }
+    }
+    return [];
+  });
 
   constructor(
     private dialog: MatDialog,
@@ -34,15 +45,15 @@ export class Class implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.loading.set(true);
     console.log("SMS_DEBUG: Fetching grades from GradeService...");
     this.gradeService.getAllGrades().subscribe({
       next: (res) => {
         console.log("SMS_DEBUG: Grades received successfully from backend:", res);
-        this.grades = res || [];
-        if (this.grades.length > 0) {
-          this.selectedGradeId = this.grades[0].id;
-          console.log("SMS_DEBUG: Selected default Grade ID:", this.selectedGradeId);
+        this.grades.set(res || []);
+        if (this.grades().length > 0) {
+          this.selectedGradeId.set(this.grades()[0].id);
+          console.log("SMS_DEBUG: Selected default Grade ID:", this.selectedGradeId());
         } else {
           console.warn("SMS_DEBUG: Received empty grades list from backend.");
         }
@@ -50,46 +61,33 @@ export class Class implements OnInit {
       },
       error: (err) => {
         console.error("SMS_DEBUG: Error fetching grades from backend:", err);
-        this.loading = false;
+        this.loading.set(false);
       }
     });
   }
 
   loadClasses(): void {
-    this.loading = true;
+    this.loading.set(true);
     console.log("SMS_DEBUG: Fetching classes from ClassService...");
     this.classService.getAllClasses().subscribe({
       next: (res) => {
         console.log("SMS_DEBUG: Classes received successfully from backend:", res);
-        this.allClasses = res || [];
-        try {
-          this.filterClasses();
-          console.log("SMS_DEBUG: Filtered classes for current grade:", this.classes);
-        } catch(e) {
-          console.error("SMS_DEBUG: Exception inside filterClasses():", e);
-        }
-        this.loading = false;
+        this.allClasses.set(res || []);
+        this.selectedClassIds.set(new Set()); // clear selections when data changes
+        this.loading.set(false);
       },
       error: (err) => {
         console.error("SMS_DEBUG: Error fetching classes from backend:", err);
-        this.loading = false;
+        this.loading.set(false);
         swal.fire('Error', 'Failed to load classes', 'error');
       }
     });
   }
 
-  filterClasses(): void {
-    this.selectedClassIds.clear(); // clear selections when filter changes
-    if (this.selectedGradeId !== null && this.grades.length > 0) {
-      const selectedGradeObj = this.grades.find(g => g.id == this.selectedGradeId);
-      if (selectedGradeObj) {
-        this.classes = this.allClasses.filter(c => c.grade === selectedGradeObj.grade);
-      } else {
-        this.classes = [];
-      }
-    } else {
-      this.classes = [];
-    }
+  onGradeChange(gradeId: any): void {
+    const id = gradeId ? Number(gradeId) : null;
+    this.selectedGradeId.set(id);
+    this.selectedClassIds.set(new Set());
   }
 
   openDilog(classObj?: ClassRES) {
@@ -106,11 +104,15 @@ export class Class implements OnInit {
   }
 
   toggleSelection(classId: number): void {
-    if (this.selectedClassIds.has(classId)) {
-      this.selectedClassIds.delete(classId);
-    } else {
-      this.selectedClassIds.add(classId);
-    }
+    this.selectedClassIds.update(set => {
+      const next = new Set(set);
+      if (next.has(classId)) {
+        next.delete(classId);
+      } else {
+        next.add(classId);
+      }
+      return next;
+    });
   }
 
   deleteClass(id: number): void {
@@ -124,17 +126,25 @@ export class Class implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.loading = true;
+        this.loading.set(true);
         this.classService.deleteClass(id).subscribe({
           next: () => {
             swal.fire('Deleted!', 'Class has been deleted.', 'success');
-            this.selectedClassIds.delete(id);
+            this.selectedClassIds.update(set => {
+              const next = new Set(set);
+              next.delete(id);
+              return next;
+            });
             this.loadClasses();
           },
           error: (err) => {
             console.error(err);
-            this.loading = false;
-            swal.fire('Error!', 'Failed to delete class.', 'error');
+            this.loading.set(false);
+            if (err.status === 409) {
+              swal.fire('Conflict!', 'Cannot delete class because it contains students or is linked to other records.', 'error');
+            } else {
+              swal.fire('Error!', 'Failed to delete class.', 'error');
+            }
           }
         });
       }
@@ -142,11 +152,12 @@ export class Class implements OnInit {
   }
 
   deleteSelectedClasses(): void {
-    if (this.selectedClassIds.size === 0) return;
+    const selectedIds = this.selectedClassIds();
+    if (selectedIds.size === 0) return;
 
     swal.fire({
       title: 'Delete Selected Classes?',
-      text: `Are you sure you want to delete ${this.selectedClassIds.size} selected classes?`,
+      text: `Are you sure you want to delete ${selectedIds.size} selected classes?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -154,19 +165,23 @@ export class Class implements OnInit {
       confirmButtonText: 'Yes, delete them!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.loading = true;
-        const deleteObservables = Array.from(this.selectedClassIds).map(id => this.classService.deleteClass(id));
+        this.loading.set(true);
+        const deleteObservables = Array.from(selectedIds).map(id => this.classService.deleteClass(id));
         
         forkJoin(deleteObservables).subscribe({
           next: () => {
             swal.fire('Deleted!', 'Selected classes have been deleted.', 'success');
-            this.selectedClassIds.clear();
+            this.selectedClassIds.set(new Set());
             this.loadClasses();
           },
           error: (err) => {
             console.error(err);
-            this.loading = false;
-            swal.fire('Error!', 'Failed to delete some or all selected classes.', 'error');
+            this.loading.set(false);
+            if (err.status === 409) {
+              swal.fire('Conflict!', 'Some selected classes cannot be deleted because they contain students or are linked to other records.', 'error');
+            } else {
+              swal.fire('Error!', 'Failed to delete some or all selected classes.', 'error');
+            }
           }
         });
       }

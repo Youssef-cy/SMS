@@ -130,22 +130,8 @@
             </small>
           </div>
 
-          <div class="form-group">
-            <label>Password *</label>
-            <input
-              type="password"
-              formControlName="password"
-              [class.invalid]="form.get('password')?.invalid && form.get('password')?.touched"
-            />
-            <small
-              class="error-msg"
-              *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
-            >
-              <span *ngIf="form.get('password')?.errors?.['required']">Password is required.</span>
-              <span *ngIf="form.get('password')?.errors?.['minlength']"
-                >Password must be at least 6 characters.</span
-              >
-            </small>
+          <div class="form-group" style="grid-column: span 2; background-color: #f8f9fa; padding: 10px; border-radius: 4px; border-left: 4px solid #007bff;">
+            <p style="margin: 0; font-size: 0.9em; color: #555;"><i>A secure password will be automatically generated and sent to the employee's email address.</i></p>
           </div>
 
           <div class="form-group">

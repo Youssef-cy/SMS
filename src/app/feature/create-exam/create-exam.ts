@@ -6,6 +6,7 @@ import { ExamREQ } from '../../core/model/exam-req';
 import { CancelBtn } from "../../shared/cancel-btn/cancel-btn";
 import { SaveBtn } from "../../shared/save-btn/save-btn";
 import { PublishBtn } from "../../shared/publish-btn/publish-btn";
+import { MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,7 +18,10 @@ import Swal from 'sweetalert2';
 })
 export class CreateExamComponent {
 
-  constructor(private examService: Exam) {}
+  constructor(
+    private examService: Exam,
+    private dialogRef: MatDialogRef<CreateExamComponent>
+  ) {}
 
   exam: ExamREQ = {
     courseName: '',
@@ -29,6 +33,10 @@ export class CreateExamComponent {
     status: 'Scheduled',
     examType:''
   };
+
+  close() {
+    this.dialogRef.close();
+  }
 
 
 createExam(form: NgForm) {

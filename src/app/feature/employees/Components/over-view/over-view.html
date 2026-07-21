@@ -1,23 +1,21 @@
-<div class="stats-container">
-
-  <div class="stat-card red">
-    <div class="title">Total Employees</div>
-    <div class="value">{{data()?.totalEmployees}}</div>
+<div class="stats-grid">
+  <div class="stat-card students">
+    <span class="stat-title">Total Employees</span>
+    <h2>{{data()?.totalEmployees}}</h2>
   </div>
 
-  <div class="stat-card blue">
-    <div class="title">Active Employees</div>
-    <div class="value">{{data()?.activeEmployees}}</div>
+  <div class="stat-card employees">
+    <span class="stat-title">Active Employees</span>
+    <h2>{{data()?.activeEmployees}}</h2>
   </div>
 
-  <div class="stat-card red">
-    <div class="title">On leave</div>
-    <div class="value">{{data()?.onLeave}}</div>
+  <div class="stat-card top">
+    <span class="stat-title">On leave</span>
+    <h2>{{data()?.onLeave}}</h2>
   </div>
 
-  <div class="stat-card blue">
-    <div class="title">Total Teachers</div>
-    <div class="value">{{data()?.totalTeacher}}</div>
+  <div class="stat-card attendance">
+    <span class="stat-title">Total Teachers</span>
+    <h2>{{data()?.totalTeacher}}</h2>
   </div>
-
 </div>

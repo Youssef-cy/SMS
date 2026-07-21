@@ -1,17 +1,5 @@
 import { Routes } from '@angular/router';
 import { Dashboard } from './feature/dashboard/dashboard';
-import { Employees } from './feature/employees/employees';
-import { ExamSchedule } from './feature/exam-schedule/exam-schedule';
-import { Reports } from './feature/reports/reports';
-import { Materials } from './feature/materials/materials';
-import { Timetable } from './feature/time-table/time-table';
-import { Notifications } from './feature/notifications/notifications';
-import { TopStudentsComponent } from './feature/top-student/top-student';
-import { StudentsComponent } from './feature/student/student';
-import { EmployeeProfile } from './feature/employees/employee-profile/employee-profile';
-import { StudentProfile } from './feature/student-profile/student-profile';
-import { Class } from './feature/class/class';
-import { Attendance } from './feature/attendance/attendance';
 import { Login } from './feature/login/login';
 import { authGuard } from './core/service/auth-guard';
 
@@ -27,62 +15,62 @@ export const routes: Routes = [
     },
     {
         path: "Employees",
-        component: Employees,
+        loadComponent: () => import('./feature/employees/employees').then(m => m.Employees),
         canActivate: [authGuard]
     },
     {
         path: "Students",
-        component: StudentsComponent,
+        loadComponent: () => import('./feature/student/student').then(m => m.StudentsComponent),
         canActivate: [authGuard]
     },
     {
         path: "notification",
-        component: Notifications,
+        loadComponent: () => import('./feature/notifications/notifications').then(m => m.Notifications),
         canActivate: [authGuard]
     },
     {
         path: "TOP",
-        component: TopStudentsComponent,
+        loadComponent: () => import('./feature/top-student/top-student').then(m => m.TopStudentsComponent),
         canActivate: [authGuard]
     },
     {
         path: "Exam_schedule",
-        component: ExamSchedule,
+        loadComponent: () => import('./feature/exam-schedule/exam-schedule').then(m => m.ExamSchedule),
         canActivate: [authGuard]
     },
     {
         path: "Timetable",
-        component: Timetable,
+        loadComponent: () => import('./feature/time-table/time-table').then(m => m.Timetable),
         canActivate: [authGuard]
     },
     {
         path: "Reports",
-        component: Reports,
+        loadComponent: () => import('./feature/reports/reports').then(m => m.Reports),
         canActivate: [authGuard]
     },
     {
         path: "Materials",
-        component: Materials,
+        loadComponent: () => import('./feature/materials/materials').then(m => m.Materials),
         canActivate: [authGuard]
     },
     {
         path: "teacherProfile/:id",
-        component: EmployeeProfile,
+        loadComponent: () => import('./feature/employees/employee-profile/employee-profile').then(m => m.EmployeeProfile),
         canActivate: [authGuard]
     },
     {
         path: "studentProfile/:id",
-        component: StudentProfile,
+        loadComponent: () => import('./feature/student-profile/student-profile').then(m => m.StudentProfile),
         canActivate: [authGuard]
     },
     {
         path: "Class",
-        component: Class,
+        loadComponent: () => import('./feature/class/class').then(m => m.Class),
         canActivate: [authGuard]
     },
     {
         path: "Attendance",
-        component: Attendance,
+        loadComponent: () => import('./feature/attendance/attendance').then(m => m.Attendance),
         canActivate: [authGuard]
     }
 ];

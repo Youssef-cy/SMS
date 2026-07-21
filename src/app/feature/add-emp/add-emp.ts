@@ -46,7 +46,6 @@ export class AddEmp implements OnInit{
       nationalId: [null, [Validators.required, Validators.pattern(/^[0-9]{14}$/)]],
 
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
 
       address: ['', [Validators.required, Validators.minLength(3)]],
 
@@ -111,8 +110,7 @@ export class AddEmp implements OnInit{
             religion: user.religion,
           });
 
-          this.form.get('password')?.clearValidators();
-          this.form.get('password')?.updateValueAndValidity();
+          // No password field to update
 
           if (profile.teacher) {
             this.form.patchValue({
@@ -229,7 +227,7 @@ export class AddEmp implements OnInit{
               html: `
               <div style="text-align:left">
                 <p><strong>Email:</strong> ${res.email}</p>
-                <p><strong>Password:</strong> ${res.password}</p>
+                <p><i>A secure password has been sent to this email address.</i></p>
               </div>
             `,
               confirmButtonColor: '#0F2747',
@@ -265,7 +263,7 @@ export class AddEmp implements OnInit{
               html: `
               <div style="text-align:left">
                 <p><strong>Email:</strong> ${res.email}</p>
-                <p><strong>Password:</strong> ${res.password}</p>
+                <p><i>A secure password has been sent to this email address.</i></p>
               </div>
             `,
               confirmButtonColor: '#0F2747',

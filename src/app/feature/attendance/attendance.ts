@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as ExcelJS from 'exceljs';
@@ -46,7 +51,7 @@ interface AttendanceGridResponse {
 @Component({
   selector: 'app-attendance',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule],
   templateUrl: './attendance.html',
   styleUrl: './attendance.css',
 })
@@ -63,7 +68,7 @@ export class Attendance implements OnInit {
     day: 'numeric',
   });
 
-  private readonly selectedDate = this.today;
+  selectedDate: Date = this.today;
 
   allClasses = signal<ClassResponse[]>([]);
   selectedClass = signal<ClassResponse | null>(null);
@@ -122,6 +127,14 @@ export class Attendance implements OnInit {
           this.loading.set(false);
         },
       });
+  }
+
+  // ── Date Change Handler ────────────────────────────────────────────────────
+  onDateChange(): void {
+    const cls = this.selectedClass();
+    if (cls) {
+      this.loadGrid(cls.id);
+    }
   }
 
   // ── Stats ─────────────────────────────────────────────────────────────────

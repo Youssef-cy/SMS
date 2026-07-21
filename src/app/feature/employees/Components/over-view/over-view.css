@@ -1,64 +1,56 @@
-*{
-    margin-top: 10px;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.stats-container{
+.stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-    gap: 20px;
-    width: 90%;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+    margin-top: 20px;
+    margin-right: 35px;
 }
 
-.stat-card{
-    background: #fff;
-    border-radius: 14px;
-    padding: 10px 20px;
-    min-height: 58px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    position: relative;
-
-    box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    transition: .25s;
+.stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 4px solid var(--color-primary-dark);
 }
 
-.stat-card:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+.stat-card.students {
+    border-left-color: var(--color-primary-dark);
+}
+.stat-card.students small{
+    color: var(--color-status-active-text);
 }
 
-.stat-card::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    border-radius: 20px 0 0 20px;
+.stat-card.employees {
+    border-left-color: var(--color-info-banner-bg);
 }
 
-.red::before{
-    border-left: var(--color-primary-dark) solid;
+.stat-card.top {
+    border-left-color: var(--color-status-leave-text);
 }
 
-.blue::before{
-border-left: var(--color-info-banner-text) solid;
+.stat-card.top small{
+    color: var(--color-info-banner-bg);
+}
+.stat-card.attendance {
+    border-left-color: var(--color-status-inactive-text);
+}
+.stat-card.attendance small{
+    color: var(--color-primary-dark);
+}
+.stat-title {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 13px;
 }
 
-.title{
-    font-size: 15px;
-    color: #7b7b7b;
-    margin-bottom: 6px;
-    font-weight: 500;
+.stat-card h2 {
+    margin: 8px 0 2px;
+    font-size: 30px;
+    color: var(--color-text-main);
 }
 
-.value{
-    font-size: 40px;
-    font-weight: 600;
-    color: #222;
-    line-height: 1;
+.stat-card small {
+    color: var(--color-text-muted);
 }
