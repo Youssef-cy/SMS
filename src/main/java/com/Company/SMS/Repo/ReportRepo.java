@@ -7,23 +7,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
-public interface ReportRepo extends JpaRepository<Report,Long> {
-@Query("""
+public interface ReportRepo extends JpaRepository<Report, Long> {
+    @Query("""
 
-select new com.Company.SMS.DTO.Report.ReportRES(
-r.id,
-r.user.firstName,
-r.content,
-r.fileLink,
-r.createdAt,
-r.sentTo.userId,
-r.user.role.roleName,
-r.reportType
+            select new com.Company.SMS.DTO.Report.ReportRES(
+            r.id,
+            r.user.firstName,
+            r.content,
+            r.fileLink,
+            r.createdAt,
+            r.sentTo.userId,
+            r.user.role.roleName,
+            r.reportType
 
-)from Report r
+            )from Report r
 
-""")
-    List<ReportRES> findAllReports ();
+            """)
+    List<ReportRES> findAllReports();
 
 }

@@ -11,27 +11,24 @@ import java.util.List;
 @Repository
 public interface CourseRepo extends JpaRepository<Course, Long> {
 
-    //return all materials
+    // return all materials
     @Query("""
-        SELECT new com.Company.SMS.DTO.material.MaterialRes(
-            g.id,
-            g.name,
-            t.id,
-            t.term,
-            c.id,
-            c.courseName,
-            c.teacher.user.firstName,
-            c.materials,
-            c.courseType
-        )
-        FROM Course c
-        JOIN c.grade g
-        join c.term t
-    """)
+                SELECT new com.Company.SMS.DTO.material.MaterialRes(
+                    g.id,
+                    g.name,
+                    t.id,
+                    t.term,
+                    c.id,
+                    c.courseName,
+                    c.teacher.user.firstName,
+                    c.materials,
+                    c.courseType
+                )
+                FROM Course c
+                JOIN c.grade g
+                join c.term t
+            """)
     List<MaterialRes> findMaterials();
-
-
 
     List<Course> findByTeacher_User_UserId(Long userId);
 }
-

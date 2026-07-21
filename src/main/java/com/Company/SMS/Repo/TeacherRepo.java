@@ -9,9 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TeacherRepo extends CrudRepository<Teacher, Long> {
+    Optional<Teacher> findByUser_UserId(Long userId);
+
     @Query("""
             SELECT new com.Company.SMS.DTO.Teacher.TeacherRES(
                 t.id,

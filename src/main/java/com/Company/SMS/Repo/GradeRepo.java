@@ -7,20 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
-public interface GradeRepo extends JpaRepository<Grade,Long> {
+public interface GradeRepo extends JpaRepository<Grade, Long> {
 
     @Query("""
 
-select new com.Company.SMS.DTO.Grades.GradeRES(
-    g.id,
-    g.name,
-    g.year,
-    t.name
-    
-)from Grade g 
-join g.terms t
+            select new com.Company.SMS.DTO.Grades.GradeRES(
+                g.id,
+                g.name,
+                g.year,
+                t.name
 
-""")
+            )from Grade g
+            join g.terms t
+
+            """)
     List<GradeRES> findAllGrade();
 }

@@ -20,7 +20,7 @@ public class UserPhoneNumber {
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.Company.SMS.DTO.Teacher.TeacherRES;
 import com.Company.SMS.DTO.User.UserReq;
 import com.Company.SMS.DTO.User.UserRes;
+import com.Company.SMS.DTO.User.UserResPost;
 import com.Company.SMS.Repo.RoleRepo;
 import com.Company.SMS.Repo.TeacherRepo;
 import com.Company.SMS.Repo.UserRepo;
@@ -28,6 +29,11 @@ public class EmployeeService {
     @Autowired
     TeacherRepo teacherRepo;
 
+    @Autowired
+    EmailAndPasswordService emailAndPasswordService;
+    @Autowired
+    org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
     @Transactional
     public UserRes addEmployee(UserReq req) {
         log.info("Adding employee with role ID: {}", req.getRole());
@@ -42,7 +48,10 @@ public class EmployeeService {
         user.setLastNameInArabic(req.getLastNameAnArabic());
         user.setNationalNumber(req.getNationalId());
         user.setEmail(req.getEmail());
-        user.setPassword(req.getPassword());
+        
+        String rawPassword = emailAndPasswordService.generatePassword();
+        user.setPassword(passwordEncoder.encode(rawPassword));
+        
         user.setAddress(req.getAddress());
         user.setGender(req.getGender());
         user.setNationality(req.getNationality());
@@ -52,6 +61,8 @@ public class EmployeeService {
         user.setReligion(req.getReligion());
 
         user = userRepo.save(user);
+
+        emailAndPasswordService.sendPasswordEmail(rawPassword, user.getEmail());
 
         return new UserRes(
                 user.getUserId(),
@@ -98,8 +109,8 @@ public class EmployeeService {
                 user.getIsDeleted());
     }
 
-    public List<TeacherRES> allEmployees() {
-        return teacherRepo.getAllTeachers();
+    public List<UserResPost> allEmployees() {
+        return userRepo.findAllEmployees();
 
     }
 

@@ -28,7 +28,7 @@ public class Team {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    
     @JoinColumn(name = "PROJECT_ID", nullable = false)
     private Project project;
 

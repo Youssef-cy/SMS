@@ -9,18 +9,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ClassRepo extends JpaRepository<Class,Long> {
-@Query("""
-        SELECT new com.Company.SMS.DTO.Class.ClassRes(
-        cl.id,
-        cl.name,
-        cl.grade.name,
-        t.name,
-        cl.capacity,
-        (SELECT COUNT(s) FROM Student s WHERE s.studentClass.id = cl.id)
-        ) FROM Class cl
-        JOIN cl.grade g
-        JOIN g.terms t
-""")
-List<ClassRes> findAllClassRes();
+public interface ClassRepo extends JpaRepository<Class, Long> {
+        @Query("""
+                                SELECT new com.Company.SMS.DTO.Class.ClassRes(
+                                cl.id,
+                                cl.name,
+                                cl.grade.name,
+                                t.name,
+                                cl.capacity,
+                                (SELECT COUNT(s) FROM Student s WHERE s.studentClass.id = cl.id)
+                                ) FROM Class cl
+                                JOIN cl.grade g
+                                JOIN g.terms t
+                        """)
+        List<ClassRes> findAllClassRes();
 }

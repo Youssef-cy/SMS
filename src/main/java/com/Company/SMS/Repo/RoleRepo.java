@@ -7,13 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
-public interface RoleRepo extends JpaRepository<Role,Long> {
+public interface RoleRepo extends JpaRepository<Role, Long> {
     @Query("""
-SELECT  new com.Company.SMS.DTO.Role.RoleRES(
-    R.id,
-    R.roleName
-)from Role R
-""")
+            SELECT  new com.Company.SMS.DTO.Role.RoleRES(
+                R.id,
+                R.roleName
+            )from Role R
+            """)
     List<RoleRES> findAllRole();
 }

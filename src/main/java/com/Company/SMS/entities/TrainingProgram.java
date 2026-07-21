@@ -28,7 +28,7 @@ public class TrainingProgram {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    
     @JoinColumn(name = "TEACHER_ID", nullable = false)
     private Teacher teacher;
 

@@ -77,11 +77,13 @@ public class ExamService {
 
 
     public List<ExamRES> getExamForThisWeek() {
+        // Determine the start of the current week (Saturday) using the previous or same Saturday.
+        // The original implementation used .with(DayOfWeek.SATURDAY) which returns the *next* Saturday
+        // when the current day is after Saturday, causing the week window to be shifted forward.
         LocalDate startOfWeek = LocalDate.now()
-                .with(DayOfWeek.SATURDAY);
-
+                .with(java.time.temporal.TemporalAdjusters.previousOrSame(DayOfWeek.SATURDAY));
+        // The week spans Saturday through the following Friday (6 days after the start).
         LocalDate endOfWeek = startOfWeek.plusDays(6);
-
         return examRepo.getExamsThisWeek(startOfWeek, endOfWeek);
     }
 

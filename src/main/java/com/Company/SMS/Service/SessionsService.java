@@ -81,11 +81,11 @@ public class SessionsService {
                 saved.getCourse().getTeacher().getUser().getFirstName(),
                 saved.getDayOfWeek(),
                 saved.getStartAt(),
-                saved.getEndAt()
-        );
+                saved.getEndAt());
     }
 
-    // ========================= SAVE ALL SESSIONS (BATCH UPDATE/DELETE) =========================
+    // ========================= SAVE ALL SESSIONS (BATCH UPDATE/DELETE)
+    // =========================
     @Transactional
     public List<SessionRES> saveAllSessions(Long classId, List<SessionREQ> requests) {
         List<Session> existingSessions = repo.findAllByClassFieldId(classId);
@@ -106,7 +106,7 @@ public class SessionsService {
                     processedKeys.add(req.getId());
                 }
             }
-            
+
             Course course = courseRepo.findById(req.getCourseid())
                     .orElseThrow(() -> new EntityNotFoundException("Course not found"));
 
@@ -150,8 +150,7 @@ public class SessionsService {
                     saved.getCourse().getTeacher().getUser().getFirstName(),
                     saved.getDayOfWeek(),
                     saved.getStartAt(),
-                    saved.getEndAt()
-            ));
+                    saved.getEndAt()));
         }
         return response;
     }
@@ -169,23 +168,20 @@ public class SessionsService {
         return teacherList;
     }
 
+    // ===============================grade====================
 
-//    ===============================grade====================
-
-
-    public List<Grade> getAllGrades (){
+    public List<Grade> getAllGrades() {
         return gradeRepo.findAll();
     }
 
+    // =====================class====================
 
-//    =====================class====================
-
-
-    public List<Class> getAllClasses (){
+    public List<Class> getAllClasses() {
         return classRepo.findAll();
     }
 
-    // ========================= CLEAR ALL SESSIONS FOR A CLASS =========================
+    // ========================= CLEAR ALL SESSIONS FOR A CLASS
+    // =========================
     @Transactional
     public void clearAllByClass(Long classId) {
         List<Session> sessions = repo.findAllByClassFieldId(classId);

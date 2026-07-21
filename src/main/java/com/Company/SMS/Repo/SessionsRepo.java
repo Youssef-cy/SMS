@@ -16,19 +16,19 @@ public interface SessionsRepo extends JpaRepository<Session, Long> {
     // ========================= GET ALL SESSIONS =========================
 
     @Query("""
-        SELECT new com.Company.SMS.DTO.Session.SessionRES(
-            s.id,
-            s.course.id,
-            s.classField.name,
-            s.course.courseName,
-            s.course.teacher.user.firstName,
-            s.dayOfWeek,
-            s.startAt,
-            s.endAt
-        )
-        FROM Session s
-        WHERE s.classField.id = :classId
-    """)
+                SELECT new com.Company.SMS.DTO.Session.SessionRES(
+                    s.id,
+                    s.course.id,
+                    s.classField.name,
+                    s.course.courseName,
+                    s.course.teacher.user.firstName,
+                    s.dayOfWeek,
+                    s.startAt,
+                    s.endAt
+                )
+                FROM Session s
+                WHERE s.classField.id = :classId
+            """)
     List<SessionRES> findAllSessionsByClassId(@Param("classId") Long classId);
 
     List<Session> findAllByClassFieldId(Long classId);
@@ -36,13 +36,13 @@ public interface SessionsRepo extends JpaRepository<Session, Long> {
     // ========================= GET TEACHERS =========================
 
     @Query("""
-        SELECT new com.Company.SMS.DTO.Session.TeacherListRES(
-            c.id,
-            c.courseName,
-            c.teacher.user.firstName
-        )
-        FROM Course c
-    """)
+                SELECT new com.Company.SMS.DTO.Session.TeacherListRES(
+                    c.id,
+                    c.courseName,
+                    c.teacher.user.firstName
+                )
+                FROM Course c
+            """)
     List<TeacherListRES> findAllTeacherList();
 
     List<Session> findByClassField_IdAndDayOfWeekOrderByStartAtAsc(Long classId, Long dayOfWeek);

@@ -27,7 +27,7 @@ public class Project {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    
     @JoinColumn(name = "COURSE_ID", nullable = false)
     private Course course;
 

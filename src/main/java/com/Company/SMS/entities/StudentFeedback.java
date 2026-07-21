@@ -27,7 +27,7 @@ public class StudentFeedback {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.RESTRICT)
+    
     @JoinColumn(name = "STUDENT_ID", nullable = false)
     private Student student;
 
